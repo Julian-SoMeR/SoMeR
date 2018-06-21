@@ -49,22 +49,24 @@
             </nav>
         </header>
 
-        <!-- Breadcrumbs that get displayed before the content! -->
-            <ul class="breadcrumbs">
-                <li><a href="@routes.ApplicationController.home()">Home</a></li>
-                <li><a href="@routes.ApplicationController.home()">Test</a></li>
-            </ul>
-        @content
+            <!-- Breadcrumbs that get displayed before the content! -->
+        <ul class="breadcrumbs">
+            <li><a href="@routes.ApplicationController.home()">Home</a></li>
+            <li><a href="@routes.ApplicationController.home()">Test</a></li>
+        </ul>
+        <!--<div class="content-footer-container">-->
+            @content
 
-            <!-- Footer after each pages content! -->
-        <footer class="footer-container">
-            <ul class="footer-link-list">
-                <li><a href="#None">*metrics Project</a></li>
-                <li><a href="@routes.ApplicationController.home()">How To Participate</a></li>
-                <li><a href="@routes.ApplicationController.home()">About Us</a></li>
-                <li><a href="@routes.ApplicationController.home()">Imprint</a></li>
-            </ul>
-            <div class="bottom-box"></div>
-        </footer>
+                <!-- Footer after each pages content! -->
+            <footer class="footer-container">
+                <ul class="footer-link-list">
+                    <li><a href="#None">*metrics Project</a></li>
+                    <li><a href="@routes.ApplicationController.home()">How To Participate</a></li>
+                    <li><a href="@routes.ApplicationController.home()">About Us</a></li>
+                    <li><a href="@routes.ApplicationController.home()">Imprint</a></li>
+                </ul>
+            </footer>
+            <!--<div class="bottom-box"></div>-->
+        <!--</div>-->
     </body>
 </html>
