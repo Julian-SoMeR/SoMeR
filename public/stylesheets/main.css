@@ -94,11 +94,6 @@ a:hover {
     list-style: none;
 }
 
-.top-navigation li {
-    display: flex;
-    align-items: flex-end;
-}
-
 .navigation-items a {
     color: #FFF;
 }
@@ -116,18 +111,16 @@ a:hover {
     border-bottom: 1.25px solid black;
 }
 
+.navigation-link.active {
+    color: #000;
+}
+
+.active,
 .navigation-link:hover,
 .search-Container:hover {
     transition-duration: 0.4s;
     background-color: #F5F5F5;
     text-decoration: none;
-    color: #000;
-    border: 1px solid black;
-    border-bottom: 1.25px solid #F5F5F5;
-}
-
-.navigation-link.active {
-    background-color: #F5F5F5;
     color: #000;
     border: 1px solid black;
     border-bottom: 1.25px solid #F5F5F5;
@@ -142,7 +135,7 @@ a:hover {
 
 .search-Container {
     display: flex;
-    padding: 6.2px;
+    padding: 4.5px;
     background-color: #666666;
     border-top-right-radius: 5px;
     border-top-left-radius: 5px;
@@ -181,7 +174,7 @@ a:hover {
 }
 
 /* Gradient buttons!*/
-.login-button {
+.custom-button {
     border: 1px solid #cfcfcf;
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
@@ -202,7 +195,7 @@ a:hover {
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#E6E6E6, endColorstr=#CCCCCC);
 }
 
-.login-button:hover {
+.custom-button:hover {
     border: 1px solid #b3b3b3;
     background-color: #cdcdcd;
     background-image: -webkit-gradient(linear, left top, left bottom, from(#cdcdcd), to(#b3b3b3));
@@ -220,7 +213,8 @@ a:hover {
     border-color: #b3b3b3;
 }
 
-.login-overlay {
+.login-overlay,
+.register-overlay {
     position: fixed;
     display: none;
     width: 100%;
@@ -236,7 +230,7 @@ a:hover {
     cursor: pointer;
 }
 
-@media only screen and (max-width: 1060px) {
+@media only screen and (max-width: 1069px) {
     .header-container {
         flex-direction: column;
         align-items: flex-start;
@@ -262,16 +256,12 @@ a:hover {
     }
 }
 
-@media only screen and (max-width: 870px) {
+@media only screen and (max-width: 899px) {
     .top-navigation {
         display: block;
     }
 
     .navigation-items {
-        display: block;
-    }
-
-    .top-navigation li {
         display: block;
     }
 

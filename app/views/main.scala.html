@@ -6,12 +6,12 @@
     <head>
         <title>@title</title>
         <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-            <!--<link rel="stylesheet" media="screen" href="@routes.Assets.at("bootstraps/css/bootstrap.min.css")"/>-->
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")">
-        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")">
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")"/>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+
     </head>
     <body>
             <!-- Header with Top Navigation, Search & Login before each pages content! -->
@@ -22,31 +22,36 @@
                 </a>
             </div>
             <nav class="top-navigation">
-                <ul class="navigation-items">
-                    <li><a class="active navigation-link" href="@routes.ApplicationController.home()">Home</a></li>
-                    <li><a class="navigation-link" href="@routes.ApplicationController.home()">Platforms</a></li>
-                    <li><a class="navigation-link" href="@routes.ApplicationController.home()">Aggregators</a></li>
-                    <li><a class="navigation-link" href="@routes.ApplicationController.home()">How To Participate</a></li>
-                    <li><a class="navigation-link" href="@routes.ApplicationController.home()">About</a></li>
-                    <li><a class="navigation-link" href="@routes.ApplicationController.home()">Management</a></li>
-                </ul>
+                <div id="navigation-items" class="navigation-items">
+                    <a class="navigation-link active" href="@routes.ApplicationController.home()">Home</a>
+                    <a class="navigation-link" href="#None">Platforms</a>
+                    <a class="navigation-link" href="@routes.ApplicationController.aggregators()">Aggregators</a>
+                    <a class="navigation-link" href="@routes.ApplicationController.howTo()">How To Participate</a>
+                    <a class="navigation-link" href="@routes.ApplicationController.about()">About</a>
+                    <a class="navigation-link" href="@routes.ApplicationController.management()">Management</a>
+                </div>
+
                 <div class="inbetween-bottom-border"></div>
-                <ul class="right-header-container">
-                    <li>
-                        <div class="login-container">
-                            <button class="login-button" type="button">Register</button>
-                            <hr class="login-separator"/>
-                            <button class="login-button" type="button">Login</button>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="search-Container">
-                            <input class="search-Box" type="text" placeholder="Search.."/>
+                <div class="right-header-container">
+                    <div class="login-container">
+                        <button class="custom-button" type="button" onclick="registerVisible()">Register</button>
+                        <hr class="login-separator"/>
+                        <button class="custom-button" type="button" onclick="loginVisible()">Login</button>
+                    </div>
+
+                    <div class="search-Container">
+                        <input class="search-Box" type="text" placeholder="Search.."/>
+                        <a href="@routes.ApplicationController.search()">
                             <i class="material-icons search-Icon">search</i>
-                        </div>
-                    </li>
-                </ul>
-                <div id="login-overlay" class="login-overlay">
+                        </a>
+                    </div>
+                </div>
+
+                <div id="register-overlay" class="register-overlay" onclick="registerInvisible()">
+                    <h2>Register</h2>
+                    <input class="username-box" type="text" placeholder="Enter E-Mail.."/>
+                </div>
+                <div id="login-overlay" class="login-overlay" onclick="loginInvisible()">
                     <h2>Login</h2>
                     <input class="username-box" type="text" placeholder="Enter Username.."/>
                 </div>
@@ -56,21 +61,21 @@
             <!-- Breadcrumbs that get displayed before the content! -->
         <ul class="breadcrumbs">
             <li><a href="@routes.ApplicationController.home()">Home</a></li>
-            <li><a href="@routes.ApplicationController.home()">Test</a></li>
+            <li><a href="#Test">Test</a></li>
         </ul>
-        <!--<div class="content-footer-container">-->
-            @content
+            <!--<div class="content-footer-container">-->
+        @content
 
-                <!-- Footer after each pages content! -->
-            <footer class="footer-container">
-                <ul class="footer-link-list">
-                    <li><a href="#None">*metrics Project</a></li>
-                    <li><a href="@routes.ApplicationController.home()">How To Participate</a></li>
-                    <li><a href="@routes.ApplicationController.home()">About</a></li>
-                    <li><a href="@routes.ApplicationController.home()">Imprint</a></li>
-                </ul>
-            </footer>
-            <!--<div class="bottom-box"></div>-->
-        <!--</div>-->
+            <!-- Footer after each pages content! -->
+        <footer class="footer-container">
+            <ul class="footer-link-list">
+                <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
+                <li><a href="@routes.ApplicationController.howTo()">How To Participate</a></li>
+                <li><a href="@routes.ApplicationController.about()">About</a></li>
+                <li><a href="#Test">Imprint</a></li>
+            </ul>
+        </footer>
+
     </body>
+    <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
 </html>

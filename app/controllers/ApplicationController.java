@@ -38,5 +38,8 @@ public class ApplicationController extends Controller {
         return ok(search.render());
     }
 
+    public Result metrics() {
+        return redirect("https://metrics-project.net");
+    }
 
 }
