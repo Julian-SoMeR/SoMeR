@@ -1,24 +1,30 @@
-/* ---- Navigation link functionality (setting stuff active)---- */
+/*
+---- Navigation link functionality (setting stuff active)----
+---- JS attempt: ----
 
-var navigationContainer = document.getElementById("navigation-items");
-console.log(navigationContainer);
+$(document).ready(function () {
+    let navigationContainer = document.getElementById("navigation-items");
+    console.log(navigationContainer);
 
 //Get all navigation links
-var navigationLinks = navigationContainer.getElementsByClassName("navigation-link");
+    let navigationLinks = navigationContainer.getElementsByClassName("navigation-link");
 
-console.log(navigationLinks);
-console.log(navigationLinks.length);
+    console.log(navigationLinks);
+    console.log(navigationLinks.length);
+
 //Go through all links and add "active" class to current link
-for (var i = 0; i < navigationLinks.length; i++) {
-    console.log("Within for Loop")
-    navigationLinks[i].addEventListener("click", function () {
-        var currentlyActive = document.getElementsByClassName("active");
-        currentlyActive[0].className = currentlyActive[0].className.replace(" active", "");
-        console.log("Deleted!")
-        this.className += " active";
-        console.log(navigationLinks)
-    });
-}
+    for (let i = 0; i < navigationLinks.length; i++) {
+        console.log("Within for Loop");
+        navigationLinks[i].addEventListener("click", function () {
+            let currentlyActive = document.getElementsByClassName("active");
+            currentlyActive[0].className = currentlyActive[0].className.replace(" active", "");
+            console.log("Deleted!");
+            this.className += " active";
+            console.log(navigationLinks);
+        });
+    }
+});
+*/
 
 
 /* ---- Login/Register Overlays ---- */

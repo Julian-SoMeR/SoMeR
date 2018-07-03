@@ -1,5 +1,14 @@
 @(title: String)(content: Html)
 
+<!--
+    Method to set current pages navigation item.
+    If the current pages path matches the item,
+    set it to "active"
+-->
+@setLinkActive(pathName:String) = @{
+    if (request.path.equals(pathName)) "active"
+}
+
 <!DOCTYPE html>
 
 <html lang="en">
@@ -11,6 +20,7 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
 
     </head>
     <body>
@@ -23,12 +33,12 @@
             </div>
             <nav class="top-navigation">
                 <div id="navigation-items" class="navigation-items">
-                    <a class="navigation-link active" href="@routes.ApplicationController.home()">Home</a>
-                    <a class="navigation-link" href="#None">Platforms</a>
-                    <a class="navigation-link" href="@routes.ApplicationController.aggregators()">Aggregators</a>
-                    <a class="navigation-link" href="@routes.ApplicationController.howTo()">How To Participate</a>
-                    <a class="navigation-link" href="@routes.ApplicationController.about()">About</a>
-                    <a class="navigation-link" href="@routes.ApplicationController.management()">Management</a>
+                    <a class="@setLinkActive("/Home") navigation-link" href="@routes.ApplicationController.home()">Home</a>
+                    <a class="@setLinkActive("/Platforms") navigation-link" href="@routes.ApplicationController.platforms()">Platforms</a>
+                    <a class="@setLinkActive("/Aggregators") navigation-link" href="@routes.ApplicationController.aggregators()">Aggregators</a>
+                    <a class="@setLinkActive("/HowToParticipate") navigation-link" href="@routes.ApplicationController.howTo()">How To Participate</a>
+                    <a class="@setLinkActive("/About") navigation-link" href="@routes.ApplicationController.about()">About</a>
+                    <a class="@setLinkActive("/Management") navigation-link" href="@routes.ApplicationController.management()">Management</a>
                 </div>
 
                 <div class="inbetween-bottom-border"></div>
@@ -77,5 +87,4 @@
         </footer>
 
     </body>
-    <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
 </html>
