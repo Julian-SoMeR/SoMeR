@@ -22,13 +22,13 @@
     Method to set current pages footer navigation item.
     If the current pages path matches the item,
     set it to "footer-active"
--->
+
 @setBreadcrumbs(pathName: String) = @{
     if(request.path.equals(pathName)) request.path
 }
+    -->
 
-
-<!DOCTYPE html>
+    <!DOCTYPE html>
 
 <html lang="en">
     <head>
@@ -40,10 +40,9 @@
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
 
-
     </head>
     <body>
-            <!-- Header with Top Navigation, Search & Login before each pages content! -->
+            <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
         <header>
             <div class="header-container">
                 <div class="logo">
@@ -52,6 +51,8 @@
                     </a>
                 </div>
                 <nav class="top-navigation">
+
+                        <!-- Global navigation elements -->
                     <div id="navigation-items" class="navigation-items">
                         <a class="@setTopLinkActive("/home") navigation-link" href="@routes.ApplicationController.home()">
                             Home</a>
@@ -76,25 +77,68 @@
                         </div>
 
                         <div class="@setTopLinkActive("/search") search-Container">
-                            <input class="search-Box" type="text" placeholder="Search.."/>
-                            <a href="@routes.ApplicationController.search()">
-                                <i class="material-icons search-Icon">search</i>
-                            </a>
+                            <input class="search-Box" type="search" placeholder="Search.." q="googlesearch"/>
+                            <button class="search-Button" type="submit">
+                                <a href="@routes.ApplicationController.search()">
+                                    <i class="material-icons search-Icon">search</i>
+                                </a>
+                            </button>
                         </div>
                     </div>
 
-                    <div id="register-overlay" class="register-overlay" onclick="registerInvisible()">
-                        <h2>Register</h2>
-                        <input class="username-box" type="text" placeholder="Enter E-Mail.."/>
+                    <div id="register-overlay" class="register-overlay">
+                        <div class="register-overlay-container">
+                            <h1 class="overlay-h1">Register</h1>
+
+                            <div class="register-overlay-username">
+                                <h4>Username:</h4>
+                                <input class="input-box" type="text" placeholder="Enter Username.."/>
+                            </div>
+
+                            <div class="register-overlay-email">
+                                <h4>E-Mail</h4>
+                                <input class="input-box" type="email" placeholder="Enter E-Mail.."/>
+                                <input class="input-box" type="email" placeholder="Repeat E-Mail.."/>
+                            </div>
+
+                            <div class="register-overlay-password">
+                                <h4>Password</h4>
+                                <input class="input-box" type="password" placeholder="Enter Password.."/>
+                                <input class="input-box" type="password" placeholder="Repeat Password.."/>
+                            </div>
+
+                            <div class="register-overlay-button-container">
+                                <button class="custom-button" type="submit">Register</button>
+                                <button class="custom-button" type="button" onclick="registerInvisible()">Cancel</button>
+                            </div>
+
+                        </div>
                     </div>
-                    <div id="login-overlay" class="login-overlay" onclick="loginInvisible()">
-                        <h2>Login</h2>
-                        <input class="username-box" type="text" placeholder="Enter Username.."/>
+
+                    <div id="login-overlay" class="login-overlay">
+                        <div class="login-overlay-container">
+                            <h1 class="overlay-h1">Login</h1>
+
+                            <div class="login-overlay-username">
+                                <h4>Username:</h4>
+                                <input class="input-box" type="text" placeholder="Enter Username.."/>
+                            </div>
+
+                            <div class="login-overlay-password">
+                                <h4>Password:</h4>
+                                <input class="input-box" type="password" placeholder="Enter Password.."/>
+                                <a href="#None">Forgot password?</a>
+                            </div>
+
+                            <div class="login-overlay-button-container">
+                                <button class="custom-button" type="submit">Login</button>
+                                <button class="custom-button" type="button" onclick="loginInvisible()">Cancel</button>
+                            </div>
+                        </div>
                     </div>
                 </nav>
             </div>
         </header>
-
 
         @content
 

@@ -1,80 +1,104 @@
 @main("Imprint Page") {
 
-    <!-- Breadcrumbs that get displayed before the content!
-             This is a bit redundant BUT works without JS!!-->
-    <ul class="breadcrumbs">
-        <li><a href="@routes.ApplicationController.imprint()">Imprint</a></li>
-    </ul>
 
-    <h1>Imprint</h1>
+    <h1 class="page-title">Imprint</h1>
+        <!-- Breadcrumbs that get displayed before the content!
+          This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs">
+        <ul class="breadcrumb-list">
+            <li></li>
+            <li><a href="@routes.ApplicationController.home()">Sub-Layer 1</a></li>
+            <li><a href="@routes.ApplicationController.home()">Sub-Layer 2</a></li>
+        </ul>
+    </div>
+    <div class="content-container">
 
-    <h2>Provider</h2>
+        <h2>Provider</h2>
 
-    <p>The provider of this website in the legal sense is the<br>
-        University of Göttingen<br>
-        Göttingen State and University Library<br>
-        Platz der Göttinger Sieben 1<br>
-        37073 Göttingen, Germany<br>
-        Tel.: +49 (0) 551 / 39-5212<br>
-        Fax: +49 (0) 551 / 39-5222<br>
-        E-mail: sekretariat(at)sub.uni-goettingen.de</p>
+        <p>The provider of this website in the legal sense is the<br>
+            University of Göttingen<br>
+            Göttingen State and University Library<br>
+            Platz der Göttinger Sieben 1<br>
+            37073 Göttingen, Germany<br>
+            Tel.: +49 (0) 551 / 39-5212<br>
+            Fax: +49 (0) 551 / 39-5222<br>
+            E-mail: sekretariat(at)sub.uni-goettingen.de</p>
 
-    <h2>Representatives</h2>
+        <h2>Representatives</h2>
 
-    <p>Göttingen State and University Library is headed by Dr Wolfram Horstmann. The library is a central institution of the University of Göttingen. The University of Göttingen is a public body. It is legally represented by its president, Prof. Dr Ulrike Beisiegel.</p>
+        <p>Göttingen State and University Library is headed by Dr Wolfram Horstmann. The library is a central institution of the University of Göttingen. The University of Göttingen is a public body. It is legally represented by its president, Prof. Dr Ulrike Beisiegel.</p>
 
-    <h2>Competent supervisory authority</h2>
+        <h2>Competent supervisory authority</h2>
 
-    <p>University of Göttingen Foundation under Public Law, University Foundation Committee (Section 59 (2), Section 60 (2) (2) sentence (2)(7), and Section 60(a) (1) of the Lower Saxony Higher Education Act (NHG)), Wilhelmsplatz 1, 37073 Göttingen, Germany.</p>
+        <p>University of Göttingen Foundation under Public Law, University Foundation Committee (Section 59 (2), Section 60 (2) (2) sentence (2)(7), and Section 60(a) (1) of the Lower Saxony Higher Education Act (NHG)), Wilhelmsplatz 1, 37073 Göttingen, Germany.</p>
 
-    <h2>Editorial responsibility</h2>
+        <h2>Editorial responsibility</h2>
 
-    <p>The person responsible for the content of this website in accordance with Section 55 (2) of the State Broadcasting Treaty (RStV) is:<br>
-        Margo Bargheer<br>
-        Göttingen State and University Library<br>
-        Platz der Göttinger Sieben 1<br>
-        37073 Göttingen<br>
-        Germany<br>
-        E-mail: bargheer(at)sub.uni-goettingen.de</p>
+        <p>The person responsible for the content of this website in accordance with Section 55 (2) of the State Broadcasting Treaty (RStV) is:<br>
+            Margo Bargheer<br>
+            Göttingen State and University Library<br>
+            Platz der Göttinger Sieben 1<br>
+            37073 Göttingen<br>
+            Germany<br>
+            E-mail: bargheer(at)sub.uni-goettingen.de</p>
 
-    <h2>VAT identification number</h2>
+        <h2>VAT identification number</h2>
 
-    <p>VAT identification number in accordance with Section 27(a) of the German Value Added Tax Act:<br>
-        DE152336201</p>
+        <p>VAT identification number in accordance with Section 27(a) of the German Value Added Tax Act:<br>
+            DE152336201</p>
 
-    <h2>Disclaimer</h2>
+        <h2>Disclaimer</h2>
 
-    <p>The information provided on this site has been carefully compiled. However, the provider makes no claim and gives no warranty regarding the currency, accuracy or completeness of the material provided. The German-language version of this website is authoritative. The contents of this site are provided for information purposes only and do not constitute legal advice. All free services offered are non- binding. The project partners reserve the right to change, supplement or delete any of the services or material offered or to discontinue publication at any time and without prior notice. The provider accepts no responsibility for the content of external websites connected by link to this website. The external links provided on this website are reviewed and compiled with great care. However, our editorial team has no influence on the current and future design and content of the linked sites. The provider accepts no responsibility for the content of linked sites, nor does it adopt it as its own. The providers of the linked websites shall bear sole liability for illegal, inaccurate or incomplete content and for any loss or damages arising out of the use or non-use thereof. No legal liability will be accepted by the party concerned for merely referring to a website via a link.</p>
+        <p>The information provided on this site has been carefully compiled. However, the provider makes no claim
+            and gives no warranty regarding the currency, accuracy or completeness of the material provided.
+            The German-language version of this website is authoritative. The contents of this site are provided
+            for information purposes only and do not constitute legal advice. All free services offered are
+            non- binding. The project partners reserve the right to change, supplement or delete any of the
+            services or material offered or to discontinue publication at any time and without prior notice
+            . The provider accepts no responsibility for the content of external websites connected by link
+            to this website. The external links provided on this website are reviewed and compiled with great
+            care. However, our editorial team has no influence on the current and future design and content
+            of the linked sites. The provider accepts no responsibility for the content of linked sites,
+            nor does it adopt it as its own. The providers of the linked websites shall bear sole liability
+            for illegal, inaccurate or incomplete content and for any loss or damages arising out of the use
+            or non-use thereof. No legal liability will be accepted by the party concerned for merely referring
+            to a website via a link.</p>
 
-    <h2>Licensing terms</h2>
+        <h2>Licensing terms</h2>
 
-    <p>Unless otherwise stated, all content on this website is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">Creative Commons 4.0 Attribution International (CC BY 4.0) Licence</a>.<br>
-        Excepted from this are, in particular, the logos of the universities and other institutions who support *metrics.</p>
+        <p>Unless otherwise stated, all content on this website is licensed under a <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">
+            Creative Commons 4.0 Attribution International (CC BY 4.0) Licence</a>.<br>
+            Excepted from this are, in particular, the logos of the universities and other institutions who support *metrics.</p>
 
-    <h2>CSS-Framework</h2>
+        <h2>CSS-Framework</h2>
 
-    <p>Foundation - <a href="http://foundation.zurb.com/get-involved/faq.html" target="_blank" rel="noopener">http://foundation.zurb.com/get-involved/faq.html</a></p>
+        <p>Foundation - <a href="http://foundation.zurb.com/get-involved/faq.html" target="_blank" rel="noopener">
+            http://foundation.zurb.com/get-involved/faq.html</a></p>
 
-    <h2>Icons</h2>
+        <h2>Icons</h2>
 
-    <p>Themify Icons - <a href="https://themify.me/themify-icons" target="_blank" rel="noopener">https://themify.me/themify-icons</a></p>
+        <p>Themify Icons - <a href="https://themify.me/themify-icons" target="_blank" rel="noopener">
+            https://themify.me/themify-icons</a></p>
 
-    <p>The avatar for missing pictures of team members is from: <a href="https://pixabay.com/de/profil-mann-benutzer-home-42914/" target="_blank" rel="noopener">https://pixabay.com/de/profil-mann-benutzer-home-42914/</a></p>
+        <p>The avatar for missing pictures of team members is from: <a href="https://pixabay.com/de/profil-mann-benutzer-home-42914/" target="_blank" rel="noopener">
+            https://pixabay.com/de/profil-mann-benutzer-home-42914/</a></p>
 
-    <h2>English translation</h2>
+        <h2>English translation</h2>
 
-    <p>Miriam Geoghegan M.A.</p>
+        <p>Miriam Geoghegan M.A.</p>
 
-    <h2>Internet addresses</h2>
+        <h2>Internet addresses</h2>
 
-    <p><a href="http://metrics_project.net, http://metrics-project.de" target="_blank" rel="noopener">http://metrics_project.net, http://metrics-project.de</a></p>
+        <p><a href="http://metrics_project.net, http://metrics-project.de" target="_blank" rel="noopener">
+            http://metrics_project.net, http://metrics-project.de</a></p>
 
-    <h2>Social Media</h2>
+        <h2>Social Media</h2>
 
-    <p>This imprint also applies to the following social media accounts:
-        <a href="https://twitter.com/metrics_project/" target="_blank" rel="noopener">https://twitter.com/metrics_project/</a>
-        <a href="https://www.facebook.com/metricsproject/" target="_blank" rel="noopener">https://www.facebook.com/metricsproject/</a></p>
+        <p>This imprint also applies to the following social media accounts:
+            <a href="https://twitter.com/metrics_project/" target="_blank" rel="noopener">
+                https://twitter.com/metrics_project/</a>
+            <a href="https://www.facebook.com/metricsproject/" target="_blank" rel="noopener">
+                https://www.facebook.com/metricsproject/</a></p>
+    </div>
 
-        <!-- Stop editing content here -->
-        <!-- Start editing content here -->
 }

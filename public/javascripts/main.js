@@ -1,6 +1,10 @@
+/* Always for the document to be ready!!! */
+
+/* ---------------------------------------------------------------------------------------------------------------*/
+
 /* ---- Login/Register Overlays ---- */
 function registerVisible() {
-    document.getElementById("register-overlay").style.display = "block";
+    document.getElementById("register-overlay").style.display = "flex";
 }
 
 function registerInvisible() {
@@ -8,12 +12,33 @@ function registerInvisible() {
 }
 
 function loginVisible() {
-    document.getElementById("login-overlay").style.display = "block";
+    document.getElementById("login-overlay").style.display = "flex";
 }
 
 function loginInvisible() {
     document.getElementById("login-overlay").style.display = "none";
 }
+
+
+/* When you click on the overlay and outside the corresponding dialog, close it. */
+$('.register-overlay').on('click', function (e) {
+    /* Make sure only parent reacts to event! */
+    if (e.target !== this) {
+        return;
+    } else {
+        document.getElementById("register-overlay").style.display = "none";
+    }
+});
+
+$('.login-overlay').on('click', function (e) {
+    /* Make sure only parent reacts to event! */
+    if (e.target !== this) {
+        return;
+    } else {
+        document.getElementById("login-overlay").style.display = "none";
+    }
+
+});
 
 /*
 ---- Navigation link functionality (setting stuff active)----
