@@ -1,3 +1,17 @@
 @main("Platforms Page") {
+
+    <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
     <h1>Platforms</h1>
+    <div class="breadcrumbs">
+
+        <ul class="breadcrumb-list">
+            <li></li>
+            <li><a href="@routes.ApplicationController.home()">Sub-Layer 1</a></li>
+            <li><a href="@routes.ApplicationController.home()">Sub-Layer 2</a></li>
+        </ul>
+    </div>
+    <div class="content-container">
+        Content
+    </div>
 }

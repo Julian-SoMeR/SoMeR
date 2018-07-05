@@ -1,19 +1,30 @@
 @main("Home Page") {
-    <div class="home-container">
-        <h1>Home</h1>
+    <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs breadcrumbs-home">
+        <p class="breadcrumb-paragraph">You are here: </p>
+    <ul class="breadcrumb-list">
+        <li class="breadcrumb-firstItem">Home</li>
+        <li><a href="#none">Sub-Layer 1</a></li>
+    </ul>
+    </div>
+    <div class="content-container">
+
+
         <div class="home-about-container">
-        <p>In this task *metrics will develop a registry of social media platforms that are used for scholarly
-            communication. The registry will include platforms that were created specifically for scientific use, as well
-            as general purpose platforms that are now commonly used by scientists for dissemination of their research
-            results. For all services, we will describe:</p>
-        <ul class="paragraph-list">
-            <li>which functions of scholarly communication they support,</li>
-            <li>which interactions are possible, and</li>
-            <li>what meaningful metrics possess could build upon capturing these interactions.</li>
-        </ul>
-        <p>The registry will also provide a detailed overview on currently offered *metrics aggregators and a
-            comparision of the information that is offered by these services.
-        </p>
+            <h2>About</h2>
+            <p>In this task *metrics will develop a registry of social media platforms that are used for scholarly
+                communication. The registry will include platforms that were created specifically for scientific use, as well
+                as general purpose platforms that are now commonly used by scientists for dissemination of their research
+                results. For all services, we will describe:</p>
+            <ul class="paragraph-list">
+                <li>which functions of scholarly communication they support,</li>
+                <li>which interactions are possible, and</li>
+                <li>what meaningful metrics possess could build upon capturing these interactions.</li>
+            </ul>
+            <p>The registry will also provide a detailed overview on currently offered *metrics aggregators and a
+                comparision of the information that is offered by these services.
+            </p>
         </div>
     </div>
 }

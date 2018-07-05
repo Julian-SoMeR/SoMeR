@@ -1,3 +1,20 @@
+/* ---- Login/Register Overlays ---- */
+function registerVisible() {
+    document.getElementById("register-overlay").style.display = "block";
+}
+
+function registerInvisible() {
+    document.getElementById("register-overlay").style.display = "none";
+}
+
+function loginVisible() {
+    document.getElementById("login-overlay").style.display = "block";
+}
+
+function loginInvisible() {
+    document.getElementById("login-overlay").style.display = "none";
+}
+
 /*
 ---- Navigation link functionality (setting stuff active)----
 ---- JS attempt: ----
@@ -25,21 +42,3 @@ $(document).ready(function () {
     }
 });
 */
-
-
-/* ---- Login/Register Overlays ---- */
-function registerVisible() {
-    document.getElementById("register-overlay").style.display = "block";
-}
-
-function registerInvisible() {
-    document.getElementById("register-overlay").style.display = "none";
-}
-
-function loginVisible() {
-    document.getElementById("login-overlay").style.display = "block";
-}
-
-function loginInvisible() {
-    document.getElementById("login-overlay").style.display = "none";
-}

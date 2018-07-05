@@ -1,13 +1,32 @@
 @(title: String)(content: Html)
 
 <!--
-    Method to set current pages navigation item.
+    Method to set current pages top navigation item.
     If the current pages path matches the item,
     set it to "active"
 -->
-@setLinkActive(pathName:String) = @{
-    if (request.path.equals(pathName)) "active"
+@setTopLinkActive(pathName: String) = @{
+    if(request.path.equals(pathName)) "active"
 }
+
+    <!--
+    Method to set current pages footer navigation item.
+    If the current pages path matches the item,
+    set it to "footer-active"
+-->
+@setFooterLinkActive(pathName: String) = @{
+    if(request.path.equals(pathName)) "footer-active"
+}
+
+    <!--
+    Method to set current pages footer navigation item.
+    If the current pages path matches the item,
+    set it to "footer-active"
+-->
+@setBreadcrumbs(pathName: String) = @{
+    if(request.path.equals(pathName)) request.path
+}
+
 
 <!DOCTYPE html>
 
@@ -20,71 +39,77 @@
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.at("images/favicon.png")"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         <script src="@routes.Assets.at("javascripts/jquery-1.9.0.min.js")" type="text/javascript"></script>
-        <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
+
 
     </head>
     <body>
             <!-- Header with Top Navigation, Search & Login before each pages content! -->
-        <header class="header-container">
-            <div class="logo">
-                <a href="@routes.ApplicationController.home()">
-                    <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
-                </a>
+        <header>
+            <div class="header-container">
+                <div class="logo">
+                    <a href="@routes.ApplicationController.home()">
+                        <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
+                    </a>
+                </div>
+                <nav class="top-navigation">
+                    <div id="navigation-items" class="navigation-items">
+                        <a class="@setTopLinkActive("/home") navigation-link" href="@routes.ApplicationController.home()">
+                            Home</a>
+                        <a class="@setTopLinkActive("/platforms") navigation-link" href="@routes.ApplicationController.platforms()">
+                            Platforms</a>
+                        <a class="@setTopLinkActive("/aggregators") navigation-link" href="@routes.ApplicationController.aggregators()">
+                            Aggregators</a>
+                        <a class="@setTopLinkActive("/howtoparticipate") navigation-link" href="@routes.ApplicationController.howTo()">
+                            How To Participate</a>
+                        <a class="@setTopLinkActive("/about") navigation-link" href="@routes.ApplicationController.about()">
+                            About</a>
+                        <a class="@setTopLinkActive("/management") navigation-link" href="@routes.ApplicationController.management()">
+                            Management</a>
+                    </div>
+
+                    <div class="inbetween-bottom-border"></div>
+                    <div class="right-header-container">
+                        <div class="login-container">
+                            <button class="custom-button" type="button" onclick="registerVisible()">Register</button>
+                            <hr class="login-separator"/>
+                            <button class="custom-button" type="button" onclick="loginVisible()">Login</button>
+                        </div>
+
+                        <div class="@setTopLinkActive("/search") search-Container">
+                            <input class="search-Box" type="text" placeholder="Search.."/>
+                            <a href="@routes.ApplicationController.search()">
+                                <i class="material-icons search-Icon">search</i>
+                            </a>
+                        </div>
+                    </div>
+
+                    <div id="register-overlay" class="register-overlay" onclick="registerInvisible()">
+                        <h2>Register</h2>
+                        <input class="username-box" type="text" placeholder="Enter E-Mail.."/>
+                    </div>
+                    <div id="login-overlay" class="login-overlay" onclick="loginInvisible()">
+                        <h2>Login</h2>
+                        <input class="username-box" type="text" placeholder="Enter Username.."/>
+                    </div>
+                </nav>
             </div>
-            <nav class="top-navigation">
-                <div id="navigation-items" class="navigation-items">
-                    <a class="@setLinkActive("/Home") navigation-link" href="@routes.ApplicationController.home()">Home</a>
-                    <a class="@setLinkActive("/Platforms") navigation-link" href="@routes.ApplicationController.platforms()">Platforms</a>
-                    <a class="@setLinkActive("/Aggregators") navigation-link" href="@routes.ApplicationController.aggregators()">Aggregators</a>
-                    <a class="@setLinkActive("/HowToParticipate") navigation-link" href="@routes.ApplicationController.howTo()">How To Participate</a>
-                    <a class="@setLinkActive("/About") navigation-link" href="@routes.ApplicationController.about()">About</a>
-                    <a class="@setLinkActive("/Management") navigation-link" href="@routes.ApplicationController.management()">Management</a>
-                </div>
-
-                <div class="inbetween-bottom-border"></div>
-                <div class="right-header-container">
-                    <div class="login-container">
-                        <button class="custom-button" type="button" onclick="registerVisible()">Register</button>
-                        <hr class="login-separator"/>
-                        <button class="custom-button" type="button" onclick="loginVisible()">Login</button>
-                    </div>
-
-                    <div class="search-Container">
-                        <input class="search-Box" type="text" placeholder="Search.."/>
-                        <a href="@routes.ApplicationController.search()">
-                            <i class="material-icons search-Icon">search</i>
-                        </a>
-                    </div>
-                </div>
-
-                <div id="register-overlay" class="register-overlay" onclick="registerInvisible()">
-                    <h2>Register</h2>
-                    <input class="username-box" type="text" placeholder="Enter E-Mail.."/>
-                </div>
-                <div id="login-overlay" class="login-overlay" onclick="loginInvisible()">
-                    <h2>Login</h2>
-                    <input class="username-box" type="text" placeholder="Enter Username.."/>
-                </div>
-            </nav>
         </header>
 
-            <!-- Breadcrumbs that get displayed before the content! -->
-        <ul class="breadcrumbs">
-            <li><a href="@routes.ApplicationController.home()">Home</a></li>
-            <li><a href="#Test">Test</a></li>
-        </ul>
-            <!--<div class="content-footer-container">-->
+
         @content
 
             <!-- Footer after each pages content! -->
         <footer class="footer-container">
             <ul class="footer-link-list">
+                <li><a class="@setFooterLinkActive("/howtoparticipate")" href="@routes.ApplicationController.howTo()">
+                    How To Participate</a></li>
+                <li><a class="@setFooterLinkActive("/about")" href="@routes.ApplicationController.about()">About</a></li>
+                <li><a class="@setFooterLinkActive("/imprint")" href="@routes.ApplicationController.imprint()">
+                    Imprint</a></li>
                 <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
-                <li><a href="@routes.ApplicationController.howTo()">How To Participate</a></li>
-                <li><a href="@routes.ApplicationController.about()">About</a></li>
-                <li><a href="#Test">Imprint</a></li>
             </ul>
         </footer>
 
     </body>
+    <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
 </html>

@@ -3,28 +3,31 @@
 # ~~~~
 
 #Redirect to Home page
-GET     /                           controllers.Default.redirect(to ="/Home")
+GET     /                           controllers.Default.redirect(to ="/home")
 
 # Home page
-GET     /Home                       controllers.ApplicationController.home()
+GET     /home                       controllers.ApplicationController.home()
 
 #Platforms page
-GET     /Platforms                  controllers.ApplicationController.platforms()
+GET     /platforms                  controllers.ApplicationController.platforms()
 
 #Aggregators page
-GET     /Aggregators                controllers.ApplicationController.aggregators()
+GET     /aggregators                controllers.ApplicationController.aggregators()
 
 #How To page
-GET     /HowToParticipate           controllers.ApplicationController.howTo()
+GET     /howtoparticipate           controllers.ApplicationController.howTo()
 
 #About page
-GET     /About                      controllers.ApplicationController.about()
+GET     /about                      controllers.ApplicationController.about()
 
 #Management page
-GET     /Management                 controllers.ApplicationController.management()
+GET     /management                 controllers.ApplicationController.management()
 
 #Search page
-GET     /Search                     controllers.ApplicationController.search()
+GET     /search                     controllers.ApplicationController.search()
+
+#Imprint page
+GET     /imprint                     controllers.ApplicationController.imprint()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
