@@ -27,6 +27,32 @@ p {
     line-height: 1.5em;
 }
 
+/* JS message that only displays when Javascript is blocked. */
+.js-message {
+    display: block;
+
+    /* Show the "Use JS" message slowly to avoid blinking */
+    animation: 5s fadeIn;
+    animation-fill-mode: forwards;
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    width: 100%;
+    text-align: center;
+}
+
+@keyframes fadeIn {
+    0% {
+        display: none;
+        opacity: 0;
+    }
+
+    100% {
+        display: block;
+        opacity: 1;
+    }
+}
+
 /* General list stylings. */
 .paragraph-list {
     margin: 5px 15px 5px 50px;

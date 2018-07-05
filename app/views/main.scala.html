@@ -18,18 +18,7 @@
     if(request.path.equals(pathName)) "footer-active"
 }
 
-    <!--
-    Method to set current pages footer navigation item.
-    If the current pages path matches the item,
-    set it to "footer-active"
-
-@setBreadcrumbs(pathName: String) = @{
-    if(request.path.equals(pathName)) request.path
-}
-    -->
-
-    <!DOCTYPE html>
-
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <title>@title</title>
@@ -44,6 +33,8 @@
     <body>
             <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
         <header>
+            <p id="js-message" class="js-message">This website uses JavaScript.
+                Please enable it for the best experience!</p>
             <div class="header-container">
                 <div class="logo">
                     <a href="@routes.ApplicationController.home()">

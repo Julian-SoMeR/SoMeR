@@ -1,4 +1,7 @@
-/* Always for the document to be ready!!! */
+
+window.onload = function() {
+        document.getElementById("js-message").style.display = "none";
+};
 
 /* ---------------------------------------------------------------------------------------------------------------*/
 
