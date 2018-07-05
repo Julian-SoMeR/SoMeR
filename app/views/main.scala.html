@@ -54,26 +54,32 @@
 
                         <!-- Global navigation elements -->
                     <div id="navigation-items" class="navigation-items">
-                        <a class="@setTopLinkActive("/home") navigation-link" href="@routes.ApplicationController.home()">
+                        <a class="@setTopLinkActive("/home") navigation-link"
+                        href="@routes.ApplicationController.home()">
                             Home</a>
-                        <a class="@setTopLinkActive("/platforms") navigation-link" href="@routes.ApplicationController.platforms()">
+                        <a class="@setTopLinkActive("/platforms") navigation-link"
+                        href="@routes.ApplicationController.platforms()">
                             Platforms</a>
-                        <a class="@setTopLinkActive("/aggregators") navigation-link" href="@routes.ApplicationController.aggregators()">
+                        <a class="@setTopLinkActive("/aggregators") navigation-link"
+                        href="@routes.ApplicationController.aggregators()">
                             Aggregators</a>
-                        <a class="@setTopLinkActive("/howtoparticipate") navigation-link" href="@routes.ApplicationController.howTo()">
+                        <a class="@setTopLinkActive("/howtoparticipate") navigation-link"
+                        href="@routes.ApplicationController.howTo()">
                             How To Participate</a>
-                        <a class="@setTopLinkActive("/about") navigation-link" href="@routes.ApplicationController.about()">
+                        <a class="@setTopLinkActive("/about") navigation-link"
+                        href="@routes.ApplicationController.about()">
                             About</a>
-                        <a class="@setTopLinkActive("/management") navigation-link" href="@routes.ApplicationController.management()">
+                        <a class="@setTopLinkActive("/management") navigation-link"
+                        href="@routes.ApplicationController.management()">
                             Management</a>
                     </div>
 
                     <div class="inbetween-bottom-border"></div>
                     <div class="right-header-container">
                         <div class="login-container">
-                            <button class="custom-button" type="button" onclick="registerVisible()">Register</button>
+                            <input class="custom-button" type="button" onclick="registerVisible()" value="Register"/>
                             <hr class="login-separator"/>
-                            <button class="custom-button" type="button" onclick="loginVisible()">Login</button>
+                            <input class="custom-button" type="button" onclick="loginVisible()" value="Login"/>
                         </div>
 
                         <div class="@setTopLinkActive("/search") search-Container">
@@ -87,54 +93,58 @@
                     </div>
 
                     <div id="register-overlay" class="register-overlay">
-                        <div class="register-overlay-container">
+                        <form class="register-overlay-container">
                             <h1 class="overlay-h1">Register</h1>
 
                             <div class="register-overlay-username">
-                                <h4>Username:</h4>
-                                <input class="input-box" type="text" placeholder="Enter Username.."/>
+                                <label for="register-username" ><b>Username:</b></label>
+                                <input id="register-username" name="register-username" class="input-box"
+                                type="text" placeholder="Enter Username.."/>
                             </div>
 
                             <div class="register-overlay-email">
-                                <h4>E-Mail</h4>
-                                <input class="input-box" type="email" placeholder="Enter E-Mail.."/>
-                                <input class="input-box" type="email" placeholder="Repeat E-Mail.."/>
+                                <label for="register-email" ><b>E-Mail:</b></label>
+                                <input id="register-email" name="register-email" class="input-box" type="email" placeholder="Enter E-Mail.."/>
+                                <input id="register-email-repeat" name="register-email-repeat" class="input-box" type="email" placeholder="Repeat E-Mail.."/>
                             </div>
 
                             <div class="register-overlay-password">
-                                <h4>Password</h4>
-                                <input class="input-box" type="password" placeholder="Enter Password.."/>
-                                <input class="input-box" type="password" placeholder="Repeat Password.."/>
+                                <label for="register-password" ><b>Password:</b></label>
+                                <input id="register-password" name="register-password" class="input-box" type="password" placeholder="Enter Password.."/>
+                                <input id="register-password-repeat" name="register-password-repeat" class="input-box" type="password" placeholder="Repeat Password.."/>
                             </div>
 
                             <div class="register-overlay-button-container">
-                                <button class="custom-button" type="submit">Register</button>
-                                <button class="custom-button" type="button" onclick="registerInvisible()">Cancel</button>
+                                <input class="custom-button" type="submit" name="register-button" value="Register"/>
+                                <input class="custom-button" type="button" onclick="registerInvisible()"
+                                name="register-cancel-button" value="Cancel"/>
                             </div>
-
-                        </div>
+                        </form>
                     </div>
 
                     <div id="login-overlay" class="login-overlay">
-                        <div class="login-overlay-container">
+                        <form class="login-overlay-container">
                             <h1 class="overlay-h1">Login</h1>
 
                             <div class="login-overlay-username">
-                                <h4>Username:</h4>
-                                <input class="input-box" type="text" placeholder="Enter Username.."/>
+                                <label for="login-username"><b>Username:</b></label>
+                                <input id="login-username" name="login-username" class="input-box" type="text"
+                                placeholder="Enter Username.."/>
                             </div>
 
                             <div class="login-overlay-password">
-                                <h4>Password:</h4>
-                                <input class="input-box" type="password" placeholder="Enter Password.."/>
+                                <label for="login-password"><b>Password:</b></label>
+                                <input id="login-password" name="login-password" class="input-box" type="password"
+                                placeholder="Enter Password.."/>
                                 <a href="#None">Forgot password?</a>
                             </div>
 
                             <div class="login-overlay-button-container">
-                                <button class="custom-button" type="submit">Login</button>
-                                <button class="custom-button" type="button" onclick="loginInvisible()">Cancel</button>
+                                <input class="custom-button" type="submit" name="login-button" value="Login"/>
+                                <input class="custom-button" type="button" onclick="loginInvisible()"
+                                name="login-cancel-button" value="Cancel"/>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </nav>
             </div>
