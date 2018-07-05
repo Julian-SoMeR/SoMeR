@@ -82,14 +82,15 @@
                             <input class="custom-button" type="button" onclick="loginVisible()" value="Login"/>
                         </div>
 
-                        <div class="@setTopLinkActive("/search") search-Container">
-                            <input class="search-Box" type="search" placeholder="Search.." q="googlesearch"/>
-                            <button class="search-Button" type="submit">
+                        <form id="search-container" class="@setTopLinkActive("/search") search-container">
+                            <input id="search-box" name="search-box" class="search-box" type="search"
+                            placeholder="Search.."/>
+                            <button class="search-button" type="submit">
                                 <a href="@routes.ApplicationController.search()">
-                                    <i class="material-icons search-Icon">search</i>
+                                    <i class="material-icons search-icon">search</i>
                                 </a>
                             </button>
-                        </div>
+                        </form>
                     </div>
 
                     <div id="register-overlay" class="register-overlay">

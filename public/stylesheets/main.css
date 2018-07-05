@@ -125,19 +125,9 @@ a:hover {
     color: #000;
 }
 
-.search-Container {
-    display: flex;
-    padding: 4.5px;
-    background-color: #666666;
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
-    border: 1px solid #505050;
-    border-bottom: 1.25px solid black;
-}
-
 .active,
 .navigation-link:hover,
-.search-Container:hover {
+.search-container:hover {
     transition-duration: 0.4s;
     background-color: #F5F5F5;
     text-decoration: none;
@@ -152,22 +142,36 @@ a:hover {
     flex-grow: 1;
     flex-shrink: 1;
 }
+.search-container {
+    display: flex;
+    padding: 4px;
+    background-color: #666666;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border: 1px solid #505050;
+    border-bottom: 1.25px solid black;
+}
 
-.search-Icon {
-    background-color: #0572CE;
+.search-box {
+    margin-right: 5px;
+    padding-left: 3px;
+    max-width: 160px;
+}
+
+.search-icon {
+    color: black;
+    padding-top: 2px;
+}
+
+.search-button {
+    background-color: #E6E6E6;
     border: 1px solid black;
-    color: white;
     border-radius: 3px;
 }
 
-.search-buttuon
-
-.search-Icon:hover {
-    background-color: #0572FF;
-}
-
-.search-Box {
-    margin-right: 5px;
+.search-icon:hover,
+.search-button:hover {
+    background-color: #cdcdcd;
 }
 
 .right-header-container {

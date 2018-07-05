@@ -2,7 +2,8 @@ package controllers;
 import play.*;
 import play.mvc.*;
 import views.html.*;
-
+import models.*;
+import javax.inject.*;
 
 public class ApplicationController extends Controller {
     public Result index() {
@@ -20,7 +21,6 @@ public class ApplicationController extends Controller {
     public Result aggregators() {
         return ok(aggregators.render());
     }
-
 
     public Result howTo() {
         return ok(howto.render());
