@@ -463,7 +463,26 @@ a:hover {
     padding: 10px;
     background-color: #F5F5F5;
 
-    margin-bottom: 50px;
+    margin-bottom: 60px;
+}
+
+/* ---- BACK TO TOP BUTTON ----*/
+.back-to-top-button {
+    display: none;
+    position: fixed;
+    color: white;
+    bottom: 6.5%;
+    left: 48%;
+    z-index: 4;
+    background-color: #666666;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 15px;
+    opacity: 0.8;
+}
+
+.back-to-top-button:hover {
+    background-color: darkgray;
 }
 
 /* ----FOOTER STYLES---- */

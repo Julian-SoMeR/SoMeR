@@ -1,7 +1,24 @@
-
+/* Hide JS message when JavaScript is allowed. */
 window.onload = function() {
         document.getElementById("js-message").style.display = "none";
 };
+
+/* Back to top button. Display when the user scrolls down and hide when back at top */
+window.onscroll = function() {checkScrolling()};
+
+function checkScrolling() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+        document.getElementById("back-to-top-button").style.display = "block";
+    } else {
+        document.getElementById("back-to-top-button").style.display = "none";
+    }
+}
+
+/* When the user clicks "Back to top" scroll to the top */
+function backToTop() {
+    document.body.scrollTop = 0; //Safari
+    document.documentElement.scrollTop = 0;
+}
 
 /* ---------------------------------------------------------------------------------------------------------------*/
 
