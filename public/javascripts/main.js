@@ -1,10 +1,12 @@
 /* Hide JS message when JavaScript is allowed. */
-window.onload = function() {
-        document.getElementById("js-message").style.display = "none";
+window.onload = function () {
+    document.getElementById("js-message").style.display = "none";
 };
 
 /* Back to top button. Display when the user scrolls down and hide when back at top */
-window.onscroll = function() {checkScrolling()};
+window.onscroll = function () {
+    checkScrolling()
+};
 
 function checkScrolling() {
     if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
@@ -18,6 +20,11 @@ function checkScrolling() {
 function backToTop() {
     document.body.scrollTop = 0; //Safari
     document.documentElement.scrollTop = 0;
+}
+
+/* Submit the search query and still route to /search */
+function submitSearch() {
+    document.getElementById("search-container").submit();
 }
 
 /* ---------------------------------------------------------------------------------------------------------------*/
@@ -65,22 +72,49 @@ $('.login-overlay').on('click', function (e) {
 
 /* When the search field gains focus, set the search-container visually active. */
 $('.search-box').on('focus', function (e) {
-    document.getElementById("search-container").style.backgroundColor = "#F5F5F5";
-    document.getElementById("search-container").style.border = "1px solid black";
-    document.getElementById("search-container").style.borderBottom = "1.25px solid #F5F5F5";
-    document.getElementById("search-container").style.transitionDuration = "0.4s";
+    let searchContainer = document.getElementById("search-container");
+    searchContainer.style.backgroundColor = "#F5F5F5";
+    searchContainer.style.border = "1px solid black";
+    searchContainer.style.borderBottom = "1.25px solid #F5F5F5";
+    searchContainer.style.transitionDuration = "0.4s";
 });
 
 /* When the focus is lost, reset everything back to normal. */
 $('.search-box').on('blur', function (e) {
+    let searchContainer = document.getElementById("search-container");
     /* Only unfocus when your are not the search page. */
     if (window.location.pathname !== "/search") {
-        document.getElementById("search-container").style.backgroundColor = "#666666";
-        document.getElementById("search-container").style.border = "1px solid #505050";
-        document.getElementById("search-container").style.borderBottom = "1.25px solid black";
-        document.getElementById("search-container").style.transitionDuration = "unset";
+        searchContainer.style.backgroundColor = "#666666";
+        searchContainer.style.border = "1px solid #505050";
+        searchContainer.style.borderBottom = "1.25px solid black";
+        searchContainer.style.transitionDuration = "unset";
     }
 });
+
+/* Grab the size of the content-container within the body and decide, where to place the footer.
+ * If the content doesn't fill the screen it's fixed to the bottom, place after content otherwise. */
+
+let headerHeight = Math.max(
+    document.getElementById('header-container').scrollHeight,
+    document.getElementById('header-container').clientHeight,
+    document.getElementById('header-container').offsetHeight);
+console.log("Header Height: "+ headerHeight);
+
+let contentHeight = Math.max(
+    document.getElementById('content-container').scrollHeight,
+    document.getElementById('content-container').clientHeight,
+    document.getElementById('content-container').offsetHeight);
+console.log("Content Height: "+ contentHeight);
+
+let viewportHeight = Math.max(
+    document.body.scrollHeight,
+    document.body.clientHeight,
+    document.body.offsetHeight,
+    document.documentElement.scrollHeight,
+    document.documentElement.offsetHeight,
+    document.documentElement.clientHeight);
+console.log("Viewport Height: " + viewportHeight);
+
 
 /*
 ---- Navigation link functionality (setting stuff active)----

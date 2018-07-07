@@ -35,7 +35,7 @@
         <header>
             <p id="js-message" class="js-message">This website uses JavaScript.
                 Please enable it for the best experience!</p>
-            <div class="header-container">
+            <div id="header-container" class="header-container">
                 <div class="logo">
                     <a href="@routes.ApplicationController.home()">
                         <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
@@ -76,11 +76,12 @@
                         <form id="search-container" class="@setTopLinkActive("/search") search-container">
                             <input id="search-box" name="search-box" class="search-box" type="search"
                             placeholder="Search.."/>
-                            <button class="search-button" type="submit">
-                                <a href="@routes.ApplicationController.search()">
+
+                            <a href="@routes.ApplicationController.search()">
+                                <button class="search-button" type="button" onclick="submitSearch()">
                                     <i class="material-icons search-icon">search</i>
-                                </a>
-                            </button>
+                                </button>
+                            </a>
                         </form>
                     </div>
 
@@ -96,14 +97,18 @@
 
                             <div class="register-overlay-email">
                                 <label for="register-email" ><b>E-Mail:</b></label>
-                                <input id="register-email" name="register-email" class="input-box" type="email" placeholder="Enter E-Mail.."/>
-                                <input id="register-email-repeat" name="register-email-repeat" class="input-box" type="email" placeholder="Repeat E-Mail.."/>
+                                <input id="register-email" name="register-email" class="input-box" type="email"
+                                placeholder="Enter E-Mail.."/>
+                                <input id="register-email-repeat" name="register-email-repeat" class="input-box"
+                                type="email" placeholder="Repeat E-Mail.."/>
                             </div>
 
                             <div class="register-overlay-password">
                                 <label for="register-password" ><b>Password:</b></label>
-                                <input id="register-password" name="register-password" class="input-box" type="password" placeholder="Enter Password.."/>
-                                <input id="register-password-repeat" name="register-password-repeat" class="input-box" type="password" placeholder="Repeat Password.."/>
+                                <input id="register-password" name="register-password" class="input-box"
+                                type="password" placeholder="Enter Password.."/>
+                                <input id="register-password-repeat" name="register-password-repeat"
+                                class="input-box" type="password" placeholder="Repeat Password.."/>
                             </div>
 
                             <div class="register-overlay-button-container">
@@ -147,13 +152,14 @@
             <!-- Footer after each pages content! -->
         <footer class="footer-container">
 
-            <!-- Back to top button!! -->
+                <!-- Back to top button!! -->
             <button class="back-to-top-button" id="back-to-top-button" onclick="backToTop()">
                 Back to top</button>
             <ul class="footer-link-list">
                 <li><a class="@setFooterLinkActive("/howtoparticipate")" href="@routes.ApplicationController.howTo()">
                     How To Participate</a></li>
-                <li><a class="@setFooterLinkActive("/about")" href="@routes.ApplicationController.about()">About</a></li>
+                <li><a class="@setFooterLinkActive("/about")" href="@routes.ApplicationController.about()">About</a>
+                </li>
                 <li><a class="@setFooterLinkActive("/imprint")" href="@routes.ApplicationController.imprint()">
                     Imprint</a></li>
                 <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
