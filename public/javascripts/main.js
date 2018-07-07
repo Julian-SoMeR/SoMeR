@@ -93,18 +93,25 @@ $('.search-box').on('blur', function (e) {
 
 /* Grab the size of the content-container within the body and decide, where to place the footer.
  * If the content doesn't fill the screen it's fixed to the bottom, place after content otherwise. */
-
+let headerContainer = document.getElementById('header-container');
+let contentContainer = document.getElementById('header-container');
 let headerHeight = Math.max(
-    document.getElementById('header-container').scrollHeight,
-    document.getElementById('header-container').clientHeight,
-    document.getElementById('header-container').offsetHeight);
+    headerContainer.scrollHeight,
+    headerContainer.clientHeight,
+    headerContainer.offsetHeight);
 console.log("Header Height: "+ headerHeight);
 
 let contentHeight = Math.max(
-    document.getElementById('content-container').scrollHeight,
-    document.getElementById('content-container').clientHeight,
-    document.getElementById('content-container').offsetHeight);
+    contentContainer.scrollHeight,
+    contentContainer.clientHeight,
+    contentContainer.offsetHeight);
 console.log("Content Height: "+ contentHeight);
+
+let bodyHeight = Math.max(
+    document.body.scrollHeight,
+    document.body.clientHeight,
+    document.body.offsetHeight);
+console.log("Body Height: "+ bodyHeight);
 
 let viewportHeight = Math.max(
     document.body.scrollHeight,
