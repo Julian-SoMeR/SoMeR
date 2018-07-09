@@ -1,9 +1,9 @@
+@(platforms: List[Platform])
 @main("Platforms Page") {
-
 
     <h1 class="page-title">Platforms</h1>
 
-    <!-- Breadcrumbs that get displayed before the content!
+        <!-- Breadcrumbs that get displayed before the content!
           This is a bit redundant BUT works without JS!!-->
     <div class="breadcrumbs">
         <ul class="breadcrumb-list">
@@ -13,6 +13,32 @@
         </ul>
     </div>
     <div id="content-container" class="content-container">
-        Content
+
+        <h2>All platforms</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Platform ID</th>
+                    <th>Platform Name</th>
+                </tr>
+            </thead>
+            <tbody>
+
+            @for(platform <- platforms) {
+                <tr>
+                    <td>
+                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformID)">
+                        @platform.platformID</a>
+                    </td>
+                    <td>
+                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformID)">
+                        @platform.platformName</a>
+                    </td>
+                </tr>
+            }
+
+            </tbody>
+        </table>
+
     </div>
 }

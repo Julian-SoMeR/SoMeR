@@ -14,10 +14,6 @@ public class ApplicationController extends Controller {
         return ok(home.render());
     }
 
-    public Result platforms() {
-        return ok(platforms.render());
-    }
-
     public Result aggregators() {
         return ok(aggregators.render());
     }

@@ -2,14 +2,15 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
+# ---- Basic Routing for navigation functionalities ---- #
 #Redirect to Home page
 GET     /                           controllers.Default.redirect(to ="/home")
 
 # Home page
 GET     /home                       controllers.ApplicationController.home()
 
-#Platforms page
-GET     /platforms                  controllers.ApplicationController.platforms()
+#Platforms page (List all platforms)
+GET     /platforms                  controllers.PlatformsController.platforms()
 
 #Aggregators page
 GET     /aggregators                controllers.ApplicationController.aggregators()
@@ -34,3 +35,13 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 #Redirect to metrics page
 GET     /metrics                    controllers.ApplicationController.metrics()
+
+# ---- Special routes for Platforms page ----#
+#Create a new platform
+GET     /platforms/new              controllers.PlatformsController.createNewPlatform()
+
+#Show the selected platform
+GET     /platform/:platformID       controllers.PlatformsController.showSelectedPlatform(platformID: String)
+
+#Save a platform
+POST    /platforms                  controllers.PlatformsController.savePlatform()
