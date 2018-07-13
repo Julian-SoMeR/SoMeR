@@ -14,7 +14,14 @@
     </div>
     <div id="content-container" class="content-container">
 
+        <div class="platform-navigation">
+
+        </div>
+
         <h2>All platforms</h2>
+        <a href="@routes.PlatformsController.createNewPlatform()">
+            <input class="custom-button" type="button" value="Create new platform"/>
+        </a>
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -36,7 +43,6 @@
                     </td>
                 </tr>
             }
-
             </tbody>
         </table>
 

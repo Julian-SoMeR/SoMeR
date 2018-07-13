@@ -4,10 +4,14 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
+import play.data.validation.Constraints;
 
 public class Platform {
+    @Constraints.Required
     public String platformID;
+    @Constraints.Required
     public String platformName;
+    /*
     public String platformType;
     public String targetGroup;
     public String commercialityType;
@@ -19,7 +23,7 @@ public class Platform {
     public String websiteURL;
     public String usageRanking;
     public String description;
-
+    */
 
     /* Mocking data for testing purposes: */
     private static List<Platform> platforms;
@@ -46,6 +50,7 @@ public class Platform {
         this.platformName = platformName;
     }
 
+    /*
     public Platform(String platformID, String platformName, String platformType,
                     String targetGroup, String commercialityType, String subscriptionType,
                     String primaryPurpose, String geographicalReach, String userCount,
@@ -65,7 +70,7 @@ public class Platform {
         this.usageRanking = usageRanking;
         this.description = description;
     }
-
+    */
 
     /* Some data manipulation methods */
     public static List<Platform> findAllPlatforms() {
@@ -95,7 +100,7 @@ public class Platform {
         return platforms.remove(platform);
     }
 
-    public void savePlatform() {
+    public void save() {
         platforms.remove(findByPlatformID(this.platformID));
         platforms.add(this);
     }

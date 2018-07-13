@@ -1,0 +1,17 @@
+@(platformForm: Form[Platform])
+@import helper._
+
+@main("Create New Platform") {
+
+    <h1>Create New Platform</h1>
+
+    @helper.form(action = routes.PlatformsController.savePlatform()) {
+        <fieldset>
+            <legend>Platform (@platformForm("platformName").valueOr("New"))</legend>
+            @helper.inputText(platformForm("platformID"), '_label -> "PlatformID")
+            @helper.inputText(platformForm("platformName"), '_label -> "PlatformName")
+        </fieldset>
+        <input type="submit" class="custom-button" value="Save"/>
+        <a class="custom-button" href="@routes.PlatformsController.platforms()">Cancel</a>
+    }
+}

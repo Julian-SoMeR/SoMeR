@@ -28,7 +28,7 @@ GET     /management                 controllers.ApplicationController.management
 GET     /search                     controllers.ApplicationController.search()
 
 #Imprint page
-GET     /imprint                     controllers.ApplicationController.imprint()
+GET     /imprint                    controllers.ApplicationController.imprint()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
@@ -38,10 +38,10 @@ GET     /metrics                    controllers.ApplicationController.metrics()
 
 # ---- Special routes for Platforms page ----#
 #Create a new platform
-GET     /platforms/new              controllers.PlatformsController.createNewPlatform()
+GET     /platforms/createnew        controllers.PlatformsController.createNewPlatform()
 
 #Show the selected platform
-GET     /platform/:platformID       controllers.PlatformsController.showSelectedPlatform(platformID: String)
+GET     /platforms/:platformID      controllers.PlatformsController.showSelectedPlatform(platformID: String)
 
 #Save a platform
 POST    /platforms                  controllers.PlatformsController.savePlatform()
