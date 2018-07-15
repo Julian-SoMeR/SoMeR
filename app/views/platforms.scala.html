@@ -2,7 +2,7 @@
 @main("Platforms Page") {
 
     <h1 class="page-title">Platforms</h1>
-
+    <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
         <!-- Breadcrumbs that get displayed before the content!
           This is a bit redundant BUT works without JS!!-->
     <div class="breadcrumbs">
@@ -19,9 +19,7 @@
         </div>
 
         <h2>All platforms</h2>
-        <a href="@routes.PlatformsController.createNewPlatform()">
-            <input class="custom-button" type="button" value="Create new platform"/>
-        </a>
+
         <table class="table table-striped">
             <thead>
                 <tr>
@@ -41,10 +39,19 @@
                         <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformID)">
                         @platform.platformName</a>
                     </td>
+                    <td>
+                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformID)">
+                            <i class="material-icons edit">edit</i></a>
+                        <a onclick="deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformID)')">
+                            <i class="material-icons delete">delete</i></a>
+                    </td>
                 </tr>
             }
             </tbody>
         </table>
-
+        <a href="@routes.PlatformsController.createNewPlatform()">
+            <button class="custom-button add-platform-button">
+                <i class="material-icons add">add</i> Create new Platform</button>
+        </a>
     </div>
 }

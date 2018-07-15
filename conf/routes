@@ -43,5 +43,8 @@ GET     /platforms/createnew        controllers.PlatformsController.createNewPla
 #Show the selected platform
 GET     /platforms/:platformID      controllers.PlatformsController.showSelectedPlatform(platformID: String)
 
+#Delete a platform
+DELETE  /platforms/:platformID      controllers.PlatformsController.deletePlatform(platformID: String)
+
 #Save a platform
-POST    /platforms/                  controllers.PlatformsController.savePlatform()
+POST    /platforms/                 controllers.PlatformsController.savePlatform()

@@ -3,11 +3,13 @@ package models;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
+import play.data.validation.Constraints;
 
 public class Platform {
-    //@Constraints.Required
+    @Constraints.Required
     public String platformID;
-    //@Constraints.Required
+
+    @Constraints.Required
     public String platformName;
     /*
     public String platformType;
@@ -75,7 +77,7 @@ public class Platform {
         return new ArrayList<Platform>(platforms);
     }
 
-    public Platform findByPlatformID(String platformID) {
+    public static Platform findByPlatformID(String platformID) {
         for (Platform currentElement : platforms) {
             if (currentElement.platformID.equals(platformID)) {
                 return currentElement;
@@ -94,18 +96,34 @@ public class Platform {
         return resultPlatformList;
     }
 
-    public boolean remove(Platform platform) {
+    public static boolean remove(Platform platform) {
         return platforms.remove(platform);
     }
 
     public void save() {
-        System.out.println(this.platformID);
         platforms.remove(findByPlatformID(this.platformID));
         platforms.add(this);
-        System.out.println("Test");
+    }
+
+    /* Apparently bind requests need getters and setters though they really shouldn't... */
+    public String getPlatformID() {
+        return platformID;
+    }
+
+    public void setPlatformID(String platformID) {
+        this.platformID = platformID;
+    }
+
+    public String getPlatformName() {
+        return platformName;
+    }
+
+    public void setPlatformName(String platformName) {
+        this.platformName = platformName;
     }
 
     public String toString() {
         return String.format("%s - %s", platformID, platformName);
     }
 }
+

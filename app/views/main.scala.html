@@ -1,4 +1,17 @@
 @(title: String)(content: Html)
+<!-- Show flash messages on all pages. Still need to think about hwere to place them. -->
+@if(flash.containsKey("success")) {
+    <div class="alert alert-success">
+        @flash().get("success")
+    </div>
+}
+
+@if(flash.containsKey("error")) {
+    <div class="alert alert-error">
+        @flash().get("error")
+    </div>
+}
+
 
 <!--
     Method to set current pages top navigation item.
