@@ -3,13 +3,11 @@ package models;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-import play.data.validation.Constraints;
 
 public class Platform {
-    @Constraints.Required
+    //@Constraints.Required
     public String platformID;
-    @Constraints.Required
+    //@Constraints.Required
     public String platformName;
     /*
     public String platformType;
@@ -101,8 +99,10 @@ public class Platform {
     }
 
     public void save() {
+        System.out.println(this.platformID);
         platforms.remove(findByPlatformID(this.platformID));
         platforms.add(this);
+        System.out.println("Test");
     }
 
     public String toString() {

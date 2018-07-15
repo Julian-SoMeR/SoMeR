@@ -10,10 +10,10 @@ GET     /                           controllers.Default.redirect(to ="/home")
 GET     /home                       controllers.ApplicationController.home()
 
 #Platforms page (List all platforms)
-GET     /platforms                  controllers.PlatformsController.platforms()
+GET     /platforms/                  controllers.PlatformsController.platforms()
 
 #Aggregators page
-GET     /aggregators                controllers.ApplicationController.aggregators()
+GET     /aggregators/                controllers.ApplicationController.aggregators()
 
 #How To page
 GET     /howtoparticipate           controllers.ApplicationController.howTo()
@@ -22,7 +22,7 @@ GET     /howtoparticipate           controllers.ApplicationController.howTo()
 GET     /about                      controllers.ApplicationController.about()
 
 #Management page
-GET     /management                 controllers.ApplicationController.management()
+GET     /management/                 controllers.ApplicationController.management()
 
 #Search page
 GET     /search                     controllers.ApplicationController.search()
@@ -44,4 +44,4 @@ GET     /platforms/createnew        controllers.PlatformsController.createNewPla
 GET     /platforms/:platformID      controllers.PlatformsController.showSelectedPlatform(platformID: String)
 
 #Save a platform
-POST    /platforms                  controllers.PlatformsController.savePlatform()
+POST    /platforms/                  controllers.PlatformsController.savePlatform()

@@ -20,7 +20,6 @@ import java.util.List;
 
 public class PlatformsController extends Controller {
 
-
     /* Empty form constant to bind data for "Create New Platform" Form */
     /* This is how should work but doesn't... */
     //@Inject FormFactory formFactory;
@@ -52,10 +51,14 @@ public class PlatformsController extends Controller {
             flash("error", "Please correct the form below.");
             return badRequest(platformform.render(boundPlatformForm));
         }
-        Platform platform = boundPlatformForm.get();
+        Platform platform = boundPlatformForm.bindFromRequest().get();
+        System.out.println("Before saved: " + platform);
+        System.out.println("Form Saved: " + boundPlatformForm.data());
         platform.save();
+        System.out.println("TEST GET: " + boundPlatformForm.get().platformName);
+        System.out.println("After Saved: " + platform);
         flash("success",
                 String.format("Successfully saved platform %s", platform));
-        return redirect(routes.PlatformsController.platforms());
+        return redirect(routes.ApplicationController.home());
     }
 }

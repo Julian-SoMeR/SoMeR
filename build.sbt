@@ -12,5 +12,5 @@ libraryDependencies ++= Seq( javaJdbc, cache , javaWs )
 
 libraryDependencies += "org.mariadb.jdbc" % "mariadb-java-client" % "1.1.7"
 
-unmanagedResourceDirectories in Test <+=  baseDirectory ( _ /"target/web/public/test" )  
+unmanagedResourceDirectories in Test +=  (baseDirectory ( _ /"target/web/public/test" )).value
 
