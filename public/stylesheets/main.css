@@ -471,7 +471,7 @@ a:hover {
     display: none;
     position: fixed;
     color: white;
-    bottom: 6.5%;
+    bottom: 45px;
     left: 48%;
     z-index: 4;
     background-color: #666666;
@@ -579,3 +579,78 @@ a:hover {
     align-items: left;
 }
 
+
+
+/* ---- COOKIE MESSAGE ---- */
+.js_enabled .cookie-message {
+    display: none;
+}
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+.cookie-policy-content {
+    margin: 1em;
+}
+.cookie-message {
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    background-color: #d5e6ed;
+    color: #662d91;
+    margin: 0 auto;
+    padding: 1em;
+    width: 100%;
+}
+
+.cookie-message p {
+    text-align: center;
+}
+
+.cookie-message-button-container {
+    position: relative;
+    left: 45%;
+}
+
+.close-cookie-message-button {
+    font-size: 14px;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table thead tr {
+    border-bottom: 1px solid #444;
+}
+
+table tbody tr {
+    border-bottom: 1px solid #777;
+}
+
+table tbody tr:nth-last-child(1) {
+    border: none;
+}
+
+table thead th {
+    text-align: left;
+    font-weight: bold;
+}
+
+table th:nth-child(1) {
+    min-width: 7rem;
+}
+
+table th {
+    padding: 0.8rem 0.8rem 0.4rem 0;
+    vertical-align: top;
+}
+
+table td {
+    padding: 0.8rem 0.8rem 0.8rem 0;
+    vertical-align: top;
+}
+
+table + h3 {
+    margin-top: 1.25rem;
+}

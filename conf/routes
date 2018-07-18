@@ -36,6 +36,9 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 #Redirect to metrics page
 GET     /metrics                    controllers.ApplicationController.metrics()
 
+#Cookie Policy
+GET     /cookiepolicy               controllers.ApplicationController.cookies()
+
 # ---- Special routes for Platforms page ----#
 #Create a new platform
 GET     /platforms/createnew        controllers.PlatformsController.createNewPlatform()

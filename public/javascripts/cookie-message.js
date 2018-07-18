@@ -59,3 +59,8 @@
     createCookie('seen-cookie-message','yes',cookieExpiry,cookiePath);
 
 })();
+
+// Hide cookie message on button click
+function hideCookieMessage() {
+    document.getElementById("cookie-message").style.display = "none";
+}

@@ -42,4 +42,8 @@ public class ApplicationController extends Controller {
         return redirect("https://metrics-project.net");
     }
 
+    // This renders the cookie-policy page.
+    public  Result cookies() {
+        return ok(cookiepolicy.render());
+    }
 }
