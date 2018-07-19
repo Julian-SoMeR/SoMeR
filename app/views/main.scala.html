@@ -166,22 +166,26 @@
             </div>
         </header>
 
+        <div class="content-margin">
         @content
-
+        </div>
             <!-- Footer after each pages content! -->
         <footer class="footer-container">
 
                 <!-- Back to top button!! -->
             <button class="back-to-top-button" id="back-to-top-button" onclick="backToTop()">
-                Back to top</button>
+                Back to top
+                <i class="material-icons arrow-up">keyboard_arrow_up</i>
+            </button>
             <ul class="footer-link-list">
-                <li><a class="@setFooterLinkActive("/howtoparticipate")" href="@routes.ApplicationController.howTo()">
-                    How To Participate</a></li>
+                <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
+
                 <li><a class="@setFooterLinkActive("/about")" href="@routes.ApplicationController.about()">About</a>
                 </li>
+                <li><a class="@setFooterLinkActive("/cookiepolicy")" href="@routes.ApplicationController.cookies()">
+                    Cookie Policy</a></li>
                 <li><a class="@setFooterLinkActive("/imprint")" href="@routes.ApplicationController.imprint()">
                     Imprint</a></li>
-                <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
             </ul>
 
                 <!-- Cookie message for EU Cookie Law. Derived from "https://github.com/studio24/cookie-message".

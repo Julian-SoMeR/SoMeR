@@ -1,16 +1,14 @@
 @main("Management Page") {
 
-    <h1 class="page-title">Management</h1>
-
-        <!-- Breadcrumbs that get displayed before the content!
-          This is a bit redundant BUT works without JS!!-->
+    <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
     <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
         <ul class="breadcrumb-list">
-            <li></li>
-            <li><a href="@routes.ApplicationController.home()">Sub-Layer 1</a></li>
-            <li><a href="@routes.ApplicationController.home()">Sub-Layer 2</a></li>
+            <li class="breadcrumb-firstItem">Management</li>
         </ul>
     </div>
+
     <div id="content-container" class="content-container">
         Content
     </div>

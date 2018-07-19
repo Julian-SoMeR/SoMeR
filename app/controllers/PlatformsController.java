@@ -34,7 +34,7 @@ public class PlatformsController extends Controller {
         this.platformForm = formFactory.form(Platform.class);
     }
 
-    public Result platforms() {
+    public Result platforms(Integer page) {
         List<Platform> platformList = Platform.findAllPlatforms();
         return ok(platforms.render(platformList));
     }
@@ -61,7 +61,7 @@ public class PlatformsController extends Controller {
             return notFound(String.format("Platform %s does not exist.", platformID));
         }
         Platform.remove(platform);
-        return redirect(routes.PlatformsController.platforms());
+        return redirect(routes.PlatformsController.platforms(1));
     }
 
 
@@ -75,6 +75,6 @@ public class PlatformsController extends Controller {
         platform.save();
         flash("success",
                 String.format("Successfully saved platform %s", platform));
-        return redirect(routes.PlatformsController.platforms());
+        return redirect(routes.PlatformsController.platforms(1));
     }
 }

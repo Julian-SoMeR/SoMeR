@@ -3,15 +3,30 @@
 
 @main("Create New Platform") {
 
-    <h1>Create New Platform</h1>
+    <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li><a href="@routes.PlatformsController.platforms()">
+                Platforms</a></li>
+            <li>@platformForm("platformName").valueOr("Create new Platform")</li>
+        </ul>
+    </div>
 
-    @helper.form(action = routes.PlatformsController.savePlatform()) {
-        <fieldset>
-            <legend>Platform (@platformForm("platformName").valueOr("New"))</legend>
-            @helper.inputText(platformForm("platformID"), '_label -> "PlatformID")
-            @helper.inputText(platformForm("platformName"), '_label -> "PlatformName")
-        </fieldset>
-        <input type="submit" class="custom-button" value="Save"/>
-        <a class="custom-button" href="@routes.PlatformsController.platforms()">Cancel</a>
-    }
+    <div class="content-container">
+        <h2>Create New Platform</h2>
+
+        <div class="form-container">
+        @helper.form(action = routes.PlatformsController.savePlatform()) {
+            <fieldset>
+                <legend>@platformForm("platformName").valueOr("Create new Platform")</legend>
+                @helper.inputText(platformForm("platformID"), '_label -> "PlatformID")
+                @helper.inputText(platformForm("platformName"), '_label -> "PlatformName")
+            </fieldset>
+            <input type="submit" class="custom-button" value="Save"/>
+            <a class="custom-button" href="@routes.PlatformsController.platforms()">Cancel</a>
+        }
+        </div>
+    </div>
 }
