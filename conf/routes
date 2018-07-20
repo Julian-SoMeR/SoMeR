@@ -14,7 +14,7 @@ GET     /home                       controllers.ApplicationController.home()
 GET     /platforms                  controllers.PlatformsController.platforms(page: Integer ?= 1)
 
 #Aggregators page
-GET     /aggregators               controllers.ApplicationController.aggregators()
+GET     /aggregators                controllers.ApplicationController.aggregators()
 
 #How To page
 GET     /howtoparticipate           controllers.ApplicationController.howTo()
@@ -23,7 +23,7 @@ GET     /howtoparticipate           controllers.ApplicationController.howTo()
 GET     /about                      controllers.ApplicationController.about()
 
 #Management page
-GET     /management                controllers.ApplicationController.management()
+GET     /management                 controllers.ApplicationController.management()
 
 #Search page
 GET     /search                     controllers.ApplicationController.search()
@@ -51,4 +51,4 @@ GET     /platforms/:platformID      controllers.PlatformsController.showSelected
 DELETE  /platforms/:platformID      controllers.PlatformsController.deletePlatform(platformID: String)
 
 #Save a platform
-POST    /platforms                 controllers.PlatformsController.savePlatform()
+POST    /platforms                  controllers.PlatformsController.savePlatform()

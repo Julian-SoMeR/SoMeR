@@ -268,11 +268,11 @@ a:hover {
     right: 0;
     /* Add opacity! */
     background-color: rgba(0, 0, 0, 0.5);
-
-    /* Overlay the rest of the pages content. */
     cursor: pointer;
     justify-content: center;
     align-items: center;
+    /* Overlay the rest of the pages content. */
+    z-index: 3;
 }
 
 .register-overlay-container,
@@ -288,7 +288,8 @@ a:hover {
     flex-direction: column;
     border: 1px solid black;
     min-width: 500px;
-    z-index: 2;
+    /* Overlay the rest of the pages content. */
+    z-index: 3;
 }
 
 .input-box {
@@ -331,6 +332,7 @@ a:hover {
     top: 90px;
     font-size: 14px;
     margin-top: 15px;
+    z-index: -1;
 }
 
 .breadcrumb-list,
@@ -594,7 +596,7 @@ table + h3 {
     margin-top: 1.25rem;
 }
 
-@media only screen and (max-width: 1079px) {
+@media only screen and (max-width: 1082px) {
     .header-container {
         flex-direction: column;
         align-items: flex-start;
@@ -620,15 +622,20 @@ table + h3 {
     }
 
     .breadcrumbs {
-        top: 130px;
+        top: 100px;
     }
 
     .content-margin {
-        margin-top: 170px;
+        margin-top: 140px;
+    }
+
+    /* Make the logo smaller to keep more vertical space on the page! */
+    .header-container .logo img {
+        width: 80px;
     }
 }
 
-@media only screen and (max-width: 909px) {
+@media only screen and (max-width: 912px) {
     .top-navigation {
         display: block;
     }
@@ -679,16 +686,42 @@ table + h3 {
         min-width: initial;
     }
 
-    .breadcrumbs {
-        top: 329px;
-    }
-
-    .content-margin {
-        margin-top: 369px;
-    }
-
     /* Don't display "Back to Top" Button on mobile to avoid clutter. */
     .back-to-top-button {
         display: none !important;
+    }
+
+    /* Top Navigation and breadcrumbs should'nt be global on mobile the way it's displayed. Everything should be
+     packaged in a burger menu instead. But this is out of scope right now. */
+    .header-container {
+        position: initial;
+    }
+
+    .breadcrumbs {
+        position: initial;
+    }
+
+    .content-margin {
+        margin-top: 0px;
+    }
+
+    /* Reset the logo size to make space for search and buttons, since navigation isn't global anymore */
+    /* Make the logo smaller to keep more vertical space on the page! */
+    .header-container .logo img {
+        width: 150px;
+    }
+}
+
+/* If something cuts the logo, reduce its size. */
+@media only screen and (max-width: 380px) {
+    .header-container .logo img {
+        width: 80px;
+        position: relative;
+        top: 20px;
+        left: 2px;
+    }
+
+    .header-container .logo {
+        height: 91px;
     }
 }
