@@ -1,8 +1,9 @@
 name := "somer"
  
-version := "1.0" 
-      
-lazy val `somer` = (project in file(".")).enablePlugins(PlayJava, PlayEbean)
+version := "1.0"
+
+//Disable the new default Filters... for now
+lazy val `somer` = (project in file(".")).enablePlugins(PlayJava, PlayEbean).disablePlugins(PlayFilters)
 
 resolvers += "scalaz-bintray" at "https://dl.bintray.com/scalaz/releases"
       

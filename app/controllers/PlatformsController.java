@@ -27,8 +27,6 @@ public class PlatformsController extends Controller {
 
     /* And this is how it shouldn't work but actually does.... */
     private Form<Platform> platformForm;
-    private Form<Platform> pla;
-
     @Inject
     public PlatformsController(FormFactory formFactory) {
         this.platformForm = formFactory.form(Platform.class);
@@ -45,17 +43,17 @@ public class PlatformsController extends Controller {
     }
 
     /* This method renders the form data of a platform object that already exists. Editing possible. */
-    public Result showSelectedPlatform(String platformID) {
+    public Result showSelectedPlatform(int platformID) {
         final Platform platform = Platform.findByPlatformID(platformID);
         if (platform == null) {
-            return notFound(String.format("Platform %s does not exist.", platformID));
+            return notFound(String.format("Platform %d does not exist.", platformID));
         }
         Form<Platform> filledPlatformForm = platformForm.fill(platform);
         return ok(platformdetails.render(filledPlatformForm));
     }
 
     /* Adding delete functionality, just for testing purposes. This will later be in the "Management" tab. */
-    public Result deletePlatform(String platformID) {
+    public Result deletePlatform(int platformID) {
         final Platform platform = Platform.findByPlatformID(platformID);
         if(platform == null) {
             return notFound(String.format("Platform %s does not exist.", platformID));

@@ -8,53 +8,63 @@ import play.data.validation.Constraints;
 import io.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Column;
 
 @Entity
-public class Platform {
-    @Id@Constraints.Required
-    public String platformID;
+public class Platform extends Model {
+    @Id
+    public int platformID;
 
     @Constraints.Required
     public String platformName;
+
     /* The odd names result from keeping the original column names in the database. They are auto-generated in the db.*/
     public String platformOrServiceType;
     public String targetGroup;
     public String commercialOrNoncommercialService;
+    @Column(columnDefinition = "TEXT")
     public String freeOrSubscriptionSource;
+    @Column(columnDefinition = "TEXT")
     public String primaryPurpose;
+    @Column(columnDefinition = "TEXT")
     public String geographicalReach;
+    @Column(columnDefinition = "TEXT")
     public String numberActiveOrRegisteredUsers;
+    @Column(columnDefinition = "TEXT")
     public String contentCoverage;
     public String websiteURL;
+    @Column(columnDefinition = "TEXT")
     public String usageRanking;
+    @Column(columnDefinition = "TEXT")
     public String description;
+
 
     /* Mocking data for testing purposes: */
     private static List<Platform> platforms;
 
     static {
         platforms = new ArrayList<Platform>();
-        platforms.add(new Platform("1", "Academia.edu"));
-        platforms.add(new Platform("2", "Airity Library"));
-        platforms.add(new Platform("3", "Arnetminer"));
-        platforms.add(new Platform("4", "Bibsonomy"));
-        platforms.add(new Platform("5", "CiteULike"));
-        platforms.add(new Platform("6", "Dailymotion"));
-        platforms.add(new Platform("7", "del.icio.us"));
-        platforms.add(new Platform("8", "Dryar (repository)"));
-        platforms.add(new Platform("9", "Epernicus"));
-        platforms.add(new Platform("10", "EBSCO"));
+        platforms.add(new Platform(1, "Academia.edu"));
+        platforms.add(new Platform(2, "Airity Library"));
+        platforms.add(new Platform(3, "Arnetminer"));
+        platforms.add(new Platform(4, "Bibsonomy"));
+        platforms.add(new Platform(5, "CiteULike"));
+        platforms.add(new Platform(6, "Dailymotion"));
+        platforms.add(new Platform(7, "del.icio.us"));
+        platforms.add(new Platform(8, "Dryar (repository)"));
+        platforms.add(new Platform(9, "Epernicus"));
+        platforms.add(new Platform(10, "EBSCO"));
     }
 
     public Platform() {
     }
 
-    public Platform(String platformID, String platformName) {
+    public Platform(int platformID, String platformName) {
         this.platformID = platformID;
         this.platformName = platformName;
     }
 
-    public Platform(String platformID, String platformName, String platformOrServiceType, String targetGroup,
+    public Platform(int platformID, String platformName, String platformOrServiceType, String targetGroup,
                     String commercialOrNoncommercialService, String freeOrSubscriptionSource, String primaryPurpose,
                     String geographicalReach, String numberActiveOrRegisteredUsers, String contentCoverage,
                     String websiteURL, String usageRanking, String description) {
@@ -78,9 +88,9 @@ public class Platform {
         return new ArrayList<Platform>(platforms);
     }
 
-    public static Platform findByPlatformID(String platformID) {
+    public static Platform findByPlatformID(int platformID) {
         for (Platform currentElement : platforms) {
-            if (currentElement.platformID.equals(platformID)) {
+            if (currentElement.platformID == platformID) {
                 return currentElement;
             }
         }
@@ -101,18 +111,20 @@ public class Platform {
         return platforms.remove(platform);
     }
 
+    /*
     public void save() {
         platforms.remove(findByPlatformID(this.platformID));
         platforms.add(this);
     }
+*/
 
     /* Apparently bind requests need getters and setters. So does Ebean if Play ByteCode Enhancer is not used. */
 
-    public String getPlatformID() {
+    public int getPlatformID() {
         return platformID;
     }
 
-    public void setPlatformID(String platformID) {
+    public void setPlatformID(int platformID) {
         this.platformID = platformID;
     }
 

@@ -9,10 +9,12 @@ import play.data.validation.Constraints;
 import io.ebean.Model;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Column;
 
 @Entity
-public class DataValues {
+public class DataValues extends Model {
 
+    @Column(columnDefinition = "TEXT")
     public String dataValue;
 
     @Id

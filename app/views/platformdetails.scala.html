@@ -10,7 +10,7 @@
         <ul class="breadcrumb-list">
             <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
                 Platforms</a></li>
-            <li>@platformForm("platformName").valueOr("Create new Platform")</li>
+            <li>@platformForm("platformName").getValue().orElse("Create new Platform")</li>
         </ul>
     </div>
 
@@ -20,9 +20,22 @@
         <div class="form-container">
         @helper.form(action = routes.PlatformsController.savePlatform()) {
             <fieldset>
-                <legend>@platformForm("platformName").valueOr("Create new Platform")</legend>
+                <legend>@platformForm("platformName").getValue().orElse("Create new Platform")</legend>
                 @helper.inputText(platformForm("platformID"), '_label -> "PlatformID")
                 @helper.inputText(platformForm("platformName"), '_label -> "PlatformName")
+                @helper.inputText(platformForm("platformOrServiceType"), '_label -> "platformOrServiceType")
+                @helper.inputText(platformForm("targetGroup"), '_label -> "targetGroup")
+                @helper.inputText(platformForm("commercialOrNoncommercialService"), '_label
+                        -> "commercialOrNoncommercialService")
+                @helper.inputText(platformForm("freeOrSubscriptionSource"), '_label -> "freeOrSubscriptionSource")
+                @helper.inputText(platformForm("primaryPurpose"), '_label -> "primaryPurpose")
+                @helper.inputText(platformForm("geographicalReach"), '_label -> "geographicalReach")
+                @helper.inputText(platformForm("numberActiveOrRegisteredUsers"), '_label
+                        -> "numberActiveOrRegisteredUsers")
+                @helper.inputText(platformForm("contentCoverage"), '_label -> "contentCoverage")
+                @helper.inputText(platformForm("websiteURL"), '_label -> "websiteURL")
+                @helper.inputText(platformForm("usageRanking"), '_label -> "usageRanking")
+                @helper.inputText(platformForm("description"), '_label -> "description")
             </fieldset>
             <input type="submit" class="custom-button" value="Save"/>
             <a class="custom-button" href="@routes.PlatformsController.platforms()">Cancel</a>
