@@ -5,25 +5,29 @@ import java.util.ArrayList;
 import java.util.List;
 import play.data.validation.Constraints;
 
+import io.ebean.Model;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
+@Entity
 public class Platform {
-    @Constraints.Required
+    @Id@Constraints.Required
     public String platformID;
 
     @Constraints.Required
     public String platformName;
-    /*
-    public String platformType;
+    /* The odd names result from keeping the original column names in the database. They are auto-generated in the db.*/
+    public String platformOrServiceType;
     public String targetGroup;
-    public String commercialityType;
-    public String subscriptionType;
+    public String commercialOrNoncommercialService;
+    public String freeOrSubscriptionSource;
     public String primaryPurpose;
     public String geographicalReach;
-    public String userCount;
+    public String numberActiveOrRegisteredUsers;
     public String contentCoverage;
     public String websiteURL;
     public String usageRanking;
     public String description;
-    */
 
     /* Mocking data for testing purposes: */
     private static List<Platform> platforms;
@@ -50,27 +54,24 @@ public class Platform {
         this.platformName = platformName;
     }
 
-    /*
-    public Platform(String platformID, String platformName, String platformType,
-                    String targetGroup, String commercialityType, String subscriptionType,
-                    String primaryPurpose, String geographicalReach, String userCount,
-                    String contentCoverage, String websiteURL, String usageRanking, String description) {
-
+    public Platform(String platformID, String platformName, String platformOrServiceType, String targetGroup,
+                    String commercialOrNoncommercialService, String freeOrSubscriptionSource, String primaryPurpose,
+                    String geographicalReach, String numberActiveOrRegisteredUsers, String contentCoverage,
+                    String websiteURL, String usageRanking, String description) {
         this.platformID = platformID;
         this.platformName = platformName;
-        this.platformType = platformType;
+        this.platformOrServiceType = platformOrServiceType;
         this.targetGroup = targetGroup;
-        this.commercialityType = commercialityType;
-        this.subscriptionType = subscriptionType;
+        this.commercialOrNoncommercialService = commercialOrNoncommercialService;
+        this.freeOrSubscriptionSource = freeOrSubscriptionSource;
         this.primaryPurpose = primaryPurpose;
         this.geographicalReach = geographicalReach;
-        this.userCount = userCount;
+        this.numberActiveOrRegisteredUsers = numberActiveOrRegisteredUsers;
         this.contentCoverage = contentCoverage;
         this.websiteURL = websiteURL;
         this.usageRanking = usageRanking;
         this.description = description;
     }
-    */
 
     /* Some data manipulation methods */
     public static List<Platform> findAllPlatforms() {
@@ -105,7 +106,8 @@ public class Platform {
         platforms.add(this);
     }
 
-    /* Apparently bind requests need getters and setters though they really shouldn't... */
+    /* Apparently bind requests need getters and setters. So does Ebean if Play ByteCode Enhancer is not used. */
+
     public String getPlatformID() {
         return platformID;
     }
@@ -120,6 +122,94 @@ public class Platform {
 
     public void setPlatformName(String platformName) {
         this.platformName = platformName;
+    }
+
+    public String getPlatformOrServiceType() {
+        return platformOrServiceType;
+    }
+
+    public void setPlatformOrServiceType(String platformOrServiceType) {
+        this.platformOrServiceType = platformOrServiceType;
+    }
+
+    public String getTargetGroup() {
+        return targetGroup;
+    }
+
+    public void setTargetGroup(String targetGroup) {
+        this.targetGroup = targetGroup;
+    }
+
+    public String getCommercialOrNoncommercialService() {
+        return commercialOrNoncommercialService;
+    }
+
+    public void setCommercialOrNoncommercialService(String commercialOrNoncommercialService) {
+        this.commercialOrNoncommercialService = commercialOrNoncommercialService;
+    }
+
+    public String getFreeOrSubscriptionSource() {
+        return freeOrSubscriptionSource;
+    }
+
+    public void setFreeOrSubscriptionSource(String freeOrSubscriptionSource) {
+        this.freeOrSubscriptionSource = freeOrSubscriptionSource;
+    }
+
+    public String getPrimaryPurpose() {
+        return primaryPurpose;
+    }
+
+    public void setPrimaryPurpose(String primaryPurpose) {
+        this.primaryPurpose = primaryPurpose;
+    }
+
+    public String getGeographicalReach() {
+        return geographicalReach;
+    }
+
+    public void setGeographicalReach(String geographicalReach) {
+        this.geographicalReach = geographicalReach;
+    }
+
+    public String getNumberActiveOrRegisteredUsers() {
+        return numberActiveOrRegisteredUsers;
+    }
+
+    public void setNumberActiveOrRegisteredUsers(String numberActiveOrRegisteredUsers) {
+        this.numberActiveOrRegisteredUsers = numberActiveOrRegisteredUsers;
+    }
+
+    public String getContentCoverage() {
+        return contentCoverage;
+    }
+
+    public void setContentCoverage(String contentCoverage) {
+        this.contentCoverage = contentCoverage;
+    }
+
+    public String getWebsiteURL() {
+        return websiteURL;
+    }
+
+    public void setWebsiteURL(String websiteURL) {
+        this.websiteURL = websiteURL;
+    }
+
+    public String getUsageRanking() {
+        return usageRanking;
+    }
+
+    public void setUsageRanking(String usageRanking) {
+        this.usageRanking = usageRanking;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public String toString() {
