@@ -12,15 +12,15 @@ import javax.persistence.*;
 public class Designationdata {
     @Id
     public Long designationdataId;
-    public String designationdataName;
-    public String designationdataCategory;
-    public String designationdataSubcategory;
+    public String designationName;
+    public String designationCategory;
+    public String designationSubcategory;
     @Column(columnDefinition = "TEXT")
-    public String designationdataDescription;
+    public String designationDescription;
 
     public List<Valuedata> valuedata = new ArrayList<>();
 
     public String toString() {
-        return String.format("%s - %s", designationdataId, designationdataName);
+        return String.format("%s - %s", designationdataId, designationName);
     }
 }

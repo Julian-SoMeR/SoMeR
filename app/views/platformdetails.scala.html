@@ -21,7 +21,7 @@
         @helper.form(action = routes.PlatformsController.savePlatform()) {
             <fieldset>
                 <legend>@platformForm("platformName").getValue().orElse("Create new Platform")</legend>
-                @helper.inputText(platformForm("platformID"), '_label -> "PlatformID")
+                @helper.inputText(platformForm("platformdataId"), '_label -> "PlatformID")
                 @helper.inputText(platformForm("platformName"), '_label -> "PlatformName")
                 @helper.inputText(platformForm("platformOrServiceType"), '_label -> "platformOrServiceType")
                 @helper.inputText(platformForm("targetGroup"), '_label -> "targetGroup")

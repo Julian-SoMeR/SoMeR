@@ -22,9 +22,9 @@ public class Valuedata extends Model {
     @ManyToOne
     public Designationdata designationdata;
     @ManyToOne
-    public Platform platform;
+    public Platformdata platformdata;
 
     public String toString() {
-        return String.format("%s - %s - %s", valuedataContent, platform, designationdata);
+        return String.format("%s - %s - %s", valuedataContent, platformdata, designationdata);
     }
 }

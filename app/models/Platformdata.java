@@ -1,69 +1,52 @@
 package models;
 
-import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.List;
 import play.data.validation.Constraints;
 
-//@Entity
-public class Platform {
-    //@Id
-    public int platformID;
+import io.ebean.Model;
+import javax.persistence.*;
 
-    //@Constraints.Required
+@Entity
+public class Platformdata extends Model {
+    @Id
+    public Long platformdataId;
+
+    @Constraints.Required
     public String platformName;
 
     /* The odd names result from keeping the original column names in the database. They are auto-generated in the db.*/
     public String platformOrServiceType;
     public String targetGroup;
     public String commercialOrNoncommercialService;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     public String freeOrSubscriptionSource;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     public String primaryPurpose;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     public String geographicalReach;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     public String numberActiveOrRegisteredUsers;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     public String contentCoverage;
     public String websiteURL;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     public String usageRanking;
-    //@Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT")
     public String description;
 
 
-    /* Mocking data for testing purposes: */
-    private static List<Platform> platforms;
-
-    static {
-        platforms = new ArrayList<Platform>();
-        platforms.add(new Platform(1, "Academia.edu"));
-        platforms.add(new Platform(2, "Airity Library"));
-        platforms.add(new Platform(3, "Arnetminer"));
-        platforms.add(new Platform(4, "Bibsonomy"));
-        platforms.add(new Platform(5, "CiteULike"));
-        platforms.add(new Platform(6, "Dailymotion"));
-        platforms.add(new Platform(7, "del.icio.us"));
-        platforms.add(new Platform(8, "Dryar (repository)"));
-        platforms.add(new Platform(9, "Epernicus"));
-        platforms.add(new Platform(10, "EBSCO"));
+    public Platformdata() {
     }
 
-    public Platform() {
-    }
-
-    public Platform(int platformID, String platformName) {
-        this.platformID = platformID;
+    public Platformdata(Long platformdataId, String platformName) {
+        this.platformdataId = platformdataId;
         this.platformName = platformName;
     }
 
-    public Platform(int platformID, String platformName, String platformOrServiceType, String targetGroup,
-                    String commercialOrNoncommercialService, String freeOrSubscriptionSource, String primaryPurpose,
-                    String geographicalReach, String numberActiveOrRegisteredUsers, String contentCoverage,
-                    String websiteURL, String usageRanking, String description) {
-        this.platformID = platformID;
+    public Platformdata(Long platformdataId, String platformName, String platformOrServiceType, String targetGroup,
+                        String commercialOrNoncommercialService, String freeOrSubscriptionSource, String primaryPurpose,
+                        String geographicalReach, String numberActiveOrRegisteredUsers, String contentCoverage,
+                        String websiteURL, String usageRanking, String description) {
+        this.platformdataId = platformdataId;
         this.platformName = platformName;
         this.platformOrServiceType = platformOrServiceType;
         this.targetGroup = targetGroup;
@@ -78,23 +61,23 @@ public class Platform {
         this.description = description;
     }
 
-    /* Some data manipulation methods */
-    public static List<Platform> findAllPlatforms() {
-        return new ArrayList<Platform>(platforms);
+    /* Some data manipulation methods
+    public static List<Platformdata> findAllPlatforms() {
+        return new ArrayList<Platformdata>(platforms);
     }
 
-    public static Platform findByPlatformID(int platformID) {
-        for (Platform currentElement : platforms) {
-            if (currentElement.platformID == platformID) {
+    public static Platformdata findByPlatformID(Long platformdataId) {
+        for (Platformdata currentElement : platforms) {
+            if (currentElement.platformdataId == platformdataId) {
                 return currentElement;
             }
         }
         return null;
     }
 
-    public List<Platform> findByPlatformName(String searchTerm) {
-        final List<Platform> resultPlatformList = new ArrayList<Platform>();
-        for (Platform currentElement : platforms) {
+    public List<Platformdata> findByPlatformName(String searchTerm) {
+        final List<Platformdata> resultPlatformList = new ArrayList<Platformdata>();
+        for (Platformdata currentElement : platforms) {
             if (currentElement.platformName.toLowerCase().contains(searchTerm.toLowerCase())) {
                 resultPlatformList.add(currentElement);
             }
@@ -102,23 +85,25 @@ public class Platform {
         return resultPlatformList;
     }
 
-    public static boolean remove(Platform platform) {
+    public static boolean remove(Platformdata platform) {
         return platforms.remove(platform);
     }
 
+
     public void save() {
-        platforms.remove(findByPlatformID(this.platformID));
+        platforms.remove(findByPlatformID(this.platformdataId));
         platforms.add(this);
     }
+*/
 
     /* Apparently bind requests need getters and setters. So does Ebean if Play ByteCode Enhancer is not used. */
 
-    public int getPlatformID() {
-        return platformID;
+    public Long getPlatformdataId() {
+        return platformdataId;
     }
 
-    public void setPlatformID(int platformID) {
-        this.platformID = platformID;
+    public void setPlatformdataId(Long platformdataId) {
+        this.platformdataId = platformdataId;
     }
 
     public String getPlatformName() {
@@ -218,7 +203,7 @@ public class Platform {
     }
 
     public String toString() {
-        return String.format("%s - %s", platformID, platformName);
+        return String.format("%s - %s", platformdataId, platformName);
     }
 }
 

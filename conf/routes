@@ -45,10 +45,10 @@ GET     /cookiepolicy               controllers.ApplicationController.cookies()
 GET     /platforms/createnew        controllers.PlatformsController.createNewPlatform()
 
 #Show the selected platform
-GET     /platforms/:platformID      controllers.PlatformsController.showSelectedPlatform(platformID: Int)
+GET     /platforms/:platformdataId      controllers.PlatformsController.showSelectedPlatform(platformdataId: Int)
 
 #Delete a platform
-DELETE  /platforms/:platformID      controllers.PlatformsController.deletePlatform(platformID: Int)
+DELETE  /platforms/:platformdataId      controllers.PlatformsController.deletePlatform(platformdataId: Int)
 
 #Save a platform
 POST    /platforms                  controllers.PlatformsController.savePlatform()
