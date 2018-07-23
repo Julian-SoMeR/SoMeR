@@ -2,11 +2,19 @@ package models;
 
 import play.data.validation.Constraints;
 
-import io.ebean.Model;
+import java.util.*;
+
+import io.ebean.*;
+
 import javax.persistence.*;
 
+import play.mvc.*;
+
+
 @Entity
-public class Platformdata extends Model {
+public class Platformdata extends Model implements PathBindable<Platformdata> {
+    /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how
+ to generate the tables, contents and relations of the database and provide evolutions. */
     @Id
     public Long platformdataId;
 
@@ -33,7 +41,10 @@ public class Platformdata extends Model {
     @Column(columnDefinition = "TEXT")
     public String description;
 
+    @OneToMany(mappedBy = "platformdata")
+    public List<Valuedata> valuedata = new ArrayList<>();
 
+    /* ----- Constructors ----- */
     public Platformdata() {
     }
 
@@ -61,43 +72,46 @@ public class Platformdata extends Model {
         this.description = description;
     }
 
-    /* Some data manipulation methods
+    /* Methods necessary for the interface Pathbindable */
+    @Override
+    public Platformdata bind(String key, String id) {
+        Platformdata platformdata = findByPlatformdataId(new Long(id));
+        if (platformdata == null) {
+            throw new IllegalArgumentException("Platform with id " + id + " not found");
+        }
+        return platformdata;
+    }
+
+    @Override
+    public String unbind(String key) {
+        return String.valueOf(platformdataId);
+    }
+
+    @Override
+    public String javascriptUnbind() {
+        return this.platformName;
+    }
+
+
+    //public static final Finder<Long, Platformdata> find = new Finder<>(Platformdata.class);
+    /* Some data manipulation methods */
+    public static Platformdata findByPlatformdataId(Long platformdataId) {
+        return Ebean.find(Platformdata.class, platformdataId);
+    }
+
+    public static Platformdata findByPlatformName(String platformName) {
+        return Ebean.find(Platformdata.class).where().eq("platformName", platformName).findUnique();
+    }
+
+    private static List<Platformdata> platformdataList;
     public static List<Platformdata> findAllPlatforms() {
-        return new ArrayList<Platformdata>(platforms);
+        platformdataList = Ebean.find(Platformdata.class).findList();
+        System.out.println("Test: " + platformdataList);
+        return new ArrayList<Platformdata>(platformdataList);
     }
 
-    public static Platformdata findByPlatformID(Long platformdataId) {
-        for (Platformdata currentElement : platforms) {
-            if (currentElement.platformdataId == platformdataId) {
-                return currentElement;
-            }
-        }
-        return null;
-    }
-
-    public List<Platformdata> findByPlatformName(String searchTerm) {
-        final List<Platformdata> resultPlatformList = new ArrayList<Platformdata>();
-        for (Platformdata currentElement : platforms) {
-            if (currentElement.platformName.toLowerCase().contains(searchTerm.toLowerCase())) {
-                resultPlatformList.add(currentElement);
-            }
-        }
-        return resultPlatformList;
-    }
-
-    public static boolean remove(Platformdata platform) {
-        return platforms.remove(platform);
-    }
-
-
-    public void save() {
-        platforms.remove(findByPlatformID(this.platformdataId));
-        platforms.add(this);
-    }
-*/
-
+    /* ---- Getters, Setters, ToString Method ---- */
     /* Apparently bind requests need getters and setters. So does Ebean if Play ByteCode Enhancer is not used. */
-
     public Long getPlatformdataId() {
         return platformdataId;
     }

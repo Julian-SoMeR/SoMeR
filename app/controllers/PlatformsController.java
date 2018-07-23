@@ -26,53 +26,58 @@ public class PlatformsController extends Controller {
     //Form<Platform> platformForm = formFactory.form(Platform.class).bindFromRequest();
 
     /* And this is how it shouldn't work but actually does.... */
-    private Form<Platform> platformForm;
+    private Form<Platformdata> platformdataForm;
+
     @Inject
     public PlatformsController(FormFactory formFactory) {
-        this.platformForm = formFactory.form(Platform.class);
+        this.platformdataForm = formFactory.form(Platformdata.class);
     }
 
     public Result platforms(Integer page) {
-        List<Platform> platformList = Platform.findAllPlatforms();
-        return ok(platforms.render(platformList));
+        List<Platformdata> platformdataList = Platformdata.findAllPlatforms();
+        return ok(platforms.render(platformdataList));
     }
 
     /* Render the platform details page without any data in the form so that a new entry can be created. */
     public Result createNewPlatform() {
-        return ok(platformdetails.render(platformForm));
+        return ok(platformdetails.render(platformdataForm));
     }
 
     /* This method renders the form data of a platform object that already exists. Editing possible. */
-    public Result showSelectedPlatform(int platformID) {
-        final Platform platform = Platform.findByPlatformID(platformID);
-        if (platform == null) {
-            return notFound(String.format("Platform %d does not exist.", platformID));
+    public Result showSelectedPlatform(Long platformdataId) {
+        final Platformdata platformdata = Platformdata.findByPlatformdataId(platformdataId);
+        if (platformdata == null) {
+            return notFound(String.format("Platform %d does not exist.", platformdataId));
         }
-        Form<Platform> filledPlatformForm = platformForm.fill(platform);
-        return ok(platformdetails.render(filledPlatformForm));
+        Form<Platformdata> filledPlatformdataForm = platformdataForm.fill(platformdata);
+        return ok(platformdetails.render(filledPlatformdataForm));
     }
 
     /* Adding delete functionality, just for testing purposes. This will later be in the "Management" tab. */
-    public Result deletePlatform(int platformID) {
-        final Platform platform = Platform.findByPlatformID(platformID);
-        if(platform == null) {
-            return notFound(String.format("Platform %s does not exist.", platformID));
+    public Result deletePlatform(Long platformdataId) {
+        final Platformdata platformdata = Platformdata.findByPlatformdataId(platformdataId);
+        if (platformdata == null) {
+            return notFound(String.format("Platform %s does not exist.", platformdataId));
         }
-        Platform.remove(platform);
+        platformdata.delete();
         return redirect(routes.PlatformsController.platforms(1));
     }
 
-
     public Result savePlatform() {
-        Form<Platform> boundPlatformForm = platformForm.bindFromRequest();
-        if (boundPlatformForm.hasErrors()) {
+        Form<Platformdata> boundPlatformdataForm = platformdataForm.bindFromRequest();
+        // If the form has errors, display an error message to the user.
+        if (boundPlatformdataForm.hasErrors()) {
             flash("error", "Please correct the form below.");
-            return badRequest(platformdetails.render(boundPlatformForm));
+            return badRequest(platformdetails.render(boundPlatformdataForm));
         }
-        Platform platform = boundPlatformForm.bindFromRequest().get();
-        platform.save();
+        Platformdata platformdata = boundPlatformdataForm.bindFromRequest().get();
+        // If there is no entry with the current platformdataId create a new entry, else update existing entries.
+        if (platformdata.platformdataId == null) {
+            platformdata.save();
+        }
+        platformdata.update();
         flash("success",
-                String.format("Successfully saved platform %s", platform));
+                String.format("Successfully saved platform %s", platformdata));
         return redirect(routes.PlatformsController.platforms(1));
     }
 }

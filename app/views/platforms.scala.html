@@ -1,4 +1,4 @@
-@(platforms: List[Platform])
+@(platforms: List[Platformdata])
 @main("Platforms Page") {
     <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
         <!-- Breadcrumbs that get displayed before the content!
@@ -29,17 +29,17 @@
             @for(platform <- platforms) {
                 <tr>
                     <td>
-                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformID)">
-                        @platform.platformID</a>
+                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
+                        @platform.platformdataId</a>
                     </td>
                     <td>
-                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformID)">
+                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
                         @platform.platformName</a>
                     </td>
                     <td>
-                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformID)">
+                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
                             <i class="material-icons edit">edit</i></a>
-                        <a onclick="deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformID)')">
+                        <a onclick="deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformdataId)')">
                             <i class="material-icons delete">delete</i></a>
                     </td>
                 </tr>
