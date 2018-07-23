@@ -6,9 +6,7 @@ import java.util.List;
 import play.data.validation.Constraints;
 
 import io.ebean.Model;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.*;
 
 @Entity
 public class Platform extends Model {

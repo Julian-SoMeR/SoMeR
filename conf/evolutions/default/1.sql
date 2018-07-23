@@ -3,21 +3,13 @@
 
 # --- !Ups
 
-create table data_values (
-  data_value_id                 bigint auto_increment not null,
-  data_value                    TEXT,
-  metadata_id                   bigint,
-  platform_id                   bigint,
-  constraint pk_data_values primary key (data_value_id)
-);
-
-create table metadata (
-  metadata_id                   bigint auto_increment not null,
-  metadata_name                 varchar(255),
-  metadata_category             varchar(255),
-  metadata_subcategory          varchar(255),
-  metadata_description          TEXT,
-  constraint pk_metadata primary key (metadata_id)
+create table designationdata (
+  designationdata_id            bigint auto_increment not null,
+  designationdata_name          varchar(255),
+  designationdata_category      varchar(255),
+  designationdata_subcategory   varchar(255),
+  designationdata_description   TEXT,
+  constraint pk_designationdata primary key (designationdata_id)
 );
 
 create table platform (
@@ -37,12 +29,32 @@ create table platform (
   constraint pk_platform primary key (platform_id)
 );
 
+create table valuedata (
+  valuedata_id                  bigint auto_increment not null,
+  valuedata_content             TEXT,
+  designationdata_designationdata_id bigint,
+  platform_platform_id          integer,
+  constraint pk_valuedata primary key (valuedata_id)
+);
+
+alter table valuedata add constraint fk_valuedata_designationdata_designationdata_id foreign key (designationdata_designationdata_id) references designationdata (designationdata_id) on delete restrict on update restrict;
+create index ix_valuedata_designationdata_designationdata_id on valuedata (designationdata_designationdata_id);
+
+alter table valuedata add constraint fk_valuedata_platform_platform_id foreign key (platform_platform_id) references platform (platform_id) on delete restrict on update restrict;
+create index ix_valuedata_platform_platform_id on valuedata (platform_platform_id);
+
 
 # --- !Downs
 
-drop table if exists data_values;
+alter table valuedata drop foreign key fk_valuedata_designationdata_designationdata_id;
+drop index ix_valuedata_designationdata_designationdata_id on valuedata;
 
-drop table if exists metadata;
+alter table valuedata drop foreign key fk_valuedata_platform_platform_id;
+drop index ix_valuedata_platform_platform_id on valuedata;
+
+drop table if exists designationdata;
 
 drop table if exists platform;
+
+drop table if exists valuedata;
 
