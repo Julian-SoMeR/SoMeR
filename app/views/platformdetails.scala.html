@@ -15,32 +15,48 @@
     </div>
 
     <div class="content-container">
-        <h2>Create New Platform</h2>
+        <div class="platform-details-container">
+            <div class="platform-header-container">
+                <h1>@platformdataForm("platformName").getValue().orElse("Create new Platform")</h1>
+                <a class="link-with-icon" href="@routes.PlatformsController.platforms()">
+                    View Functions<!--of @platformdataForm("platformName").getValue().orElse("Undefined")-->
+                    <i class="material-icons button-right-arrow">arrow_forward</i>
+                </a>
+            </div>
+            <div class="form-container">
+            @helper.form(action = routes.PlatformsController.savePlatform(), 'class -> "custom-form") {
+                <fieldset class="fieldset-container">
+                    <legend><h3>General Platform Information</h3></legend>
+                    <div class="required-input-container">
+                    @helper.inputText(platformdataForm("platformName"), '_label -> "Platform Name")
+                    </div>
+                    @helper.inputText(platformdataForm("platformOrServiceType"), '_label -> "Platform or Service Type")
+                    @helper.inputText(platformdataForm("targetGroup"), '_label -> "Target Group")
+                    @helper.inputText(platformdataForm("commercialOrNoncommercialService"), '_label
+                            -> "Commercial or Noncommercial Service")
+                    @helper.inputText(platformdataForm("freeOrSubscriptionSource"), '_label -> "Free or Subscription Source")
+                    @helper.inputText(platformdataForm("primaryPurpose"), '_label -> "Primary Purpose")
+                    @helper.inputText(platformdataForm("geographicalReach"), '_label -> "Geographical Reach")
+                    @helper.inputText(platformdataForm("numberActiveOrRegisteredUsers"), '_label
+                            -> "Number of Active or Registered Users")
+                    @helper.inputText(platformdataForm("contentCoverage"), '_label -> "Content Coverage")
+                    @helper.inputText(platformdataForm("websiteURL"), '_label -> "Website URL")
+                    @helper.inputText(platformdataForm("usageRanking"), '_label -> "Usage Ranking")
+                    @helper.textarea(platformdataForm("description"), '_label -> "Description")
+                    <input type="hidden" value="@platformdataForm("platformdataId").getValue().orElse("")"
+                    name="platformdataId"/>
+                    <div class="form-buttons-container">
+                        <input type="submit" class="custom-button" value="Save & Exit"/>
+                        <button class="custom-button custom-link-button">
+                            <a href="@routes.PlatformsController.platforms()">
+                                Cancel
+                            </a>
+                        </button>
+                    </div>
+                </fieldset>
 
-        <div class="form-container">
-        @helper.form(action = routes.PlatformsController.savePlatform()) {
-            <fieldset>
-                <legend>@platformdataForm("platformName").getValue().orElse("Create new Platform")</legend>
-                @helper.inputText(platformdataForm("platformName"), '_label -> "PlatformName")
-                @helper.inputText(platformdataForm("platformOrServiceType"), '_label -> "platformOrServiceType")
-                @helper.inputText(platformdataForm("targetGroup"), '_label -> "targetGroup")
-                @helper.inputText(platformdataForm("commercialOrNoncommercialService"), '_label
-                        -> "commercialOrNoncommercialService")
-                @helper.inputText(platformdataForm("freeOrSubscriptionSource"), '_label -> "freeOrSubscriptionSource")
-                @helper.inputText(platformdataForm("primaryPurpose"), '_label -> "primaryPurpose")
-                @helper.inputText(platformdataForm("geographicalReach"), '_label -> "geographicalReach")
-                @helper.inputText(platformdataForm("numberActiveOrRegisteredUsers"), '_label
-                        -> "numberActiveOrRegisteredUsers")
-                @helper.inputText(platformdataForm("contentCoverage"), '_label -> "contentCoverage")
-                @helper.inputText(platformdataForm("websiteURL"), '_label -> "websiteURL")
-                @helper.inputText(platformdataForm("usageRanking"), '_label -> "usageRanking")
-                @helper.inputText(platformdataForm("description"), '_label -> "description")
-                <input type="hidden" value="@platformdataForm("platformdataId").getValue().orElse("")"
-                name="platformdataId"/>
-            </fieldset>
-            <input type="submit" class="custom-button" value="Save"/>
-            <a class="custom-button" href="@routes.PlatformsController.platforms()">Cancel</a>
-        }
+            }
+            </div>
         </div>
     </div>
 }

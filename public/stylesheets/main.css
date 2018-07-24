@@ -250,6 +250,16 @@ a:hover {
     filter: progid:DXImageTransform.Microsoft.gradient(GradientType=0, startColorstr=#cdcdcd, endColorstr=#b3b3b3);
 }
 
+.custom-link-button,
+.custom-link-button a,
+.custom-link-button:hover,
+.custom-link-button:active,
+.custom-link-button:link,
+.custom-link-button:visited {
+    text-decoration: none;
+    color: black;
+}
+
 .login-separator {
     height: 30px;
     margin: 5px;
@@ -272,15 +282,16 @@ a:hover {
     justify-content: center;
     align-items: center;
     /* Overlay the rest of the pages content. */
-    z-index: 3;
+    z-index: 99;
 }
 
 .register-overlay-container,
 .login-overlay-container {
     position: relative;
+    top: 0px;
+    right: 0px;
     pointer-events: auto;
     cursor: initial;
-    position: relative;
     display: flex;
     justify-self: center;
     background-color: #F5F5F5;
@@ -289,7 +300,7 @@ a:hover {
     border: 1px solid black;
     min-width: 500px;
     /* Overlay the rest of the pages content. */
-    z-index: 3;
+    z-index: 99;
 }
 
 .input-box {
@@ -331,8 +342,9 @@ a:hover {
     width: 100%;
     top: 90px;
     font-size: 14px;
-    margin-top: 15px;
-    z-index: -1;
+    margin-top: 2px;
+    border-top: 13px solid #F5F5F5;
+    z-index: auto;
 }
 
 .breadcrumb-list,
@@ -403,7 +415,7 @@ a:hover {
     font-weight: bold;
     bottom: 40px;
     right: 9px;
-    z-index: 4;
+    z-index: 99;
     background-color: #666666;
     cursor: pointer;
     padding: 0 5px 10px 5px;
@@ -493,13 +505,152 @@ a:hover {
     font-size: 14px;
 }
 
+
+
+.form-container {
+    padding-top: 5px;
+}
+
+.fieldset-container {
+    padding: 5px 10px 10px 10px;
+    width: 600px;
+}
+
+.fieldset-container input[type="text"],
+.fieldset-container textarea {
+    width: 100%;
+    padding: 5px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    border-radius: 2px;
+    border: 1px solid black;
+}
+
+.fieldset-container input[type="text"]:focus {
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.fieldset-container label {
+    font-weight: bold;
+    padding-right: 50px;
+}
+
+.required-input-container .info {
+    display: none;
+}
+
+.required-input-container input[type="text"] {
+    margin-bottom: 0px;
+}
+
+.required-input-container {
+    margin-bottom: 10px;
+}
+
+dd.error {
+    color: darkred;
+    padding-left: 5px;
+}
+
+.custom-form input[type="text"]:last-of-type {
+    margin-bottom: 5px;
+}
+
+.form-buttons-container {
+    padding-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.form-buttons-container button {
+    margin-left: 15px;
+}
+
+.button-right-arrow {
+    position: relative;
+    top: 6px;
+    right: -5px;
+    font-size: 16px;
+}
+
+.platform-header-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.platform-details-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.link-with-icon,
+.link-with-icon:visited {
+    color: #3366FF;
+}
+
+.link-with-icon:hover {
+    color: #006699;
+    text-decoration: none;
+}
+
+.platform-table {
+    width: 600px;
+}
+
+.platform-table-header,
+.platform-table-column {
+    text-align: left;
+    padding: 0;
+    padding-left: 10px;
+    font-size: 18px;
+}
+
+.platform-table-column {
+    padding-top: 5px;
+}
+
+
+.platform-table a,
+.platform-table a:hover,
+.platform-table a:visited,
+.platform-table a:link,
+.platform-table a:active {
+    text-decoration: none;
+    color: black;
+}
+
+edit {
+    color: black;
+}
+
+.edit:hover {
+    color: #3366FF;
+}
+
 .delete {
     cursor: pointer;
     color: red;
 }
 
-.form-container {
-    padding: 5px;
+.delete:hover {
+    color: #FF8C00;
+}
+
+.platform-table-row:hover {
+    background-color: #CCCCCC;
+    cursor: pointer;
+}
+
+.platform-table-header:hover {
+    background-color: initial;
+    color: black;
+}
+
+.platform-icon-container {
+    display: flex;
+    text-align: right;
+    justify-content: flex-end;
 }
 
 /* ---- ABOUT STYLE ---- */
@@ -596,6 +747,7 @@ table + h3 {
     margin-top: 1.25rem;
 }
 
+/* Media Queries to enable responsiveness. */
 @media only screen and (max-width: 1082px) {
     .header-container {
         flex-direction: column;
@@ -710,6 +862,11 @@ table + h3 {
     .header-container .logo img {
         width: 150px;
     }
+
+    .fieldset-container {
+        width: 350px;
+    }
+
 }
 
 /* If something cuts the logo, reduce its size. */

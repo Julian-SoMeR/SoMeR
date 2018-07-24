@@ -16,30 +16,26 @@
         </div>
 
         <h2>All platforms</h2>
-
-        <table class="table table-striped">
+        <input type="text" id="platform-filter" onkeyup="filterPlatforms()" placeholder="Filter platforms..">
+        <table id="platform-table" class="platform-table">
             <thead>
                 <tr>
-                    <th>Platform ID</th>
-                    <th>Platform Name</th>
+                    <th class="platform-table-header">Platform Name</th>
                 </tr>
             </thead>
             <tbody>
 
             @for(platform <- platforms) {
-                <tr>
-                    <td>
-                        <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
-                        @platform.platformdataId</a>
-                    </td>
-                    <td>
+                <tr id="platform-table-row"  class="platform-table-row">
+                    <td id="platform-table-column" class="platform-table-column">
                         <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
                         @platform.platformName</a>
                     </td>
-                    <td>
+                    <td class="platform-table-column platform-icon-container">
                         <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
                             <i class="material-icons edit">edit</i></a>
-                        <a onclick="deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformdataId)')">
+                        <a onclick=
+                        "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformdataId)')">
                             <i class="material-icons delete">delete</i></a>
                     </td>
                 </tr>

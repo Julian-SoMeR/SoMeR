@@ -5,7 +5,7 @@ window.onload = function () {
 
 /* Back to top button. Display when the user scrolls down and hide when back at top */
 window.onscroll = function () {
-    checkScrolling()
+    checkScrolling();
 };
 
 function checkScrolling() {
@@ -14,42 +14,42 @@ function checkScrolling() {
     } else {
         document.getElementById("back-to-top-button").style.display = "none";
     }
-}
+};
 
 /* When the user clicks "Back to top" scroll to the top */
 function backToTop() {
     document.body.scrollTop = 0; //Safari
     document.documentElement.scrollTop = 0;
-}
+};
 
 /* Submit the search query and still route to /search */
 function submitSearch() {
     document.getElementById("search-container").submit();
-}
+};
 
 /* ---------------------------------------------------------------------------------------------------------------*/
 
 /* ---- Login/Register Overlays ---- */
 function registerVisible() {
     document.getElementById("register-overlay").style.display = "flex";
-}
+};
 
 function registerInvisible() {
     document.getElementById("register-overlay").style.display = "none";
-}
+};
 
 function loginVisible() {
     document.getElementById("login-overlay").style.display = "flex";
-}
+};
 
 function loginInvisible() {
     document.getElementById("login-overlay").style.display = "none";
-}
+};
 
 /* If a user clicks into the search field, set the tab active for that time. */
 function setSearchTabActive() {
     document.getElementById("search-container").style.backgroundColor = "#F5F5F5";
-}
+};
 
 /* When a user clicks on the overlay and outside the register dialog, close it. */
 $('.register-overlay').on('click', function (e) {
@@ -90,9 +90,10 @@ $('.search-box').on('blur', function (e) {
         searchContainer.style.transitionDuration = "unset";
     }
 });
-
+/*
 /* Grab the size of the content-container within the body and decide, where to place the footer.
  * If the content doesn't fill the screen it's fixed to the bottom, place after content otherwise. */
+/*
 let headerContainer = document.getElementById('header-container');
 let contentContainer = document.getElementById('header-container');
 let headerHeight = Math.max(
@@ -123,7 +124,7 @@ let viewportHeight = Math.max(
 console.log("Viewport Height: " + viewportHeight);
 
 
-/*
+
 ---- Navigation link functionality (setting stuff active)----
 ---- JS attempt: ----
 
