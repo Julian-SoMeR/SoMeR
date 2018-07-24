@@ -41,7 +41,7 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
     @Column(columnDefinition = "TEXT")
     public String description;
 
-    @OneToMany(mappedBy = "platformdata")
+    @OneToMany(cascade=CascadeType.ALL)
     public List<Valuedata> valuedata = new ArrayList<>();
 
     /* ----- Constructors ----- */

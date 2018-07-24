@@ -19,7 +19,7 @@ public class Designationdata {
     @Column(columnDefinition = "TEXT")
     public String designationDescription;
 
-    @OneToMany(mappedBy = "designationdata")
+    @OneToMany(cascade=CascadeType.ALL)
     public List<Valuedata> valuedata = new ArrayList<>();
 
 
