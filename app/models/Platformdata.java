@@ -5,12 +5,11 @@ import play.data.validation.Constraints;
 import java.util.*;
 
 import io.ebean.*;
-
+import io.ebean.annotation.*;
 import javax.persistence.*;
-
 import play.mvc.*;
 
-
+//@DocStore
 @Entity
 public class Platformdata extends Model implements PathBindable<Platformdata> {
     /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how
@@ -18,10 +17,12 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
     @Id
     public Long platformdataId;
 
+    @DocSortable
     @Constraints.Required
     public String platformName;
 
     /* The odd names result from keeping the original column names in the database. They are auto-generated in the db.*/
+    @DocCode
     public String platformOrServiceType;
     public String targetGroup;
     public String commercialOrNoncommercialService;
@@ -41,7 +42,7 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
     @Column(columnDefinition = "TEXT")
     public String description;
 
-    @OneToMany(cascade=CascadeType.ALL)
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "platformdata")
     public List<Valuedata> valuedata = new ArrayList<>();
 
     /* ----- Constructors ----- */
@@ -100,14 +101,15 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
     }
 
     public static Platformdata findByPlatformName(String platformName) {
-        return Ebean.find(Platformdata.class).where().eq("platformName", platformName).findUnique();
+        return Ebean.find(Platformdata.class).where().eq("platformName", platformName).findOne();
     }
 
     private static List<Platformdata> platformdataList;
     public static List<Platformdata> findAllPlatforms() {
-        platformdataList = Ebean.find(Platformdata.class).findList();
+        platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "%_%").orderBy("platformName asc").findList();
         System.out.println("Test: " + platformdataList);
-        return new ArrayList<Platformdata>(platformdataList);
+        ArrayList <Platformdata> platformdataArrayList = new ArrayList<Platformdata>(platformdataList);
+        return platformdataArrayList;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */

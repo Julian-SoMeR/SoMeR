@@ -1,0 +1,20 @@
+{
+  "mappings" : {
+    "platformdata" : {
+      "properties" : {
+        "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+        "platformOrServiceType": { "type": "keyword" },
+        "targetGroup": { "type": "text" },
+        "commercialOrNoncommercialService": { "type": "text" },
+        "freeOrSubscriptionSource": { "type": "text" },
+        "primaryPurpose": { "type": "text" },
+        "geographicalReach": { "type": "text" },
+        "numberActiveOrRegisteredUsers": { "type": "text" },
+        "contentCoverage": { "type": "text" },
+        "websiteURL": { "type": "text" },
+        "usageRanking": { "type": "text" },
+        "description": { "type": "text" }
+      }
+    }
+  }
+}

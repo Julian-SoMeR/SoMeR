@@ -16,7 +16,7 @@
 
     <div class="content-container">
         <div class="platform-details-container">
-            <div class="platform-header-container">
+            <div class="platform-details-header-container">
                 <h1>@platformdataForm("platformName").getValue().orElse("Create new Platform")</h1>
                 <a class="link-with-icon" href="@routes.PlatformsController.platforms()">
                     View Functions<!--of @platformdataForm("platformName").getValue().orElse("Undefined")-->
@@ -27,6 +27,9 @@
             @helper.form(action = routes.PlatformsController.savePlatform(), 'class -> "custom-form") {
                 <fieldset class="fieldset-container">
                     <legend><h3>General Platform Information</h3></legend>
+
+                    <input type="hidden" value="@platformdataForm("platformdataId").getValue().orElse("")"
+                    name="platformdataId"/>
                     <div class="required-input-container">
                     @helper.inputText(platformdataForm("platformName"), '_label -> "Platform Name")
                     </div>
@@ -43,18 +46,13 @@
                     @helper.inputText(platformdataForm("websiteURL"), '_label -> "Website URL")
                     @helper.inputText(platformdataForm("usageRanking"), '_label -> "Usage Ranking")
                     @helper.textarea(platformdataForm("description"), '_label -> "Description")
-                    <input type="hidden" value="@platformdataForm("platformdataId").getValue().orElse("")"
-                    name="platformdataId"/>
                     <div class="form-buttons-container">
                         <input type="submit" class="custom-button" value="Save & Exit"/>
-                        <button class="custom-button custom-link-button">
-                            <a href="@routes.PlatformsController.platforms()">
-                                Cancel
-                            </a>
-                        </button>
+                        <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
+                            Cancel
+                        </a>
                     </div>
                 </fieldset>
-
             }
             </div>
         </div>
