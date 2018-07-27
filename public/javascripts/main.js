@@ -90,6 +90,21 @@ $('.search-box').on('blur', function (e) {
         searchContainer.style.transitionDuration = "unset";
     }
 });
+
+/* When the menu icon in mobile view is clicked, toogle visibility of top navigation and show the icon as clicked. */
+let visibilityFlag = false;
+function showMobileNavigation() {
+    if (!visibilityFlag) {
+        document.getElementById("navigation-items").style.display = "block";
+        document.getElementById("menu-icon").style.backgroundColor = "#444444";
+        visibilityFlag = true;
+    } else {
+        document.getElementById("navigation-items").style.display = "none";
+        document.getElementById("menu-icon").style.backgroundColor = "#555555";
+        visibilityFlag = false;
+    }
+}
+
 /*
 /* Grab the size of the content-container within the body and decide, where to place the footer.
  * If the content doesn't fill the screen it's fixed to the bottom, place after content otherwise. */

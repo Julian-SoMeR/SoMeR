@@ -124,6 +124,10 @@ a:hover {
     width: 100%;
 }
 
+.mobile-top-nav {
+    display: none;
+}
+
 .navigation-items {
     display: flex;
     list-style: none;
@@ -821,7 +825,7 @@ table + h3 {
     }
 
     .navigation-items {
-        display: block;
+        display: none;
     }
 
     .navigation-link.active,
@@ -839,7 +843,6 @@ table + h3 {
 
     .search-Container {
         border: 1px solid black;
-        border-radius: unset;
         padding: 3px;
     }
 
@@ -895,6 +898,45 @@ table + h3 {
         width: 350px;
     }
 
+    /* Mobile navigation menu */
+    .mobile-top-nav {
+        display: block;
+        color: white;
+        background-color: #555555;
+        width: 100%;
+        border: 1px solid black;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: end;
+        height: 42px;
+        padding-top: 2px;
+        padding-right: 10px;
+    }
+
+    /* Unset all link stylings */
+    .menu-icon-link,
+    .menu-icon-link:hover,
+    .menu-icon-link:active,
+    .menu-icon-link:link,
+    .menu-icon-link:visited {
+        text-decoration: none;
+        color: white;
+        font-size: 15px;
+    }
+
+    .menu-icon {
+        border: 1px solid #404040;
+        border-radius: 5px;
+        position: relative;
+        top: 5px;
+        right: 0px;
+    }
+
+    .search-container {
+        border-top-right-radius: unset;
+        border-top-left-radius: unset;
+        border: 1px solid black;
+    }
 }
 
 /* If something cuts the logo, reduce its size. */
@@ -908,5 +950,9 @@ table + h3 {
 
     .header-container .logo {
         height: 91px;
+    }
+
+    .search-box {
+        width: 150px;
     }
 }
