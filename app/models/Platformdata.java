@@ -106,7 +106,8 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
 
     private static List<Platformdata> platformdataList;
     public static List<Platformdata> findAllPlatforms() {
-        platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "%_%").orderBy("platformName asc").findList();
+        platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
+        //platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "%_%").orderBy("platformName asc").findList();
         System.out.println("Test: " + platformdataList);
         ArrayList <Platformdata> platformdataArrayList = new ArrayList<Platformdata>(platformdataList);
         return platformdataArrayList;

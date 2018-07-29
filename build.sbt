@@ -13,9 +13,18 @@ libraryDependencies += guice
 
 libraryDependencies ++= Seq( javaJdbc, ehcache , javaWs )
 
-libraryDependencies += "org.mariadb.jdbc" % "mariadb-java-client" % "1.1.7"
+libraryDependencies += "org.mariadb.jdbc" % "mariadb-java-client" % "2.2.6"
 
-//libraryDependencies += "io.ebean" % "ebean-elastic" % "11.18.1"
+libraryDependencies += "net.java.dev.jna" % "jna" % "4.2.1"
+
+libraryDependencies += "io.ebean" % "ebean" % "11.19.1"
+
+libraryDependencies += "io.ebean" % "ebean-elastic" % "11.18.1"
+
+libraryDependencies += "com.squareup.okhttp3" % "okhttp" % "3.11.0"
+
+libraryDependencies += "com.squareup.okio" % "okio" % "1.14.0"
+
 
 unmanagedResourceDirectories in Test +=  (baseDirectory ( _ /"target/web/public/test" )).value
 
