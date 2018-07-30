@@ -5,9 +5,11 @@ import java.util.List;
 import play.data.validation.Constraints;
 
 import io.ebean.*;
+import io.ebean.annotation.*;
 import javax.persistence.*;
+import play.mvc.*;
 
-
+@DocStore
 @Entity
 public class Valuedata extends Model {
     /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how

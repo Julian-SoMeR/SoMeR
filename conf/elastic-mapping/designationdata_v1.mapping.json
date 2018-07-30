@@ -1,0 +1,12 @@
+{
+  "mappings" : {
+    "designationdata" : {
+      "properties" : {
+        "designationName": { "type": "text" },
+        "designationCategory": { "type": "text" },
+        "designationSubcategory": { "type": "text" },
+        "designationDescription": { "type": "text" }
+      }
+    }
+  }
+}

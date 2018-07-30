@@ -1,0 +1,9 @@
+{
+  "mappings" : {
+    "valuedata" : {
+      "properties" : {
+        "valuedataContent": { "type": "text" }
+      }
+    }
+  }
+}

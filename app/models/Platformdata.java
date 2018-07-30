@@ -9,7 +9,7 @@ import io.ebean.annotation.*;
 import javax.persistence.*;
 import play.mvc.*;
 
-//@DocStore
+@DocStore
 @Entity
 public class Platformdata extends Model implements PathBindable<Platformdata> {
     /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how
@@ -106,7 +106,9 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
 
     private static List<Platformdata> platformdataList;
     public static List<Platformdata> findAllPlatforms() {
-        platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
+        //platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
+        //platformdataList = Ebean.find(Platformdata.class).text().match("platformOrServiceType", "Search").findPagedList();
+        platformdataList = Ebean.find(Platformdata.class).text().match("platformOrServiceType", "Search").findList();
         //platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "%_%").orderBy("platformName asc").findList();
         System.out.println("Test: " + platformdataList);
         ArrayList <Platformdata> platformdataArrayList = new ArrayList<Platformdata>(platformdataList);
