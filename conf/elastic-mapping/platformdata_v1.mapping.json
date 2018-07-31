@@ -2,8 +2,8 @@
   "mappings" : {
     "platformdata" : {
       "properties" : {
-        "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
-        "platformOrServiceType": { "type": "keyword" },
+        "platformName": { "type": "text" },
+        "platformOrServiceType": { "type": "text" },
         "targetGroup": { "type": "text" },
         "commercialOrNoncommercialService": { "type": "text" },
         "freeOrSubscriptionSource": { "type": "text" },

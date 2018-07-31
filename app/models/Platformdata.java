@@ -11,18 +11,17 @@ import play.mvc.*;
 
 @DocStore
 @Entity
+@Table(name = "platformdata")
 public class Platformdata extends Model implements PathBindable<Platformdata> {
     /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how
  to generate the tables, contents and relations of the database and provide evolutions. */
     @Id
     public Long platformdataId;
 
-    @DocSortable
     @Constraints.Required
     public String platformName;
 
     /* The odd names result from keeping the original column names in the database. They are auto-generated in the db.*/
-    @DocCode
     public String platformOrServiceType;
     public String targetGroup;
     public String commercialOrNoncommercialService;
@@ -108,7 +107,8 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
     public static List<Platformdata> findAllPlatforms() {
         //platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
         //platformdataList = Ebean.find(Platformdata.class).text().match("platformOrServiceType", "Search").findPagedList();
-        platformdataList = Ebean.find(Platformdata.class).text().match("platformOrServiceType", "Search").findList();
+        //platformdataList = Ebean.find(Platformdata.class).text().match("platformOrServiceType", "a").findList();
+        platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "a").setUseDocStore(true).findList();
         //platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "%_%").orderBy("platformName asc").findList();
         System.out.println("Test: " + platformdataList);
         ArrayList <Platformdata> platformdataArrayList = new ArrayList<Platformdata>(platformdataList);
