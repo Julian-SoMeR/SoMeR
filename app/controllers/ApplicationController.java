@@ -15,9 +15,6 @@ import models.Platformdata;
 public class ApplicationController extends Controller {
 
     public Result home() {
-        //EbeanServer server = Ebean.getDefaultServer();
-        //DocumentStore documentStore = server.docStore();
-        //documentStore.indexAll(Platformdata.class);
         return ok(home.render());
     }
 
