@@ -19,6 +19,7 @@ libraryDependencies += "net.java.dev.jna" % "jna" % "4.2.1"
 
 libraryDependencies += "io.ebean" % "ebean-elastic" % "11.18.1"
 
+libraryDependencies += "io.ebean" % "ebean-agent" % "11.11.1"
 
 unmanagedResourceDirectories in Test +=  (baseDirectory ( _ /"target/web/public/test" )).value
 

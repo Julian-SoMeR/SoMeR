@@ -8,3 +8,4 @@ addSbtPlugin("com.typesafe.play" % "sbt-plugin" % "2.6.16")
 //libraryDependencies += "ch.qos.logback" % "logback-classic" % "1.2.3"
 
 addSbtPlugin("com.typesafe.sbt" % "sbt-play-ebean" % "4.1.3")
+

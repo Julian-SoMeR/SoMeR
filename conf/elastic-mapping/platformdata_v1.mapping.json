@@ -2,7 +2,7 @@
   "mappings" : {
     "platformdata" : {
       "properties" : {
-        "platformName": { "type": "text" },
+        "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
         "platformOrServiceType": { "type": "text" },
         "targetGroup": { "type": "text" },
         "commercialOrNoncommercialService": { "type": "text" },
@@ -13,7 +13,20 @@
         "contentCoverage": { "type": "text" },
         "websiteURL": { "type": "text" },
         "usageRanking": { "type": "text" },
-        "description": { "type": "text" }
+        "description": { "type": "text" },
+        "valuedata" : {
+          "type" : "nested",
+          "properties" : {
+            "valuedataId": { "type": "long" },
+            "valuedataContent": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "creationDate": { "type": "date" },
+        "modificationDate": { "type": "date" },
+        "versionNumber": { "type": "long" }
       }
     }
   }

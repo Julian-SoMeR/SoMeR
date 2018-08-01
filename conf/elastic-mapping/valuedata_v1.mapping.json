@@ -2,7 +2,42 @@
   "mappings" : {
     "valuedata" : {
       "properties" : {
-        "valuedataContent": { "type": "text" }
+        "valuedataContent": { "type": "text" },
+        "designationdata" : {
+          "properties" : {
+            "designationdataId": { "type": "long" },
+            "designationName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+            "designationCategory": { "type": "text" },
+            "designationSubcategory": { "type": "text" },
+            "designationDescription": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "platformdata" : {
+          "properties" : {
+            "platformdataId": { "type": "long" },
+            "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+            "platformOrServiceType": { "type": "text" },
+            "targetGroup": { "type": "text" },
+            "commercialOrNoncommercialService": { "type": "text" },
+            "freeOrSubscriptionSource": { "type": "text" },
+            "primaryPurpose": { "type": "text" },
+            "geographicalReach": { "type": "text" },
+            "numberActiveOrRegisteredUsers": { "type": "text" },
+            "contentCoverage": { "type": "text" },
+            "websiteURL": { "type": "text" },
+            "usageRanking": { "type": "text" },
+            "description": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "creationDate": { "type": "date" },
+        "modificationDate": { "type": "date" },
+        "versionNumber": { "type": "long" }
       }
     }
   }

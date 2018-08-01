@@ -9,6 +9,9 @@ create table designationdata (
   designation_category          varchar(255),
   designation_subcategory       varchar(255),
   designation_description       TEXT,
+  creation_date                 datetime(6) not null,
+  modification_date             datetime(6) not null,
+  version_number                bigint not null,
   constraint pk_designationdata primary key (designationdata_id)
 );
 
@@ -26,6 +29,9 @@ create table platformdata (
   website_url                   varchar(255),
   usage_ranking                 TEXT,
   description                   TEXT,
+  creation_date                 datetime(6) not null,
+  modification_date             datetime(6) not null,
+  version_number                bigint not null,
   constraint pk_platformdata primary key (platformdata_id)
 );
 
@@ -34,6 +40,9 @@ create table valuedata (
   valuedata_content             TEXT,
   designationdata_designationdata_id bigint,
   platformdata_platformdata_id  bigint,
+  creation_date                 datetime(6) not null,
+  modification_date             datetime(6) not null,
+  version_number                bigint not null,
   constraint pk_valuedata primary key (valuedata_id)
 );
 

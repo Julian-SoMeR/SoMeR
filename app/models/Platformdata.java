@@ -6,19 +6,35 @@ import java.util.*;
 
 import io.ebean.*;
 import io.ebean.annotation.*;
+import io.ebean.Finder;
+import io.ebean.Query;
+import io.ebean.DocumentStore;
+import io.ebean.EbeanServer;
+import io.ebean.Ebean;
+
+
+
 import javax.persistence.*;
 import play.mvc.*;
 
+/**
+ *  This model contains all the platform data of the SoMeR.
+ *  The JPA/Ebean annotations are used to tell Play how
+ *  to generate the tables, contents and relations of the database and provide evolutions.
+ */
 @DocStore
 @Entity
 @Table(name = "platformdata")
-public class Platformdata extends Model implements PathBindable<Platformdata> {
+public class Platformdata extends BaseDomain implements PathBindable<Platformdata> {
+
     /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how
- to generate the tables, contents and relations of the database and provide evolutions. */
+        to generate the tables, contents and relations of the database and provide evolutions. The other annotations
+        used tell the html form helper what constraints should be there when a form is submitted. */
     @Id
     public Long platformdataId;
 
     @Constraints.Required
+    @DocSortable
     public String platformName;
 
     /* The odd names result from keeping the original column names in the database. They are auto-generated in the db.*/
@@ -41,12 +57,15 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
     @Column(columnDefinition = "TEXT")
     public String description;
 
+    @DocEmbedded
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "platformdata")
     public List<Valuedata> valuedata = new ArrayList<>();
 
+    // List to collect all platform objects in to render them on the platforms page.
+    private static List<Platformdata> platformdataList;
+
     /* ----- Constructors ----- */
-    public Platformdata() {
-    }
+    public Platformdata() {}
 
     public Platformdata(Long platformdataId, String platformName) {
         this.platformdataId = platformdataId;
@@ -72,12 +91,13 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
         this.description = description;
     }
 
+
     /* Methods necessary for the interface Pathbindable */
     @Override
     public Platformdata bind(String key, String id) {
         Platformdata platformdata = findByPlatformdataId(new Long(id));
         if (platformdata == null) {
-            throw new IllegalArgumentException("Platform with id " + id + " not found");
+            throw new IllegalArgumentException("Platform with platformdataId " + id + " not found");
         }
         return platformdata;
     }
@@ -93,27 +113,41 @@ public class Platformdata extends Model implements PathBindable<Platformdata> {
     }
 
 
+    /* ---- Methods ---- */
     //public static final Finder<Long, Platformdata> find = new Finder<>(Platformdata.class);
-    /* Some data manipulation methods */
+
+    /**
+     * Uses the platformdataId of the platform to look up data in the database.
+     * @param platformdataId Id of the corresponding platform.
+     * @return The platform object filled with the data found in the database.
+     */
     public static Platformdata findByPlatformdataId(Long platformdataId) {
         return Ebean.find(Platformdata.class, platformdataId);
     }
 
+    /**
+     * Uses the name of the platform to look up data in the database.
+     * @param platformName Name of the corresponding platform.
+     * @return The platform object filled with the data found in the database.
+     */
     public static Platformdata findByPlatformName(String platformName) {
         return Ebean.find(Platformdata.class).where().eq("platformName", platformName).findOne();
     }
 
-    private static List<Platformdata> platformdataList;
+    /**
+     * Looks up all platform data in the database, sorts this data and saves it in a list.
+     * @return List of all platform objects filled by the data from the database.
+     */
+    //public static List<Platformdata> findAllPlatforms() {
     public static List<Platformdata> findAllPlatforms() {
         //platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
-        //platformdataList = Ebean.find(Platformdata.class).text().match("platformOrServiceType", "Search").findPagedList();
-        //platformdataList = Ebean.find(Platformdata.class).text().match("platformOrServiceType", "a").findList();
-        platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "a").setUseDocStore(true).findList();
-        //platformdataList = Ebean.find(Platformdata.class).where().ilike("platformOrServiceType", "%_%").orderBy("platformName asc").findList();
+        //platformdataList = Ebean.find(Platformdata.class).text().match("platformName", "a").order().asc("platformName").findList();
+        platformdataList = Ebean.find(Platformdata.class).setUseDocStore(true).where().ilike("platformName", "%a%").order().asc("platformName").findList();
         System.out.println("Test: " + platformdataList);
         ArrayList <Platformdata> platformdataArrayList = new ArrayList<Platformdata>(platformdataList);
         return platformdataArrayList;
     }
+
 
     /* ---- Getters, Setters, ToString Method ---- */
     /* Apparently bind requests need getters and setters. So does Ebean if Play ByteCode Enhancer is not used. */
