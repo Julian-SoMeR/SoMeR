@@ -1,14 +1,16 @@
+@(searchObject: models.Search)
 @main("Search Page") {
-
     <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
     <div class="breadcrumbs">
-        <p class="breadcrumb-paragraph">You searched for: </p>
+        <p class="breadcrumb-paragraph">You are here: </p>
         <ul class="breadcrumb-list">
-            <li class="breadcrumb-firstItem">"Keyword"</li>
+            <li class="breadcrumb-firstItem">Search Results for "@searchObject.queryString"</li>
         </ul>
     </div>
     <div id="content-container" class="content-container">
-        Content
+        <div id="search-result-container" class="search-result-container">
+            Search
+        </div>
     </div>
 }

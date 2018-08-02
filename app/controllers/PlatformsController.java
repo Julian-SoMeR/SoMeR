@@ -4,9 +4,6 @@ import play.mvc.*;
 
 import play.*;
 import views.html.*;
-import views.html.platforms;
-import views.html.platformdetails;
-
 import models.*;
 
 import javax.inject.Inject;

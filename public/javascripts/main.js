@@ -93,6 +93,7 @@ $('.search-box').on('blur', function (e) {
 
 /* When the menu icon in mobile view is clicked, toogle visibility of top navigation and show the icon as clicked. */
 let visibilityFlag = false;
+
 function showMobileNavigation() {
     if (!visibilityFlag) {
         document.getElementById("navigation-items").style.display = "block";
@@ -105,6 +106,27 @@ function showMobileNavigation() {
     }
 }
 
+/* If the search page is loaded, highlight the searchb box for tab behaviour. */
+function highlightSearchbox() {
+    let searchContainer = document.getElementById("search-container");
+    if (window.location.pathname.includes("/search")) {
+        searchContainer.style.backgroundColor = "#F5F5F5";
+        searchContainer.style.border = "1px solid black";
+        searchContainer.style.borderBottom = "1.25px solid #F5F5F5";
+        searchContainer.style.transitionDuration = "unset";
+    }
+}
+
+/*let searchContainer = document.getElementById("search-container");
+searchContainer.addEventListener("load",highlightSearchbox);
+function highlightSearchbox() {
+
+    searchContainer.style.backgroundColor = "#F5F5F5";
+    searchContainer.style.border = "1px solid black";
+    searchContainer.style.borderBottom = "1.25px solid #F5F5F5";
+    searchContainer.style.transitionDuration = "0s";
+}
+*/
 /*
 /* Grab the size of the content-container within the body and decide, where to place the footer.
  * If the content doesn't fill the screen it's fixed to the bottom, place after content otherwise. */

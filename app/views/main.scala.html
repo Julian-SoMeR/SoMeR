@@ -1,221 +1,254 @@
 @(title: String)(content: Html)
-<!-- Show flash messages on all pages. Still need to think about where to place them. -->
-@if(flash.containsKey("success")) {
-    <div class="alert alert-success">
-    @flash().get("success")
-    </div>
-}
+<!--(searchForm: Form[Search])
 
-@if(flash.containsKey("error")) {
-    <div class="alert alert-error">
-    @flash().get("error")
-    </div>
-}
+    <!-- Form of the search input -->
+
+    <!-- Show flash messages on all pages. Still need to think about where to place them. -->
+    @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+        @flash().get("success")
+        </div>
+    }
+
+    @if(flash.containsKey("error")) {
+        <div class="alert alert-error">
+        @flash().get("error")
+        </div>
+    }
 
 
-    <!--
+
+        <!--
     Method to set current pages top navigation item.
     If the current pages path matches the item,
     set it to "active"
 -->
-    @setTopLinkActive(pathName: String) = @{
-        if(request.path.equals(pathName)) "active"
-    }
+        @setTopLinkActive(pathName: String) = @{
+            if(request.path.contains(pathName)) "active"
+        }
 
-    <!--
+        <!--
+    Method to set searchbar active.
+    If the first 7 characters of the current pages path matches the "/search",
+    set it to "active"
+-->
+        @setSearchbarActive(searchPath: String) = @{
+            if(request.path.subSequence(0, 5).equals(searchPath)) "active"
+        }
+
+        <!--
     Method to set current pages footer navigation item.
     If the current pages path matches the item,
     set it to "footer-active"
 -->
-    @setFooterLinkActive(pathName: String) = @{
-        if(request.path.equals(pathName)) "footer-active"
-    }
+        @setFooterLinkActive(pathName: String) = @{
+            if(request.path.equals(pathName)) "footer-active"
+        }
 
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <title>@title</title>
-        <meta charset="UTF-8"/>
-        <meta name="viewport" content="width=device-width, initial-scale=1"/>
-        <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
-        <link rel="icon" href="@routes.Assets.at("images/logo_metrics.svg")"/>
-        <script src="@routes.Assets.at("javascripts/jquery-3.3.1.min.js")"></script>
+    <!DOCTYPE html>
+    <html lang="en">
+        <head>
+            <title>@title</title>
+            <meta charset="UTF-8"/>
+            <meta name="viewport" content="width=device-width, initial-scale=1"/>
+            <link rel="stylesheet" media="screen" href="@routes.Assets.at("stylesheets/main.css")"/>
+            <link rel="icon" href="@routes.Assets.at("images/logo_metrics.svg")"/>
+            <script src="@routes.Assets.at("javascripts/jquery-3.3.1.min.js")"></script>
 
 
-            <!-- Google Material Icons -> View "Apache-License-2_0.md" in "/public/" folder. -->
-        <link rel="stylesheet" href="@routes.Assets.at("material-design-icons-3.0.1")"/>
-        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
-    </head>
-    <body>
-            <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
-        <header>
-            <p id="js-message" class="js-message">This website uses JavaScript.
-                Please enable it for the best experience!</p>
-            <div id="header-container" class="header-container">
-                <div class="logo">
-                    <a href="@routes.ApplicationController.home()">
-                        <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
-                    </a>
-                </div>
-                <nav class="top-navigation">
-                    <div class="mobile-top-nav">
-                        Menu
-                        <a href="javascript:void(0);" class="menu-icon-link" onclick="showMobileNavigation()">
-                            <i class="material-icons menu-icon" id="menu-icon">menu</i>
+                <!-- Google Material Icons -> View "Apache-License-2_0.md" in "/public/" folder. -->
+            <link rel="stylesheet" href="@routes.Assets.at("material-design-icons-3.0.1")"/>
+            <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
+        </head>
+        <body>
+                <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
+            <header>
+                <p id="js-message" class="js-message">This website uses JavaScript.
+                    Please enable it for the best experience!</p>
+                <div id="header-container" class="header-container">
+                    <div class="logo">
+                        <a href="@routes.ApplicationController.home()">
+                            <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
                         </a>
                     </div>
-                        <!-- Global navigation elements -->
-                    <div id="navigation-items" class="navigation-items">
-                        <a class="@setTopLinkActive("/home") navigation-link"
-                        href="@routes.ApplicationController.home()">
+                    <nav class="top-navigation">
+                        <div class="mobile-top-nav">
+                        Menu
+                            <a href="javascript:void(0);" class="menu-icon-link" onclick="showMobileNavigation()">
+                                <i class="material-icons menu-icon" id="menu-icon">menu</i>
+                            </a>
+                        </div>
+                            <!-- Global navigation elements -->
+                        <div id="navigation-items" class="navigation-items">
+                            <a class="@setTopLinkActive("/home") navigation-link"
+                            href="@routes.ApplicationController.home()">
                             Home</a>
-                        <a class="@setTopLinkActive("/platforms") navigation-link"
-                        href="@routes.PlatformsController.platforms()">
+                            <a class="@setTopLinkActive("/platforms") navigation-link"
+                            href="@routes.PlatformsController.platforms()">
                             Platforms</a>
-                        <a class="@setTopLinkActive("/aggregators") navigation-link"
-                        href="@routes.ApplicationController.aggregators()">
+                            <a class="@setTopLinkActive("/aggregators") navigation-link"
+                            href="@routes.ApplicationController.aggregators()">
                             Aggregators</a>
-                        <a class="@setTopLinkActive("/howtoparticipate") navigation-link"
-                        href="@routes.ApplicationController.howTo()">
+                            <a class="@setTopLinkActive("/howtoparticipate") navigation-link"
+                            href="@routes.ApplicationController.howTo()">
                             How To Participate</a>
-                        <a class="@setTopLinkActive("/about") navigation-link"
-                        href="@routes.ApplicationController.about()">
+                            <a class="@setTopLinkActive("/about") navigation-link"
+                            href="@routes.ApplicationController.about()">
                             About</a>
-                        <a class="@setTopLinkActive("/management") navigation-link"
-                        href="@routes.ApplicationController.management()">
+                            <a class="@setTopLinkActive("/management") navigation-link"
+                            href="@routes.ApplicationController.management()">
                             Management</a>
-                    </div>
-
-                    <div class="inbetween-bottom-border"></div>
-                    <div class="right-header-container">
-                        <div class="login-container">
-                            <input class="custom-button" type="button" onclick="registerVisible()" value="Register"/>
-                            <hr class="login-separator"/>
-                            <input class="custom-button" type="button" onclick="loginVisible()" value="Login"/>
                         </div>
 
-                        <form id="search-container" class="@setTopLinkActive("/search") search-container">
-                            <input id="search-box" name="search-box" class="search-box" type="search"
-                            placeholder="Search.."/>
-
-                            <a href="@routes.ApplicationController.search()">
-                                <button class="search-button" type="button" onclick="submitSearch()">
-                                    <i class="material-icons search-icon">
-                                        search
-                                    </i>
-                                </button>
-                            </a>
-                        </form>
-                    </div>
-
-                    <div id="register-overlay" class="register-overlay">
-                        <form class="register-overlay-container">
-                            <h1 class="overlay-h1">Register</h1>
-
-                            <div class="register-overlay-username">
-                                <label for="register-username" ><b>Username:</b></label>
-                                <input id="register-username" name="register-username" class="input-box"
-                                type="text" placeholder="Enter Username.."/>
+                        <div class="inbetween-bottom-border"></div>
+                        <div class="right-header-container">
+                            <div class="login-container">
+                                <input class="custom-button" type="button" onclick="registerVisible()" value="Register"/>
+                                <hr class="login-separator"/>
+                                <input class="custom-button" type="button" onclick="loginVisible()" value="Login"/>
                             </div>
 
-                            <div class="register-overlay-email">
-                                <label for="register-email" ><b>E-Mail:</b></label>
-                                <input id="register-email" name="register-email" class="input-box" type="email"
-                                placeholder="Enter E-Mail.."/>
-                                <input id="register-email-repeat" name="register-email-repeat" class="input-box"
-                                type="email" placeholder="Repeat E-Mail.."/>
-                            </div>
+                                <!--
+                            helper.form(action = routes.SearchController.search(searchForm("searchQuery")
+                                    .getValue().orElse("")
+                                ), 'class -> "setTopLinkActive(" / search") search-container"
+                                ,
+                                'id -> "search-container"
+                                )
+                                {
 
-                            <div class="register-overlay-password">
-                                <label for="register-password" ><b>Password:</b></label>
-                                <input id="register-password" name="register-password" class="input-box"
-                                type="password" placeholder="Enter Password.."/>
-                                <input id="register-password-repeat" name="register-password-repeat"
-                                class="input-box" type="password" placeholder="Repeat Password.."/>
-                            </div>
+                            helper.inputText(searchForm("searchQuery"), 'id -> "search-box", 'class -> "search-box",
+                                'placeholder -> "Search..")
+                            <button class="search-button" type="submit">
+                                <i class="material-icons search-icon">
+                                                search
+                                </i>
+                            </button>
+                            }
+                            -->
 
-                            <div class="register-overlay-button-container">
-                                <input class="custom-button" type="submit" name="register-button" value="Register"/>
-                                <input class="custom-button" type="button" onclick="registerInvisible()"
-                                name="register-cancel-button" value="Cancel"/>
-                            </div>
-                        </form>
-                    </div>
+                            <form id="search-container" class="search-container"
+                                    action="/search">
+                                <input id="search-input" name="query" class="search-box" type="search"
+                                placeholder="Search.."/>
+                                    <button class="search-button" type="submit">
+                                        <i class="material-icons search-icon">
+                                                search
+                                        </i>
+                                    </button>
 
-                    <div id="login-overlay" class="login-overlay">
-                        <form class="login-overlay-container">
-                            <h1 class="overlay-h1">Login</h1>
+                            </form>
 
-                            <div class="login-overlay-username">
-                                <label for="login-username"><b>Username:</b></label>
-                                <input id="login-username" name="login-username" class="input-box" type="text"
-                                placeholder="Enter Username.."/>
-                            </div>
+                        </div>
 
-                            <div class="login-overlay-password">
-                                <label for="login-password"><b>Password:</b></label>
-                                <input id="login-password" name="login-password" class="input-box" type="password"
-                                placeholder="Enter Password.."/>
-                                <a href="#None">Forgot password?</a>
-                            </div>
+                        <div id="register-overlay" class="register-overlay">
+                            <form class="register-overlay-container">
+                                <h1 class="overlay-h1">Register</h1>
 
-                            <div class="login-overlay-button-container">
-                                <input class="custom-button" type="submit" name="login-button" value="Login"/>
-                                <input class="custom-button" type="button" onclick="loginInvisible()"
-                                name="login-cancel-button" value="Cancel"/>
-                            </div>
-                        </form>
-                    </div>
-                </nav>
+                                <div class="register-overlay-username">
+                                    <label for="register-username" ><b>Username:</b></label>
+                                    <input id="register-username" name="register-username" class="input-box"
+                                    type="text" placeholder="Enter Username.."/>
+                                </div>
+
+                                <div class="register-overlay-email">
+                                    <label for="register-email" ><b>E-Mail:</b></label>
+                                    <input id="register-email" name="register-email" class="input-box" type="email"
+                                    placeholder="Enter E-Mail.."/>
+                                    <input id="register-email-repeat" name="register-email-repeat" class="input-box"
+                                    type="email" placeholder="Repeat E-Mail.."/>
+                                </div>
+
+                                <div class="register-overlay-password">
+                                    <label for="register-password" ><b>Password:</b></label>
+                                    <input id="register-password" name="register-password" class="input-box"
+                                    type="password" placeholder="Enter Password.."/>
+                                    <input id="register-password-repeat" name="register-password-repeat"
+                                    class="input-box" type="password" placeholder="Repeat Password.."/>
+                                </div>
+
+                                <div class="register-overlay-button-container">
+                                    <input class="custom-button" type="submit" name="register-button" value="Register"/>
+                                    <input class="custom-button" type="button" onclick="registerInvisible()"
+                                    name="register-cancel-button" value="Cancel"/>
+                                </div>
+                            </form>
+                        </div>
+
+                        <div id="login-overlay" class="login-overlay">
+                            <form class="login-overlay-container">
+                                <h1 class="overlay-h1">Login</h1>
+
+                                <div class="login-overlay-username">
+                                    <label for="login-username"><b>Username:</b></label>
+                                    <input id="login-username" name="login-username" class="input-box" type="text"
+                                    placeholder="Enter Username.."/>
+                                </div>
+
+                                <div class="login-overlay-password">
+                                    <label for="login-password"><b>Password:</b></label>
+                                    <input id="login-password" name="login-password" class="input-box" type="password"
+                                    placeholder="Enter Password.."/>
+                                    <a href="#None">Forgot password?</a>
+                                </div>
+
+                                <div class="login-overlay-button-container">
+                                    <input class="custom-button" type="submit" name="login-button" value="Login"/>
+                                    <input class="custom-button" type="button" onclick="loginInvisible()"
+                                    name="login-cancel-button" value="Cancel"/>
+                                </div>
+                            </form>
+                        </div>
+                    </nav>
+                </div>
+            </header>
+
+            <div class="content-margin">
+            @content
             </div>
-        </header>
+                <!-- Footer after each pages content! -->
+            <footer class="footer-container">
 
-        <div class="content-margin">
-        @content
-        </div>
-            <!-- Footer after each pages content! -->
-        <footer class="footer-container">
-
-                <!-- Back to top button!! -->
-            <button class="back-to-top-button" id="back-to-top-button" onclick="backToTop()">
+                    <!-- Back to top button!! -->
+                <button class="back-to-top-button" id="back-to-top-button" onclick="backToTop()">
                 Back to top
-                <i class="material-icons arrow-up">keyboard_arrow_up</i>
-            </button>
-            <ul class="footer-link-list">
-                <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
+                    <i class="material-icons arrow-up">keyboard_arrow_up</i>
+                </button>
+                <ul class="footer-link-list">
+                    <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
 
-                <li><a class="@setFooterLinkActive("/about")" href="@routes.ApplicationController.about()">About</a>
-                </li>
-                <li><a class="@setFooterLinkActive("/cookiepolicy")" href="@routes.ApplicationController.cookies()">
+                    <li><a class="@setFooterLinkActive("/about")" href="@routes.ApplicationController.about()">About</a>
+                    </li>
+                    <li><a class="@setFooterLinkActive("/cookiepolicy")" href="@routes.ApplicationController.cookies()">
                     Cookie Policy</a>
-                </li>
-                <li><a class="@setFooterLinkActive("/imprint")" href="@routes.ApplicationController.imprint()">
+                    </li>
+                    <li><a class="@setFooterLinkActive("/imprint")" href="@routes.ApplicationController.imprint()">
                     Imprint</a>
-                </li>
-            </ul>
+                    </li>
+                </ul>
 
-                <!-- Cookie message for EU Cookie Law. Derived from "https://github.com/studio24/cookie-message".
+                    <!-- Cookie message for EU Cookie Law. Derived from "https://github.com/studio24/cookie-message".
                 View "MIT License.md" in "/public/" folder. -->
-            <div class="cookie-message" id="cookie-message" data-cookie-expiry="60">
+                <div class="cookie-message" id="cookie-message" data-cookie-expiry="60">
 
-                <div class="cookie-message-text-container">
-                    <p>
+                    <div class="cookie-message-text-container">
+                        <p>
                         The *metrics SoMeR uses cookies to ensure we give you the best experience on our website.
-                        By using our site, you acknowledge that you have read and understand our
-                        <a href="@routes.ApplicationController.cookies()">Cookie Policy</a>.
-                        Your use of *metrics SoMeR services is subject to these policies. </p>
-                </div>
-                <div class="cookie-message-button-container">
-                    <button class="custom-button close-cookie-message-button" onclick="hideCookieMessage()">
+                            By using our site, you acknowledge that you have read and understand our
+                            <a href="@routes.ApplicationController.cookies()">Cookie Policy</a>.
+                            Your use of *metrics SoMeR services is subject to these policies. </p>
+                    </div>
+                    <div class="cookie-message-button-container">
+                        <button class="custom-button close-cookie-message-button" onclick="hideCookieMessage()">
                         Close
-                    </button>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </footer>
-            <!-- JavaScript for most functionality on the site. -->
-        <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
-            <!-- Handle the display of cookie message -->
-        <script src="@routes.Assets.at("javascripts/cookie-message.js")" type="text/javascript"></script>
-    </body>
+            </footer>
+                <!-- JavaScript for most functionality on the site. -->
+            <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
+                <!-- Handle the display of cookie message -->
+            <script src="@routes.Assets.at("javascripts/cookie-message.js")" type="text/javascript"></script>
+        </body>
 
-</html>
+    </html>

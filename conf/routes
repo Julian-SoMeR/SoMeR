@@ -26,7 +26,7 @@ GET     /about                      controllers.ApplicationController.about()
 GET     /management                 controllers.ApplicationController.management()
 
 #Search page
-GET     /search                     controllers.ApplicationController.search()
+GET     /search                     controllers.SearchController.search(searchQuery: models.Search)
 
 #Imprint page
 GET     /imprint                    controllers.ApplicationController.imprint()

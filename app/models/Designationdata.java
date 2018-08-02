@@ -7,7 +7,6 @@ import io.ebean.*;
 import io.ebean.annotation.*;
 import javax.persistence.*;
 import play.mvc.*;
-//import models.finder.DesignationdataFinder;
 
 /**
  *  This model contains all the designation data for the functions/services data of the SoMeR.

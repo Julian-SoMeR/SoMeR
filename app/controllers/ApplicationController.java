@@ -1,16 +1,12 @@
 package controllers;
+
 import play.*;
 import play.mvc.*;
 import views.html.*;
 import models.*;
 import javax.inject.*;
-
-
-import io.ebean.DocumentStore;
-import io.ebean.EbeanServer;
-import io.ebean.Ebean;
-import models.Platformdata;
-
+import play.data.Form;
+import play.data.FormFactory;
 
 public class ApplicationController extends Controller {
 
@@ -32,10 +28,6 @@ public class ApplicationController extends Controller {
 
     public Result management() {
         return ok(management.render());
-    }
-
-    public Result search() {
-        return ok(search.render());
     }
 
     public Result imprint() {
