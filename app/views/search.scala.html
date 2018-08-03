@@ -15,18 +15,18 @@
 
                     <tbody>
 
-                    @for(platformResult <- platformdataResultList) {
-                        <tr id="platform-table-row" class="platform-table-row">
-                            <td id="platform-table-column" class="platform-table-column">
-                                <p>Result found in platforms:</p>
-                                <h3>
-                                    <a href="@routes.PlatformsController.showSelectedPlatform(platformResult.platformdataId)">
-                                    @platformResult.platformName</a>
-                                </h3>
+                        @for(platformResult <- platformdataResultList) {
+                            <tr id="platform-table-row" class="platform-table-row">
+                                <td id="platform-table-column" class="platform-table-column">
+                                    <p>Result found in platforms:</p>
+                                    <h3>
+                                        <a href="@routes.PlatformsController.showSelectedPlatform(platformResult.platformdataId)">
+                                            <div class="query-result">@platformResult.platformName</div></a>
+                                    </h3>
 
-                            </td>
-                        </tr>
-                    }
+                                </td>
+                            </tr>
+                        }
                         @for(valuedataResult <- valuedataResultList) {
                             <tr id="platform-table-row" class="platform-table-row">
                                 <td id="platform-table-column" class="platform-table-column">
@@ -35,7 +35,7 @@
                                     <h5>
                                         <a href="@routes.PlatformsController
                                         .showSelectedPlatform(platformResult.platformdataId)">
-                                        @valuedataResult.valuedataContent</a>
+                                            <div class="query-result">@valuedataResult.valuedataContent</div></a>
                                     </h5>
                                 </td>
                             </tr>
@@ -44,4 +44,21 @@
                 </table>
             </div>
         </div>
+
+            <!-- jquery.highlight.js highlighter to mark query string in search results.
+             See "https://raw.githubusercontent.com/bartaz/sandbox.js/master/jquery.highlight.js".
+             View "MIT License.md" in "/public/" folder. -->
+        <script src="@routes.Assets.at("javascripts/jquery.highlight.js")"></script>
+        <script type="text/javascript">
+                /* This marks every the query string in the search results. */
+                        $(".query-result").highlight("@searchObject.queryString");
+
+                /* This is here for convenience since we can easily pass over the query string to JS.
+                 * It inserts the query string into the search field after loading the search results. */
+                $(document).ready(function () {
+                    let searchInput = document.getElementById("search-input");
+                    searchInput.value = "@searchObject.queryString";
+                });
+        </script>
+        <script src="@routes.Assets.at("javascripts/search.js")" type="text/javascript"></script>
     }

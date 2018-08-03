@@ -208,6 +208,12 @@ a:hover {
     flex-direction: column;
 }
 
+/* This is necessary to highlight search results. */
+.highlight {
+    background-color: lightblue;
+    /*#e2e2e2*/
+}
+
 /* ---- Login & Register button + overlay styles ---- */
 .login-container {
     display: flex;
@@ -508,8 +514,6 @@ a:hover {
     padding: 0 10px 10px 2px;
     font-size: 14px;
 }
-
-
 
 .form-container {
     padding-top: 5px;
