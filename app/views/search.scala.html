@@ -1,16 +1,47 @@
-@(searchObject: models.Search)
-@main("Search Page") {
-    <!-- Breadcrumbs that get displayed before the content!
+@(searchObject: models.Search, platformdataResultList: List[Platformdata], valuedataResultList: List[Valuedata])
+    @main("Search Page") {
+        <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
-    <div class="breadcrumbs">
-        <p class="breadcrumb-paragraph">You are here: </p>
-        <ul class="breadcrumb-list">
-            <li class="breadcrumb-firstItem">Search Results for "@searchObject.queryString"</li>
-        </ul>
-    </div>
-    <div id="content-container" class="content-container">
-        <div id="search-result-container" class="search-result-container">
-            Search
+        <div class="breadcrumbs">
+            <p class="breadcrumb-paragraph">You are here: </p>
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-firstItem">Search Results for "@searchObject.queryString"</li>
+            </ul>
         </div>
-    </div>
-}
+        <div id="content-container" class="content-container">
+            <h2>Search Results for "@searchObject.queryString"</h2>
+            <div id="search-result-container" class="search-result-container">
+                <table id="search-result-table" class="platform-table">
+
+                    <tbody>
+
+                    @for(platformResult <- platformdataResultList) {
+                        <tr id="platform-table-row" class="platform-table-row">
+                            <td id="platform-table-column" class="platform-table-column">
+                                <p>Result found in platforms:</p>
+                                <h3>
+                                    <a href="@routes.PlatformsController.showSelectedPlatform(platformResult.platformdataId)">
+                                    @platformResult.platformName</a>
+                                </h3>
+
+                            </td>
+                        </tr>
+                    }
+                        @for(valuedataResult <- valuedataResultList) {
+                            <tr id="platform-table-row" class="platform-table-row">
+                                <td id="platform-table-column" class="platform-table-column">
+                                    <p>Result found in functions of platform "@valuedataResult.platformdata.platformName":</p>
+                                    <h4>@valuedataResult.designationdata.designationName :</h4>
+                                    <h5>
+                                        <a href="@routes.PlatformsController
+                                        .showSelectedPlatform(platformResult.platformdataId)">
+                                        @valuedataResult.valuedataContent</a>
+                                    </h5>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    }

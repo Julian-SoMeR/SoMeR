@@ -114,8 +114,6 @@ public class Platformdata extends BaseDomain implements PathBindable<Platformdat
 
 
     /* ---- Methods ---- */
-    //public static final Finder<Long, Platformdata> find = new Finder<>(Platformdata.class);
-
     /**
      * Uses the platformdataId of the platform to look up data in the database.
      * @param platformdataId Id of the corresponding platform.
@@ -140,11 +138,12 @@ public class Platformdata extends BaseDomain implements PathBindable<Platformdat
      */
     //public static List<Platformdata> findAllPlatforms() {
     public static List<Platformdata> findAllPlatforms() {
-        //platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
+        platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
         //platformdataList = Ebean.find(Platformdata.class).text().match("platformName", "a").order().asc("platformName").findList();
-        platformdataList = Ebean.find(Platformdata.class).setUseDocStore(true).where().ilike("platformName", "%a%").order().asc("platformName").findList();
-        System.out.println("Test: " + platformdataList);
+        //platformdataList = Ebean.find(Platformdata.class).setUseDocStore(true).where().ilike("platformName", "%a%").order().asc("platformName").findList();
+        System.out.println("List: " + platformdataList);
         ArrayList <Platformdata> platformdataArrayList = new ArrayList<Platformdata>(platformdataList);
+        System.out.println("ArrayList: " + platformdataArrayList);
         return platformdataArrayList;
     }
 
