@@ -26,7 +26,6 @@ import play.mvc.*;
 @Entity
 @Table(name = "platformdata")
 public class Platformdata extends BaseDomain implements PathBindable<Platformdata> {
-
     /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how
         to generate the tables, contents and relations of the database and provide evolutions. The other annotations
         used tell the html form helper what constraints should be there when a form is submitted. */
@@ -57,11 +56,19 @@ public class Platformdata extends BaseDomain implements PathBindable<Platformdat
     @Column(columnDefinition = "TEXT")
     public String description;
 
-    @DocEmbedded
+    //@DocEmbedded
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "platformdata")
-    public List<Valuedata> valuedata = new ArrayList<>();
+    public List<FunctionContent> functionContents = new ArrayList<>();
 
-    // List to collect all platform objects in to render them on the platforms page.
+    //@DocEmbedded
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "platformdata")
+    public List<ImpactContent> impactContents = new ArrayList<>();
+
+    //@DocEmbedded
+    @OneToMany(cascade=CascadeType.ALL, mappedBy = "platformdata")
+    public List<InformationContent> informationContents = new ArrayList<>();
+
+    // List to collect all platform objects to render them on the platforms page.
     private static List<Platformdata> platformdataList;
 
     /* ----- Constructors ----- */
@@ -136,7 +143,6 @@ public class Platformdata extends BaseDomain implements PathBindable<Platformdat
      * Looks up all platform data in the database, sorts this data and saves it in a list.
      * @return List of all platform objects filled by the data from the database.
      */
-    //public static List<Platformdata> findAllPlatforms() {
     public static List<Platformdata> findAllPlatforms() {
         platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
         //platformdataList = Ebean.find(Platformdata.class).text().match("platformName", "a").order().asc("platformName").findList();

@@ -7,7 +7,7 @@ import javax.persistence.*;
 import play.mvc.*;
 
 /**
- *  This model contains all the functions/services data values of the SoMeR. It can only be obtained via
+ *  This model contains all the functions/services data contents of the SoMeR. It can only be obtained via
  *  a cross reference between its designating data and a platform.
  *  The JPA/Ebean annotations are used to tell Play how
  *  to generate the tables, contents and relations of the database and provide evolutions.
@@ -16,9 +16,6 @@ import play.mvc.*;
 @Entity
 @Table(name = "valuedata")
 public class Valuedata extends BaseDomain implements PathBindable<Valuedata> {
-
-    //EbeanServer server = Ebean.getDefaultServer();
-    //public static ValuedataFinder find = new ValuedataFinder();
 
     /* These are all attributes that are mapped for the database. The JPA/Ebean annotations are used to tell Play how
      to generate the tables, contents and relations of the database and provide evolutions. */
@@ -68,7 +65,7 @@ public class Valuedata extends BaseDomain implements PathBindable<Valuedata> {
     /* ---- Methods ---- */
 
     /**
-     * This method uses the platformdataId of the valuedata entity to find data in the database and bind in to the
+     * This method uses the platformdataId of the valuedata entity to find data in the database and bind it to the
      * corresponding model object.
      * @param valuedataId Unique identifier of valuedata.
      * @return Model object filled with data from the valuedata table.

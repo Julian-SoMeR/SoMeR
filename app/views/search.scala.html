@@ -1,4 +1,5 @@
-@(searchObject: models.Search, platformdataResultList: List[Platformdata], valuedataResultList: List[Valuedata])
+@(searchObject: models.Search, platformdataResultList: List[Platformdata],
+        functionContentResultList: List[FunctionContent])
     @main("Search Page") {
         <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
@@ -27,15 +28,15 @@
                                 </td>
                             </tr>
                         }
-                        @for(valuedataResult <- valuedataResultList) {
+                        @for(functionContentResult <- functionContentResultList) {
                             <tr id="platform-table-row" class="platform-table-row">
                                 <td id="platform-table-column" class="platform-table-column">
-                                    <p>Result found in functions of platform "@valuedataResult.platformdata.platformName":</p>
-                                    <h4>@valuedataResult.designationdata.designationName :</h4>
+                                    <p>Result found in functions of platform "@functionContentResult.platformdata.platformName":</p>
+                                    <h4>@functionContentResult.designationdata.designationName :</h4>
                                     <h5>
                                         <a href="@routes.PlatformsController
                                         .showSelectedPlatform(platformResult.platformdataId)">
-                                            <div class="query-result">@valuedataResult.valuedataContent</div></a>
+                                            <div class="query-result">@functionContentResult.functionContent</div></a>
                                     </h5>
                                 </td>
                             </tr>

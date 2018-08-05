@@ -22,8 +22,8 @@ public class Search implements QueryStringBindable<Search> {
 
     /* Result lists for each type of data. */
     private static List<Platformdata> platformdataList;
-    private static List<Valuedata> valuedataList;
-    private static List<Designationdata> designationdataList;
+    private static List<FunctionContent> functionContents;
+    private static List<ImpactContent> impactContents;
 
     /* Methods necessary for the interface QueryStringBindable. */
     @Override
@@ -66,13 +66,20 @@ public class Search implements QueryStringBindable<Search> {
         return platformdataArrayList;
     }
 
-    public static List<Valuedata> queryAllValues(String queryString) {
-        valuedataList = Ebean.find(Valuedata.class).setUseDocStore(true).where()
-                .ilike("valuedataContent" ,"%" + queryString + "%").findList();
-        System.out.println("Value Query List: " + valuedataList);
-        ArrayList<Valuedata> valuedataArrayList = new ArrayList<Valuedata>(valuedataList);
-        System.out.println("Value Query ArrayList: " + valuedataArrayList);
-        return valuedataArrayList;
+    public static List<FunctionContent> queryAllFunctionContents(String queryString) {
+        functionContents = Ebean.find(FunctionContent.class).setUseDocStore(true).where()
+                .ilike("functionContent" ,"%" + queryString + "%").findList();
+        ArrayList<FunctionContent> functionContentArrayList = new ArrayList<FunctionContent>(functionContents);
+        System.out.println("Value Query ArrayList: " + functionContentArrayList);
+        return functionContentArrayList;
+    }
+
+    public static List<ImpactContent> queryAllImpactContents(String queryString) {
+        impactContents = Ebean.find(ImpactContent.class).setUseDocStore(true).where()
+                .ilike("impactContent" ,"%" + queryString + "%").findList();
+        ArrayList<ImpactContent> impactContentArrayList = new ArrayList<ImpactContent>(impactContents);
+        System.out.println("Impact Query ArrayList: " + impactContentArrayList);
+        return impactContentArrayList;
     }
 
 
