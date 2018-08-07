@@ -13,16 +13,16 @@ import play.mvc.*;
  * The JPA/Ebean annotations are used to tell Play how
  * to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "information")
 public class Information extends BaseDomain implements PathBindable<Information> {
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long informationId;
-    //@DocSortable
+    @DocSortable
     public String informationName;
-    //@DocEmbedded
+    @DocEmbedded
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "information")
     public List<InformationContent> informationContents = new ArrayList<>();
 

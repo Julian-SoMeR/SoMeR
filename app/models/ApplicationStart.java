@@ -30,10 +30,15 @@ public class ApplicationStart {
 
     public static void elasticIndexAll() {
         DocumentStore documentStore = Ebean.getDefaultServer().docStore();
-        documentStore.indexAll(Platformdata.class);
-        documentStore.indexAll(Designationdata.class);
-        documentStore.indexAll(Valuedata.class);
-
+        documentStore.indexAll(Platform.class);
+        documentStore.indexAll(Information.class);
+        documentStore.indexAll(Function.class);
+        documentStore.indexAll(Impact.class);
+        documentStore.indexAll(Aggregator.class);
+        documentStore.indexAll(InformationContent.class);
+        documentStore.indexAll(FunctionContent.class);
+        documentStore.indexAll(ImpactContent.class);
+        documentStore.indexAll(AggregatorContent.class);
         System.out.println("IT WORKED");
     }
 

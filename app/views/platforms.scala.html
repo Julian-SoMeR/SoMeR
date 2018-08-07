@@ -1,4 +1,4 @@
-@(platforms: List[Platformdata])
+@(platforms: List[Platform])
     @main("Platforms Page") {
         <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
             <!-- Breadcrumbs that get displayed before the content!
@@ -18,7 +18,8 @@
                         <tr>
                             <th class="platform-table-header"><div class="platform-table-header-name">Platform Name</div>
                                 <div class="platforms-header-container">
-                                    <input type="text" id="platform-filter" class="platform-filter" onkeyup="filterPlatforms()" placeholder="Filter platforms..">
+                                    <input type="text" id="platform-filter" class="platform-filter"
+                                    onkeyup="filterPlatforms()" placeholder="Filter platforms..">
                                     <a href="@routes.PlatformsController.createNewPlatform()">
                                         <button class="custom-button add-platform-button">
                                             <i class="material-icons add">add</i> Create new Platform</button>
@@ -33,14 +34,14 @@
                     @for(platform <- platforms) {
                         <tr id="platform-table-row" class="platform-table-row">
                             <td id="platform-table-column" class="platform-table-column">
-                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
+                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
                                 @platform.platformName</a>
                             </td>
                             <td class="platform-table-column platform-icon-container">
-                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformdataId)">
+                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
                                     <i class="material-icons edit">edit</i></a>
                                 <a onclick=
-                                "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformdataId)')">
+                                "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformId)')">
                                     <i class="material-icons delete">delete</i></a>
                             </td>
                         </tr>

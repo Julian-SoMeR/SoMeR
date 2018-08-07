@@ -14,16 +14,6 @@
         "websiteURL": { "type": "text" },
         "usageRanking": { "type": "text" },
         "description": { "type": "text" },
-        "valuedata" : {
-          "type" : "nested",
-          "properties" : {
-            "valuedataId": { "type": "long" },
-            "valuedataContent": { "type": "text" },
-            "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
-          }
-        },
         "creationDate": { "type": "date" },
         "modificationDate": { "type": "date" },
         "versionNumber": { "type": "long" }

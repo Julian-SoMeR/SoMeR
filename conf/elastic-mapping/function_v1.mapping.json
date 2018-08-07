@@ -1,0 +1,24 @@
+{
+  "mappings" : {
+    "function" : {
+      "properties" : {
+        "functionName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+        "functionCategory": { "type": "text" },
+        "functionDescription": { "type": "text" },
+        "functionContents" : {
+          "type" : "nested",
+          "properties" : {
+            "functionContentId": { "type": "long" },
+            "functionContent": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "creationDate": { "type": "date" },
+        "modificationDate": { "type": "date" },
+        "versionNumber": { "type": "long" }
+      }
+    }
+  }
+}

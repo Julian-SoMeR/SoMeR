@@ -1,7 +1,5 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
@@ -14,7 +12,7 @@ import play.mvc.*;
  *  The JPA/Ebean annotations are used to tell Play how
  *  to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "function_content")
 public class FunctionContent extends BaseDomain implements PathBindable<FunctionContent> {
@@ -23,21 +21,21 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
     public Long functionContentId;
     @Column(columnDefinition = "TEXT")
     public String functionContent;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
     public Function function;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
-    public Platformdata platformdata;
+    public Platform platform;
 
     /* ----- Constructors ----- */
     public FunctionContent() {}
 
-    public FunctionContent(Long functionContentId, String functionContent, Function function, Platformdata platformdata) {
+    public FunctionContent(Long functionContentId, String functionContent, Function function, Platform platform) {
         this.functionContentId = functionContentId;
         this.functionContent = functionContent;
         this.function = function;
-        this.platformdata = platformdata;
+        this.platform = platform;
     }
 
     /* Methods necessary for the interface Pathbindable */
@@ -98,19 +96,19 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
         this.function = function;
     }
 
-    public Platformdata getPlatformdata() {
-        return platformdata;
+    public Platform getPlatform() {
+        return platform;
     }
 
-    public void setPlatformdata(Platformdata platformdata) {
-        this.platformdata = platformdata;
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
     }
 
     public String toString() {
         return "FunctionContent{" +
                 "functionContentId=" + functionContentId +
                 ", function=" + function +
-                ", platformdata=" + platformdata +
+                ", platform=" + platform +
                 '}';
     }
 }

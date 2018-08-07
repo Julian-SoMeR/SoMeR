@@ -1,4 +1,4 @@
-@(searchObject: models.Search, platformdataResultList: List[Platformdata],
+@(searchObject: models.Search, platformResultList: List[Platform],
         functionContentResultList: List[FunctionContent])
     @main("Search Page") {
         <!-- Breadcrumbs that get displayed before the content!
@@ -16,12 +16,12 @@
 
                     <tbody>
 
-                        @for(platformResult <- platformdataResultList) {
+                        @for(platformResult <- platformResultList) {
                             <tr id="platform-table-row" class="platform-table-row">
                                 <td id="platform-table-column" class="platform-table-column">
                                     <p>Result found in platforms:</p>
                                     <h3>
-                                        <a href="@routes.PlatformsController.showSelectedPlatform(platformResult.platformdataId)">
+                                        <a href="@routes.PlatformsController.showSelectedPlatform(platformResult.platformId)">
                                             <div class="query-result">@platformResult.platformName</div></a>
                                     </h3>
 
@@ -31,8 +31,8 @@
                         @for(functionContentResult <- functionContentResultList) {
                             <tr id="platform-table-row" class="platform-table-row">
                                 <td id="platform-table-column" class="platform-table-column">
-                                    <p>Result found in functions of platform "@functionContentResult.platformdata.platformName":</p>
-                                    <h4>@functionContentResult.designationdata.designationName :</h4>
+                                    <p>Result found in functions of platform "@functionContentResult.platform.platformName":</p>
+                                    <h4>@functionContentResult.function.functionName :</h4>
                                     <h5>
                                         <a href="@routes.PlatformsController
                                         .showSelectedPlatform(platformResult.platformdataId)">

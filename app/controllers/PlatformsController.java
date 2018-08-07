@@ -1,80 +1,84 @@
 package controllers;
 
 import play.mvc.*;
-
 import play.*;
 import views.html.*;
 import models.*;
-
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
-
 import play.data.Form;
 import play.data.FormFactory;
-
-import java.util.List;
+import play.data.DynamicForm;
+import java.util.*;
 
 public class PlatformsController extends Controller {
 
-    /* Empty form constant to bind data for "Create New Platform" Form */
-    /* This is how should work but doesn't... */
-    //@Inject FormFactory formFactory;
-    //Form<Platform> platformForm = formFactory.form(Platform.class).bindFromRequest();
+    private DynamicForm dForm;
 
-    /* And this is how it shouldn't work but actually does.... */
-    private Form<Platformdata> platformdataForm;
+    private Form<Platform> platformForm;
+    //private Form<InformationContent> informationContentForm;
 
     @Inject
     public PlatformsController(FormFactory formFactory) {
-        this.platformdataForm = formFactory.form(Platformdata.class);
+        this.platformForm = formFactory.form(Platform.class);
+        this.dForm = formFactory.form();
+        //this.informationContentForm = formFactory.form(InformationContent.class);
     }
 
     public Result platforms(Integer page) {
-        List<Platformdata> platformdataList = Platformdata.findAllPlatforms();
-        return ok(platforms.render(platformdataList));
+        List<Platform> platformList = Platform.findAllPlatforms();
+        return ok(platforms.render(platformList));
     }
 
     /* Render the platform details page without any data in the form so that a new entry can be created. */
     public Result createNewPlatform() {
-        return ok(platformdetails.render(platformdataForm));
+
+        return ok(platformdetails.render(platformForm, null));
     }
 
     /* This method renders the form data of a platform object that already exists. Editing possible. */
-    public Result showSelectedPlatform(Long platformdataId) {
-        final Platformdata platformdata = Platformdata.findByPlatformdataId(platformdataId);
-        if (platformdata == null) {
-            return notFound(String.format("Platform %d does not exist.", platformdataId));
+    public Result showSelectedPlatform(Long platformId) {
+        final Platform platform = Platform.findByPlatformId(platformId);
+        List<InformationContent> informationContents = InformationContent.findAllByPlatformId(platformId);
+        if (platform == null) {
+            return notFound(String.format("Platform %d does not exist.", platformId));
         }
-        Form<Platformdata> filledPlatformdataForm = platformdataForm.fill(platformdata);
-        return ok(platformdetails.render(filledPlatformdataForm));
+        Form<Platform> filledPlatformForm = platformForm.fill(platform);
+        return ok(platformdetails.render(filledPlatformForm, platform));
     }
 
     /* Adding delete functionality, just for testing purposes. This will later be in the "Management" tab. */
-    public Result deletePlatform(Long platformdataId) {
-        final Platformdata platformdata = Platformdata.findByPlatformdataId(platformdataId);
-        if (platformdata == null) {
-            return notFound(String.format("Platform %s does not exist.", platformdataId));
+    public Result deletePlatform(Long platformId) {
+        final Platform platform = Platform.findByPlatformId(platformId);
+        if (platform == null) {
+            return notFound(String.format("Platform %s does not exist.", platformId));
         }
-        platformdata.delete();
+        platform.delete();
         return redirect(routes.PlatformsController.platforms(1));
     }
 
     public Result savePlatform() {
-        Form<Platformdata> boundPlatformdataForm = platformdataForm.bindFromRequest();
+
+        DynamicForm requestData = dForm.bindFromRequest();
+        System.out.println("" + requestData);
+
+        Form<Platform> boundPlatformForm = platformForm.bindFromRequest();
+        Platform platform = boundPlatformForm.bindFromRequest().get();
+        System.out.println("content: " + boundPlatformForm);
         // If the form has errors, display an error message to the user.
-        if (boundPlatformdataForm.hasErrors()) {
+        if (boundPlatformForm.hasErrors()) {
             flash("error", "Please correct the form below.");
-            return badRequest(platformdetails.render(boundPlatformdataForm));
+            return badRequest(platformdetails.render(boundPlatformForm, platform));
         }
-        Platformdata platformdata = boundPlatformdataForm.bindFromRequest().get();
-        // If there is no entry with the current platformdataId create a new entry, else update existing entries.
-        if (platformdata.platformdataId == null) {
-            platformdata.save();
+        // If there is no entry with the current platformId create a new entry, else update existing entries.
+
+        if (platform.platformId == null) {
+            platform.save();
         }
-        platformdata.update();
+        platform.update();
         flash("success",
-                String.format("Successfully saved platform %s", platformdata));
+                String.format("Successfully saved platform %s", platform));
         return redirect(routes.PlatformsController.platforms(1));
     }
 }

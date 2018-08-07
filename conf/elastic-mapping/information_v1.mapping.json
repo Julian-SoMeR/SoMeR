@@ -1,0 +1,22 @@
+{
+  "mappings" : {
+    "information" : {
+      "properties" : {
+        "informationName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+        "informationContents" : {
+          "type" : "nested",
+          "properties" : {
+            "informationContentId": { "type": "long" },
+            "informationContent": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "creationDate": { "type": "date" },
+        "modificationDate": { "type": "date" },
+        "versionNumber": { "type": "long" }
+      }
+    }
+  }
+}

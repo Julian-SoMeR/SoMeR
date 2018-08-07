@@ -13,20 +13,20 @@ import play.mvc.*;
  * The JPA/Ebean annotations are used to tell Play how
  * to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "aggregator")
 public class Aggregator extends BaseDomain implements PathBindable<Aggregator> {
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long aggregatorId;
-    //@DocSortable
+    @DocSortable
     public String aggregatorName;
     public String aggregatorCategory;
     @Column(columnDefinition = "TEXT")
     public String aggregatorDescription;
 
-    //@DocEmbedded
+    @DocEmbedded
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "aggregator")
     public List<AggregatorContent> aggregatorContents = new ArrayList<>();
 

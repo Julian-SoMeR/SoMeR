@@ -1,12 +1,11 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
 import javax.persistence.*;
 import play.mvc.*;
+import java.util.*;
 
 /**
  *  This model contains all the general information data contents of the SoMeR. It can only be obtained via
@@ -14,7 +13,7 @@ import play.mvc.*;
  *  The JPA/Ebean annotations are used to tell Play how
  *  to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "information_content")
 public class InformationContent extends BaseDomain implements PathBindable<InformationContent>  {
@@ -23,21 +22,23 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
     public Long informationContentId;
     @Column(columnDefinition = "TEXT")
     public String informationContent;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
+    @JoinColumn(name = "information_information_id")
     public Information information;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
-    public Platformdata platformdata;
+    @JoinColumn(name = "platform_platform_id")
+    public Platform platform;
 
     /* ----- Constructors ----- */
     public InformationContent() {}
 
-    public InformationContent(Long informationContentId, String informationContent, Information information, Platformdata platformdata) {
+    public InformationContent(Long informationContentId, String informationContent, Information information, Platform platform) {
         this.informationContentId = informationContentId;
         this.informationContent = informationContent;
         this.information = information;
-        this.platformdata = platformdata;
+        this.platform = platform;
     }
 
     /* Methods necessary for the interface Pathbindable */
@@ -72,6 +73,19 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
             return Ebean.find(InformationContent.class, informationContentId);
     }
 
+    /**
+     * This method uses the functionContentId of the functionContent entity to find data in the database and bind
+     * it to the corresponding model object.
+     */
+    public static List<InformationContent> findAllByPlatformId(Long platformId) {
+        List<InformationContent> informationContents = Ebean.find(InformationContent.class).where()
+                .eq("platform_platform_id", platformId).findList();
+        ArrayList <InformationContent> informationContentArrayList = new ArrayList<InformationContent>(informationContents);
+        //System.out.println("InformationContent ArrayList: " + informationContentArrayList);
+        return informationContentArrayList;
+    }
+
+
     /* ---- Getters, Setters, ToString Method ---- */
 
     public Long getInformationContentId() {
@@ -98,19 +112,20 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
         this.information = information;
     }
 
-    public Platformdata getPlatformdata() {
-        return platformdata;
+    public Platform getPlatform() {
+        return platform;
     }
 
-    public void setPlatformdata(Platformdata platformdata) {
-        this.platformdata = platformdata;
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
     }
 
     public String toString() {
         return "InformationContent{" +
                 "informationContentId=" + informationContentId +
+                ", informationContent='" + informationContent + '\'' +
                 ", information=" + information +
-                ", platformdata=" + platformdata +
+                ", platform=" + platform +
                 '}';
     }
 }

@@ -1,7 +1,5 @@
 package models;
 
-import java.util.ArrayList;
-import java.util.List;
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
@@ -14,7 +12,7 @@ import play.mvc.*;
  *  The JPA/Ebean annotations are used to tell Play how
  *  to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "aggregator_content")
 public class AggregatorContent extends BaseDomain implements PathBindable<AggregatorContent> {
@@ -23,21 +21,21 @@ public class AggregatorContent extends BaseDomain implements PathBindable<Aggreg
     public Long aggregatorContentId;
     @Column(columnDefinition = "TEXT")
     public String aggregatorContent;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
     public Aggregator aggregator;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
-    public Platformdata platformdata;
+    public Platform platform;
 
     /* ----- Constructors ----- */
     public AggregatorContent() {}
 
-    public AggregatorContent(Long aggregatorContentId, String aggregatorContent, Aggregator aggregator, Platformdata platformdata) {
+    public AggregatorContent(Long aggregatorContentId, String aggregatorContent, Aggregator aggregator, Platform platform) {
         this.aggregatorContentId = aggregatorContentId;
         this.aggregatorContent = aggregatorContent;
         this.aggregator = aggregator;
-        this.platformdata = platformdata;
+        this.platform = platform;
     }
 
     /* Methods necessary for the interface Pathbindable */
@@ -98,19 +96,19 @@ public class AggregatorContent extends BaseDomain implements PathBindable<Aggreg
         this.aggregator = aggregator;
     }
 
-    public Platformdata getPlatformdata() {
-        return platformdata;
+    public Platform getPlatform() {
+        return platform;
     }
 
-    public void setPlatformdata(Platformdata platformdata) {
-        this.platformdata = platformdata;
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
     }
 
     public String toString() {
         return "AggregatorContent{" +
                 "aggregatorContentId=" + aggregatorContentId +
                 ", aggregator=" + aggregator +
-                ", platformdata=" + platformdata +
+                ", platform=" + platform +
                 '}';
     }
 }

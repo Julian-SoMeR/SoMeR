@@ -14,20 +14,20 @@ import java.util.List;
  * The JPA/Ebean annotations are used to tell Play how
  * to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "impact")
 public class Impact extends BaseDomain implements PathBindable<Impact> {
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long impactId;
-    //@DocSortable
+    @DocSortable
     public String impactName;
     public String impactCategory;
     @Column(columnDefinition = "TEXT")
     public String impactDescription;
 
-    //@DocEmbedded
+    @DocEmbedded
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "impact")
     public List<ImpactContent> impactContents = new ArrayList<>();
 
@@ -73,7 +73,7 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
      * @param impactId Unique identifier of functions.
      * @return Model object filled with data from the impact table.
      */
-    public static Function findByImpactId(Long impactId) {
+    public static Impact findByImpactId(Long impactId) {
         return Ebean.find(Impact.class, impactId);
     }
 
@@ -82,7 +82,7 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
      * @param impactName Name of the corresponding impact.
      * @return The function object filled with the data found in the database.
      */
-    public static Function findByImpactName(String impactName) {
+    public static Impact findByImpactName(String impactName) {
         return Ebean.find(Impact.class).where().eq("impactName", impactName).findOne();
     }
 

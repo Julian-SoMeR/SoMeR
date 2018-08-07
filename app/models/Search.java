@@ -13,15 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import models.*;
-
 
 public class Search implements QueryStringBindable<Search> {
     public Long queryId;
     public String queryString;
 
     /* Result lists for each type of data. */
-    private static List<Platformdata> platformdataList;
+    private static List<Platform> platformList;
     private static List<FunctionContent> functionContents;
     private static List<ImpactContent> impactContents;
 
@@ -50,20 +48,18 @@ public class Search implements QueryStringBindable<Search> {
         return this.queryString;
     }
 
-
     /* ---- Methods ---- */
-    public static List<Platformdata> queryAllPlatforms(String queryString) {
-        //platformdataList = Ebean.find(Platformdata.class).orderBy("platformName asc").findList();
-        platformdataList = Ebean.find(Platformdata.class).setUseDocStore(true).where()
+    public static List<Platform> queryAllPlatforms(String queryString) {
+        platformList = Ebean.find(Platform.class).setUseDocStore(true).where()
                 .ilike("platformName" ,"%" + queryString + "%").orderBy("platformName asc").findList();
-        System.out.println("Platform Query List: " + platformdataList);
+        System.out.println("Platform Query List: " + platformList);
         System.out.println("Query String: " + queryString);
-        //if (platformdataList.isEmpty()) {
+        //if (platformList.isEmpty()) {
         //    System.out.println("Platform List is empty");
         //}
-        ArrayList<Platformdata> platformdataArrayList = new ArrayList<Platformdata>(platformdataList);
-        System.out.println("Platform Query ArrayList: " + platformdataArrayList);
-        return platformdataArrayList;
+        ArrayList<Platform> platformArrayList = new ArrayList<Platform>(platformList);
+        System.out.println("Platform Query ArrayList: " + platformArrayList);
+        return platformArrayList;
     }
 
     public static List<FunctionContent> queryAllFunctionContents(String queryString) {

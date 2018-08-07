@@ -1,6 +1,4 @@
 package models;
-import java.util.ArrayList;
-import java.util.List;
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
@@ -13,7 +11,7 @@ import play.mvc.*;
  *  The JPA/Ebean annotations are used to tell Play how
  *  to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "impact_content")
 public class ImpactContent extends BaseDomain implements PathBindable<ImpactContent> {
@@ -22,21 +20,21 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
     public Long impactContentId;
     @Column(columnDefinition = "TEXT")
     public String impactContent;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
     public Impact impact;
-    //@DocEmbedded
+    @DocEmbedded
     @ManyToOne
-    public Platformdata platformdata;
+    public Platform platform;
 
     /* ----- Constructors ----- */
     public ImpactContent() {}
 
-    public ImpactContent(Long impactContentId, String impactContent, Impact impact, Platformdata platformdata) {
+    public ImpactContent(Long impactContentId, String impactContent, Impact impact, Platform platform) {
         this.impactContentId = impactContentId;
         this.impactContent = impactContent;
         this.impact = impact;
-        this.platformdata = platformdata;
+        this.platform = platform;
     }
 
 
@@ -98,12 +96,12 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
         this.impact = impact;
     }
 
-    public Platformdata getPlatformdata() {
-        return platformdata;
+    public Platform getPlatform() {
+        return platform;
     }
 
-    public void setPlatformdata(Platformdata platformdata) {
-        this.platformdata = platformdata;
+    public void setPlatform(Platform platform) {
+        this.platform = platform;
     }
 
     @Override
@@ -111,7 +109,7 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
         return "ImpactContent{" +
                 "impactContentId=" + impactContentId +
                 ", impact=" + impact +
-                ", platformdata=" + platformdata +
+                ", platform=" + platform +
                 '}';
     }
 }

@@ -1,0 +1,42 @@
+{
+  "mappings" : {
+    "platform" : {
+      "properties" : {
+        "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+        "functionContents" : {
+          "type" : "nested",
+          "properties" : {
+            "functionContentId": { "type": "long" },
+            "functionContent": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "impactContents" : {
+          "type" : "nested",
+          "properties" : {
+            "impactContentId": { "type": "long" },
+            "impactContent": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "informationContents" : {
+          "type" : "nested",
+          "properties" : {
+            "informationContentId": { "type": "long" },
+            "informationContent": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "creationDate": { "type": "date" },
+        "modificationDate": { "type": "date" },
+        "versionNumber": { "type": "long" }
+      }
+    }
+  }
+}

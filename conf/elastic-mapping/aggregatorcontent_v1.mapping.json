@@ -1,0 +1,32 @@
+{
+  "mappings" : {
+    "aggregatorcontent" : {
+      "properties" : {
+        "aggregatorContent": { "type": "text" },
+        "aggregator" : {
+          "properties" : {
+            "aggregatorId": { "type": "long" },
+            "aggregatorName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+            "aggregatorCategory": { "type": "text" },
+            "aggregatorDescription": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "platform" : {
+          "properties" : {
+            "platformId": { "type": "long" },
+            "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
+        "creationDate": { "type": "date" },
+        "modificationDate": { "type": "date" },
+        "versionNumber": { "type": "long" }
+      }
+    }
+  }
+}
