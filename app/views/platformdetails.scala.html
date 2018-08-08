@@ -1,5 +1,9 @@
-@(platformForm: Form[Platform], platform: models.Platform)
+@(platform: models.Platform)
 @import helper._
+@platformName() = @{
+    if(platform.platformName != null) platform.platformName.toString else "Create new Platform"
+}
+
 
 @main("Create New Platform") {
 
@@ -10,34 +14,32 @@
         <ul class="breadcrumb-list">
             <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
                 Platforms</a></li>
-            <li>@platformForm("platformName").getValue().orElse("Create new Platform")</li>
+            <li>@platformName()</li>
         </ul>
     </div>
 
     <div class="content-container">
         <div class="platform-details-container">
             <div class="platform-details-header-container">
-                <h1>@platformForm("platformName").getValue().orElse("Create new Platform")</h1>
+                <h1>@platformName()</h1>
                 <a class="link-with-icon" href="@routes.PlatformsController.platforms()">
-                    View Functions<!--of @platformForm("platformName").getValue().orElse("Undefined")-->
+                    View Functions
                     <i class="material-icons button-right-arrow">arrow_forward</i>
                 </a>
             </div>
             <div class="form-container">
             @helper.form(action = routes.PlatformsController.savePlatform(), 'class -> "custom-form") {
                 <fieldset class="fieldset-container">
-                    <input type="hidden" value="@platformForm("platformId").getValue().orElse("")"
-                    name="platformdataId"/>
+                    <input type="hidden" value="@platform.platformId" name="platformId"/>
                     <div class="required-input-container">
-                    @helper.inputText(platformForm("platformName"), '_label -> "Platform Name")
+                        <input type="text" name="platformName" value="@platform.platformName"/>
                     </div>
                     <legend><h3>General Platform Information</h3></legend>
 
                     @for(informationContentObject <- platform.informationContents) {
-                        @informationContentObject.information </br>
-                        <input type="text" name="@informationContentObject.information.informationId" value="@informationContentObject.informationContent" />
+                        <input type="text" name="informationId(@informationContentObject.information.informationId)" value="@informationContentObject.informationContent" />
                         <!--helper.textarea(platformForm("informationContent"), '_label -> informationContentObject.information.informationName)-->
-                        @println(informationContentObject)
+                        @println(informationContentObject.information.informationName)
                     }
 
                     <!--helper.textarea(platformForm("description"), '_label -> "Description")-->

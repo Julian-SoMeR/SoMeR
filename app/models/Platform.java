@@ -11,6 +11,7 @@ import io.ebean.Query;
 import io.ebean.DocumentStore;
 import io.ebean.EbeanServer;
 import io.ebean.Ebean;
+import play.data.DynamicForm;
 
 import javax.persistence.*;
 
@@ -116,6 +117,15 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
         ArrayList <Platform> platformArrayList = new ArrayList<Platform>(platformList);
         System.out.println("Platform ArrayList: " + platformArrayList);
         return platformArrayList;
+    }
+
+    public static Platform formToPlatform(DynamicForm requestForm) {
+        Platform platform = new Platform();
+        Long platformId = Long.parseLong(requestForm.get("platformId"));
+        String platformName = requestForm.get("platformName");
+        platform.setPlatformId(platformId);
+        platform.setPlatformName(platformName);
+        return platform;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */

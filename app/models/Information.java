@@ -28,6 +28,9 @@ public class Information extends BaseDomain implements PathBindable<Information>
 
     // List to collect all information objects to render them on the platforms -> general information page.
     private static List<Information> informationList;
+    // List to collect all information ids.
+    private static List<Information> informationIds;
+
 
     /* ----- Constructors ----- */
     public Information() {}
@@ -87,6 +90,12 @@ public class Information extends BaseDomain implements PathBindable<Information>
         informationList = Ebean.find(Information.class).orderBy("informationName asc").findList();
         ArrayList <Information> informationArrayList = new ArrayList<Information>(informationList);
         return informationArrayList;
+    }
+
+    public static List<Information> findAllInformationIds() {
+        informationIds = Ebean.find(Information.class).select("informationId").findList();
+        System.out.println("RESULT: " + informationIds);
+        return informationIds;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */
