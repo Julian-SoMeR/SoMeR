@@ -1,23 +1,4 @@
 @(title: String)(content: Html)
-<!--(searchForm: Form[Search])
-
-    <!-- Form of the search input -->
-
-    <!-- Show flash messages on all pages. Still need to think about where to place them. -->
-    @if(flash.containsKey("success")) {
-        <div class="alert alert-success">
-        @flash().get("success")
-        </div>
-    }
-
-    @if(flash.containsKey("error")) {
-        <div class="alert alert-error">
-        @flash().get("error")
-        </div>
-    }
-
-
-
         <!--
     Method to set current pages top navigation item.
     If the current pages path matches the item,
@@ -61,8 +42,20 @@
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         </head>
         <body>
+            @if(flash.containsKey("success")){
+                <div class="alert alert-success">
+                @flash.get("success")
+                </div>
+            }
+            @if(flash.containsKey("error")){
+                <div class="alert alert-error">
+                @flash.get("error")
+                </div>
+            }
                 <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
             <header>
+                    <!-- Show flash messages on all pages. Still need to think about where to place them. -->
+
                 <p id="js-message" class="js-message">This website uses JavaScript.
                     Please enable it for the best experience!</p>
                 <div id="header-container" class="header-container">

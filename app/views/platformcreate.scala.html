@@ -1,0 +1,71 @@
+@import helper._
+@(informationList: List[Information])
+@main("Create New Platform") {
+    @if(flash.containsKey("success")){
+        <div class="alert alert-success">
+        @flash.get("success")
+        </div>
+    }
+    @if(flash.containsKey("error")){
+        <div class="alert alert-error">
+        @flash.get("error")
+        </div>
+    }
+    <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
+                Platforms</a></li>
+            <li>Create new Platform</li>
+        </ul>
+    </div>
+
+    <div class="content-container">
+        <div class="platform-details-container">
+            <div class="platform-details-header-container">
+                <h1>Create new Platform</h1>
+                <a class="link-with-icon" href="@routes.PlatformsController.platforms()">
+                    View Functions
+                    <i class="material-icons button-right-arrow">arrow_forward</i>
+                </a>
+            </div>
+            <div class="form-container">
+            @helper.form(action = routes.PlatformsController.updatePlatformInformation(), 'class -> "custom-form") {
+                <fieldset class="fieldset-container">
+                    <legend><h3>General Platform Information</h3></legend>
+
+                    <div class="label-input-container">
+                        <label for="platformName">
+                            Platform Name
+                        </label>
+                        <input type="text" name="platformName" value=""
+                        placeholder="Enter Platform Name.. (Required)" required/>
+                        <input type="hidden" name="platformId"/>
+                    </div>
+
+
+                    @for(informationObject <- informationList) {
+                        <label for="informationId-@informationObject.informationId">
+                        @informationObject.informationName
+                        </label>
+                        <input type="text" name="informationContent-@informationObject.informationId"
+                        value="" placeholder="Enter @informationObject.informationName.. "/>
+                        <input type="hidden" value="@informationObject.informationId"
+                        name="informationId-@informationObject.informationId"/>
+                        <input type="hidden" name="informationContentId-@informationObject.informationId"/>
+                    }
+
+                    <div class="form-buttons-container">
+                        <input type="submit" class="custom-button" value="Save & Exit"/>
+                        <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
+                            Cancel
+                        </a>
+                    </div>
+                </fieldset>
+            }
+            </div>
+        </div>
+    </div>
+}

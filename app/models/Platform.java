@@ -47,6 +47,10 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "platform")
     public List<InformationContent> informationContents = new ArrayList<InformationContent>();
 
+    @DocEmbedded
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "platform")
+    public List<AggregatorContent> aggregatorContents = new ArrayList<AggregatorContent>();
+
     // List to collect all platform objects to render them on the platforms page.
     private static List<Platform> platformList;
 
@@ -115,15 +119,21 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
     public static List<Platform> findAllPlatforms() {
         platformList = Ebean.find(Platform.class).orderBy("platformName asc").findList();
         ArrayList <Platform> platformArrayList = new ArrayList<Platform>(platformList);
-        System.out.println("Platform ArrayList: " + platformArrayList);
+        //System.out.println("Platform ArrayList: " + platformArrayList);
         return platformArrayList;
     }
 
     public static Platform formToPlatform(DynamicForm requestForm) {
         Platform platform = new Platform();
-        Long platformId = Long.parseLong(requestForm.get("platformId"));
+        String platformIdString = requestForm.get("platformId");
+        if(platformIdString != null) {
+            if (!platformIdString.isEmpty()) {
+                Long platformId = Long.parseLong(platformIdString);
+                platform.setPlatformId(platformId);
+            }
+        }
+
         String platformName = requestForm.get("platformName");
-        platform.setPlatformId(platformId);
         platform.setPlatformName(platformName);
         return platform;
     }

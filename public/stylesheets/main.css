@@ -13,6 +13,22 @@ h1, h2, h3, h4, h5, h6 {
     margin-bottom: 5px;
 }
 
+h1 {
+    font-size: 35px;
+}
+
+h2 {
+    font-size: 30px;
+}
+
+h3 {
+    font-size: 25px;
+}
+
+h4 {
+    font-size: 20px;
+}
+
 /* Title h1 of all pages */
 .page-title {
     margin: 5px 0 5px 10px;
@@ -270,6 +286,10 @@ a:hover {
     margin-left: 10px;
 }
 
+.custom-filter-button {
+    color: blue;
+}
+
 .login-separator {
     height: 30px;
     margin: 5px;
@@ -401,6 +421,25 @@ a:hover {
     cursor: default;
 }
 
+/* ---- Flash alert styles ---- */
+.alert {
+    margin: 0px;
+    padding: 0px;
+    padding-left: 5px;
+    margin-bottom: 5px;
+}
+
+.alert-error {
+    color: red;
+}
+
+.alert-success {
+    color: green;
+    width: 600px;
+    padding: 2px;
+}
+
+
 /* ---- General content container styles ---- */
 /* Have a margin, such that there is now overlap with global navigation */
 .content-margin {
@@ -513,6 +552,7 @@ a:hover {
     display: block;
     padding: 0 10px 10px 2px;
     font-size: 14px;
+    cursor: pointer;
 }
 
 .form-container {
@@ -544,22 +584,23 @@ a:hover {
     padding-right: 50px;
 }
 
-.required-input-container .info {
+.label-input-container .info {
     display: none;
 }
 
-.required-input-container input[type="text"] {
+.label-input-container input[type="text"] {
     margin-bottom: 0px;
 }
 
-.required-input-container {
-    margin-bottom: 10px;
+.label-input-container {
+    margin-bottom: 0px;
 }
 
 dd.error {
     color: darkred;
     padding-left: 5px;
 }
+
 
 .custom-form input[type="text"]:last-of-type {
     margin-bottom: 5px;
@@ -603,49 +644,70 @@ dd.error {
 }
 
 .platform-table-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     width: 600px;
+    margin-top: 5px;
 }
 
 .platform-table-header {
     display: flex;
     justify-content: space-between;
-
+    margin: 0px;
+    margin-top: 5px;
+    padding: 0px;
+    font-size: 22px;
+    padding-left: 10px;
 }
 
-.platform-table-header-name {
+.platform-table-name {
     display: flex;
-    flex: 1;
+    flex-direction: column;
+    justify-content: flex-end;
 }
 
-.platforms-header-container {
+.platforms-filter-container {
     display: flex;
-    justify-content: space-between;
-    width: 400px;
+    justify-content: flex-end;
+    width: 300px;
     margin: 5px 0;
 }
 
 .platform-filter {
-    padding: 0;
-    padding-left: 5px;
-    margin: 5px 0;
+    width: 300px;
+    padding: 4px;
+    margin-right: 5px;
+}
+
+.filter-button-separator {
+    margin: 0 2px;
+    border: none;
 }
 
 .platform-table {
     width: 600px;
 }
 
+.platform-table-row-link {
+    width: 100%;
+    min-height: 100%;
+    padding: 5px 0;
+    padding-left: 10px;
+}
+
 .platform-table-header,
 .platform-table-column {
     text-align: left;
     padding: 0;
-    padding-left: 10px;
-    font-size: 18px;
+
 }
 
 .platform-table-column {
-    padding-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    font-size: 18px;
 }
-
 
 .platform-table a,
 .platform-table a:hover,
@@ -687,6 +749,17 @@ edit {
     display: flex;
     text-align: right;
     justify-content: flex-end;
+    padding-top: 5px;
+}
+
+.select-or-create-new-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.select-platform-heading {
+    font-size: 30px;
 }
 
 /* ---- ABOUT STYLE ---- */

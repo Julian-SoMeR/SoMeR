@@ -32,6 +32,14 @@ function filterPlatforms() {
     }
 }
 
+//Reset function for platform filter
+function resetPlatformFilter() {
+    input = document.getElementById("platform-filter");
+    input.value = "";
+    filterPlatforms();
+}
+
+
 /*
 $(document).ready(function () {
 

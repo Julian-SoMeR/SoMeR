@@ -6,7 +6,7 @@
         "function" : {
           "properties" : {
             "functionId": { "type": "long" },
-            "functionName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+            "functionName": { "type": "text" },
             "functionCategory": { "type": "text" },
             "functionDescription": { "type": "text" },
             "creationDate": { "type": "date" },

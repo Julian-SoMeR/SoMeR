@@ -6,7 +6,7 @@
         "aggregator" : {
           "properties" : {
             "aggregatorId": { "type": "long" },
-            "aggregatorName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+            "aggregatorName": { "type": "text" },
             "aggregatorCategory": { "type": "text" },
             "aggregatorDescription": { "type": "text" },
             "creationDate": { "type": "date" },

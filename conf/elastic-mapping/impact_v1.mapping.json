@@ -5,16 +5,6 @@
         "impactName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
         "impactCategory": { "type": "text" },
         "impactDescription": { "type": "text" },
-        "impactContents" : {
-          "type" : "nested",
-          "properties" : {
-            "impactContentId": { "type": "long" },
-            "impactContent": { "type": "text" },
-            "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
-          }
-        },
         "creationDate": { "type": "date" },
         "modificationDate": { "type": "date" },
         "versionNumber": { "type": "long" }

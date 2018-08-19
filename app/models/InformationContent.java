@@ -3,9 +3,13 @@ package models;
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
+
 import javax.persistence.*;
+
 import play.mvc.*;
+
 import java.util.*;
+
 import play.data.DynamicForm;
 
 /**
@@ -84,38 +88,60 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
     public static List<InformationContent> findAllByPlatformId(Long platformId) {
         List<InformationContent> informationContents = Ebean.find(InformationContent.class).where()
                 .eq("platform_platform_id", platformId).findList();
+        System.out.println("TEST: " + informationContents);
         ArrayList<InformationContent> informationContentArrayList = new ArrayList<InformationContent>(informationContents);
         //System.out.println("InformationContent ArrayList: " + informationContentArrayList);
         return informationContentArrayList;
     }
 
-    //Get list of informationIds -> run through Id
-
-    public static List<InformationContent> formToInformationContents(DynamicForm requestForm) {
-        List<InformationContent> informationContents;
-        Long platformId = Long.parseLong(requestForm.get("platformId"));
-        List<Information> informationIds = Information.findAllInformationIds();
-        for(Information currentElement: informationIds) {
-            InformationContent informationContent = new InformationContent();
-            Long currentInformationId = currentElement.getInformationId();
-            String requestInformationContent = requestForm.get("informationId(" + currentInformationId + ")");
-            System.out.println("" + requestInformationContent);
-
+    /**
+     * This method is used to insert attribute values that need to be displayed in a view
+     * because an InformationContent object does only contain the id of the included platform or information object.
+     *
+     * @param informationContents Given list contain all the necessary InformationContent objects.
+     * @return List of InformationContent objects with all necessary attributes inserted.
+     */
+    public static List<InformationContent> fillForeignKeyObjects(List<InformationContent> informationContents) {
+        for (InformationContent currentElement : informationContents) {
+            currentElement.platform.setPlatformName(
+                    Platform.findByPlatformId(currentElement.platform.platformId).getPlatformName());
+            currentElement.information.setInformationName(
+                    Information.findByInformationId(currentElement.information.informationId).getInformationName());
         }
-        //for(Long currentElement: informationIds) {
-//
- //       }
-
-        return null;
+        return informationContents;
     }
 
-    public static void saveInformationContent(List<InformationContent> informationContents) {
-        for (InformationContent currentElement : informationContents) {
-            if (currentElement != null) {
-                Ebean.save(currentElement);
-            }
-        }
+    //Get list of informationIds -> run through Id
 
+    public static List<InformationContent> formToInformationContents(DynamicForm requestForm, Platform platform) {
+        List<InformationContent> informationContents = new LinkedList<>();
+        List<Information> informationList = Information.findAllInformation();
+        for (Information currentElement : informationList) {
+            String informationContentIdString = requestForm.get("informationContentId-" + currentElement.informationId);
+            if (informationContentIdString != null && !informationContentIdString.isEmpty()) {
+                Long informationContentId = Long.parseLong(informationContentIdString);
+                InformationContent existingInformationContent =
+                        InformationContent.findByInformationContentId(informationContentId);
+                String contentString = requestForm.get("informationContent-" + currentElement.informationId);
+                existingInformationContent.setInformationContent(contentString);
+                informationContents.add(existingInformationContent);
+            } else {
+                InformationContent newInformationContent = new InformationContent();
+                newInformationContent.setPlatform(platform);
+                newInformationContent.setInformation(currentElement);
+                String contentString = requestForm.get("informationContent-" + currentElement.informationId);
+                newInformationContent.setInformationContent(contentString);
+                informationContents.add(newInformationContent);
+            }
+                /*
+                Information informationObject = Information.findByInformationId(informationId);
+                List<InformationContent> informationContentsOfInformationObject = currentElement.getInformationContents();
+                informationContentsOfInformationObject.add(informationContent);
+                currentElement.setInformationContents(informationContentsOfInformationObject);
+                */
+        }
+        System.out.println("INFOCONTENT: " + informationContents);
+        return informationContents;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */

@@ -6,7 +6,7 @@
         "information" : {
           "properties" : {
             "informationId": { "type": "long" },
-            "informationName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+            "informationName": { "type": "text" },
             "creationDate": { "type": "date" },
             "modificationDate": { "type": "date" },
             "versionNumber": { "type": "long" }

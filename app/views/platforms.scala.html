@@ -1,54 +1,76 @@
 @(platforms: List[Platform])
-    @main("Platforms Page") {
-        <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
-            <!-- Breadcrumbs that get displayed before the content!
+@main("Platforms Page") {
+    <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
+        <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
-        <div class="breadcrumbs">
-            <p class="breadcrumb-paragraph">You are here: </p>
-            <ul class="breadcrumb-list">
-                <li class="breadcrumb-firstItem">Platforms</li>
-            </ul>
-        </div>
-        <div id="content-container" class="content-container">
-            <h2>Select a Platform</h2>
-            <div class="platform-table-container">
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-firstItem">Platforms</li>
+        </ul>
+    </div>
 
-                <table id="platform-table" class="platform-table">
-                    <thead>
-                        <tr>
-                            <th class="platform-table-header"><div class="platform-table-header-name">Platform Name</div>
-                                <div class="platforms-header-container">
-                                    <input type="text" id="platform-filter" class="platform-filter"
-                                    onkeyup="filterPlatforms()" placeholder="Filter platforms..">
-                                    <a href="@routes.PlatformsController.createNewPlatform()">
-                                        <button class="custom-button add-platform-button">
-                                            <i class="material-icons add">add</i> Create new Platform</button>
-                                    </a>
-                                </div>
-                            </th>
+    <div id="content-container" class="content-container">
 
-                        </tr>
-                    </thead>
-                    <tbody>
+        <div class="platform-table-container">
+            <div class="select-or-create-new-container">
+                <h2 class="select-platform-heading">Select Platform</h2>
+                <a href="@routes.PlatformsController.createNewPlatform()">
+                    <button class="custom-button add-platform-button">
+                        <i class="material-icons add">add</i> Create new Platform</button>
+                </a>
+            </div>
+            @if(flash.containsKey("success")) {
+                <div class="alert alert-success">
+                @flash.get("success")
+                </div>
+            }
+            <table id="platform-table" class="platform-table">
+                <thead>
+                    <tr>
+                        <th class="platform-table-header">
+                            <div class="platform-table-name">
+                                <span>
+                                    Platform Name
+                                </span>
+                            </div>
+                            <div class="platforms-filter-container">
+                                <input type="text" id="platform-filter" class="platform-filter"
+                                placeholder="Filter platforms..">
+                                <button class="custom-button custom-filter-button" onclick="filterPlatforms()">
+                                    Filter
+                                </button>
+                                <hr class="filter-button-separator"/>
+                                <button class="custom-button" onclick="resetPlatformFilter()">
+                                    Reset
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
 
-                    @for(platform <- platforms) {
-                        <tr id="platform-table-row" class="platform-table-row">
-                            <td id="platform-table-column" class="platform-table-column">
-                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
+                @for(platform <- platforms) {
+                    <tr id="platform-table-row" class="platform-table-row"
+                    data-href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
+                        <td id="platform-table-column" class="platform-table-column">
+                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)"
+                                class="platform-table-row-link">
                                 @platform.platformName</a>
-                            </td>
-                            <td class="platform-table-column platform-icon-container">
-                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
-                                    <i class="material-icons edit">edit</i></a>
+                            <div class="platform-icon-container">
+                                <!--<a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
+                                    <i class="material-icons edit">edit</i></a>-->
                                 <a onclick=
                                 "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformId)')">
                                     <i class="material-icons delete">delete</i></a>
-                            </td>
-                        </tr>
-                    }
-                    </tbody>
-                </table>
-            </div>
+                            </div>
+                        </td>
 
+                    </tr>
+                }
+                </tbody>
+            </table>
         </div>
-    }
+
+    </div>
+}

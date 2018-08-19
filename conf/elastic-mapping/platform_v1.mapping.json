@@ -33,6 +33,16 @@
             "versionNumber": { "type": "long" }
           }
         },
+        "aggregatorContents" : {
+          "type" : "nested",
+          "properties" : {
+            "aggregatorContentId": { "type": "long" },
+            "aggregatorContent": { "type": "text" },
+            "creationDate": { "type": "date" },
+            "modificationDate": { "type": "date" },
+            "versionNumber": { "type": "long" }
+          }
+        },
         "creationDate": { "type": "date" },
         "modificationDate": { "type": "date" },
         "versionNumber": { "type": "long" }

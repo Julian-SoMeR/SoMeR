@@ -52,7 +52,6 @@ public class Search implements QueryStringBindable<Search> {
     public static List<Platform> queryAllPlatforms(String queryString) {
         platformList = Ebean.find(Platform.class).setUseDocStore(true).where()
                 .ilike("platformName" ,"%" + queryString + "%").orderBy("platformName asc").findList();
-        System.out.println("Platform Query List: " + platformList);
         System.out.println("Query String: " + queryString);
         //if (platformList.isEmpty()) {
         //    System.out.println("Platform List is empty");

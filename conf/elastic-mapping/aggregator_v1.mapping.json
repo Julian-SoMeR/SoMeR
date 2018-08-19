@@ -5,16 +5,6 @@
         "aggregatorName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
         "aggregatorCategory": { "type": "text" },
         "aggregatorDescription": { "type": "text" },
-        "aggregatorContents" : {
-          "type" : "nested",
-          "properties" : {
-            "aggregatorContentId": { "type": "long" },
-            "aggregatorContent": { "type": "text" },
-            "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
-          }
-        },
         "creationDate": { "type": "date" },
         "modificationDate": { "type": "date" },
         "versionNumber": { "type": "long" }

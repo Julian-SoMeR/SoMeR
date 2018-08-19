@@ -1,13 +1,21 @@
-@(platform: models.Platform)
+@(informationContents: List[InformationContent])
 @import helper._
+
 @platformName() = @{
-    if(platform.platformName != null) platform.platformName.toString else "Create new Platform"
+    informationContents.head.platform.platformName
 }
 
+@platformId() = @{
+    if(informationContents.head.platform != null) informationContents.head.platform.platformId
+}
 
-@main("Create New Platform") {
-
-    <!-- Breadcrumbs that get displayed before the content!
+@main("General Platform Information") {
+    @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+        @flash.get("success")
+        </div>
+    }
+        <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
     <div class="breadcrumbs">
         <p class="breadcrumb-paragraph">You are here: </p>
@@ -28,21 +36,53 @@
                 </a>
             </div>
             <div class="form-container">
-            @helper.form(action = routes.PlatformsController.savePlatform(), 'class -> "custom-form") {
+            @helper.form(action = routes.PlatformsController.updatePlatformInformation(), 'class -> "custom-form") {
                 <fieldset class="fieldset-container">
-                    <input type="hidden" value="@platform.platformId" name="platformId"/>
-                    <div class="required-input-container">
-                        <input type="text" name="platformName" value="@platform.platformName"/>
-                    </div>
                     <legend><h3>General Platform Information</h3></legend>
 
-                    @for(informationContentObject <- platform.informationContents) {
-                        <input type="text" name="informationId(@informationContentObject.information.informationId)" value="@informationContentObject.informationContent" />
-                        <!--helper.textarea(platformForm("informationContent"), '_label -> informationContentObject.information.informationName)-->
-                        @println(informationContentObject.information.informationName)
+
+                    <div class="label-input-container">
+                        <label for="platformName">
+                            Platform Name
+                        </label>
+                        <input type="text" name="platformName" value="@platformName()"
+                        placeholder="Enter Platform Name.. (Required)" required/>
+                            <!-- Show an error message when there is an input error on the platform name. -->
+                        @if(flash.containsKey("platform_error")) {
+                            <div class="alert alert-error">
+                            @flash.get("platform_error")
+                            </div>
+                        }
+                        <input type="hidden" value="@platformId()" name="platformId"/>
+                    </div>
+
+
+                    @for(contentObject <- informationContents) {
+
+                        <div class="label-input-container">
+                            <label for="informationId-@contentObject.information.informationId">
+                            @contentObject.information.informationName
+                            </label>
+                            <input type="text" name="informationContent-@contentObject.information.informationId"
+                            value="@contentObject.informationContent"
+                            placeholder="Enter @contentObject.information.informationName.. "/>
+                                <!-- Show an error message when there is an input
+                                    error on the general information content. -->
+                            @if(flash.containsKey("information_content_error"
+                                    + contentObject.information.informationId)) {
+                                <div class="alert alert-error">
+                                @flash.get("information_content_error" + contentObject.information.informationId)
+                                </div>
+                            }
+                        </div>
+
+                        <input type="hidden" value="@contentObject.information.informationId"
+                        name="informationId-@contentObject.information.informationId"/>
+                        <input type="hidden" value="@contentObject.informationContentId"
+                        name="informationContentId-@contentObject.information.informationId"/>
+
                     }
 
-                    <!--helper.textarea(platformForm("description"), '_label -> "Description")-->
                     <div class="form-buttons-container">
                         <input type="submit" class="custom-button" value="Save & Exit"/>
                         <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
