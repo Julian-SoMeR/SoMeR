@@ -51,15 +51,13 @@
                 <tbody>
 
                 @for(platform <- platforms) {
-                    <tr id="platform-table-row" class="platform-table-row"
-                    data-href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
+                    <tr id="platform-table-row" class="platform-table-row">
                         <td id="platform-table-column" class="platform-table-column">
-                                <a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)"
+                                <a href=
+                                "@routes.PlatformsController.showSelectedPlatformInformation(platform.platformId)"
                                 class="platform-table-row-link">
                                 @platform.platformName</a>
                             <div class="platform-icon-container">
-                                <!--<a href="@routes.PlatformsController.showSelectedPlatform(platform.platformId)">
-                                    <i class="material-icons edit">edit</i></a>-->
                                 <a onclick=
                                 "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformId)')">
                                     <i class="material-icons delete">delete</i></a>

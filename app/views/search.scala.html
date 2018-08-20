@@ -21,7 +21,7 @@
                                 <td id="platform-table-column" class="platform-table-column">
                                     <p>Result found in platforms:</p>
                                     <h3>
-                                        <a href="@routes.PlatformsController.showSelectedPlatform(platformResult.platformId)">
+                                        <a href="@routes.PlatformsController.showSelectedPlatformInformation(platformResult.platformId)">
                                             <div class="query-result">@platformResult.platformName</div></a>
                                     </h3>
 
@@ -35,7 +35,7 @@
                                     <h4>@functionContentResult.function.functionName :</h4>
                                     <h5>
                                         <a href="@routes.PlatformsController
-                                        .showSelectedPlatform(platformResult.platformdataId)">
+                                        .showSelectedPlatformInformation(platformResult.platformdataId)">
                                             <div class="query-result">@functionContentResult.functionContent</div></a>
                                     </h5>
                                 </td>

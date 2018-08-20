@@ -555,12 +555,16 @@ a:hover {
     cursor: pointer;
 }
 
+.platforms-headings {
+    margin-left: 15px;
+}
+
 .form-container {
-    padding-top: 5px;
+    margin-top: 15px;
 }
 
 .fieldset-container {
-    padding: 5px 10px 10px 10px;
+    padding: 0 15px 10px 15px;
     width: 600px;
 }
 
@@ -593,7 +597,12 @@ a:hover {
 }
 
 .label-input-container {
-    margin-bottom: 0px;
+    margin: 0px;
+}
+
+.label-input-container:first-of-type {
+    margin: 0;
+    margin-bottom: 10px;
 }
 
 dd.error {
@@ -602,8 +611,8 @@ dd.error {
 }
 
 
-.custom-form input[type="text"]:last-of-type {
-    margin-bottom: 5px;
+.custom-form input[type="text"] {
+    margin-bottom: 2px;
 }
 
 .form-buttons-container {
@@ -633,14 +642,34 @@ dd.error {
     flex-direction: column;
 }
 
-.link-with-icon,
-.link-with-icon:visited {
-    color: #3366FF;
+.platforms-top-navigation-link {
+    display: flex;
+    text-decoration: none;
+    color: #FFF;
+    font-weight: bold;
+    padding: 5px 5px;
+    background-color: #666666;
+    border: 1px solid #505050;
+    border-top-left-radius: unset;
+    border-top-right-radius: unset;
+    border-bottom: 1px solid black;
 }
 
-.link-with-icon:hover {
-    color: #006699;
+.platforms-top-navigation-link:visited,
+.platforms-top-navigation-link:link {
+    color: #FFF;
     text-decoration: none;
+}
+
+.platforms-top-navigation-link:hover,
+.platform-navigation-active,
+.platform-navigation-active:visited,
+.platform-navigation-active:link {
+    background-color: #F5F5F5;
+    text-decoration: none;
+    color: #000;
+    border: 1px solid black;
+    border-bottom: 1px solid #F5F5F5;
 }
 
 .platform-table-container {
@@ -760,6 +789,47 @@ edit {
 
 .select-platform-heading {
     font-size: 30px;
+}
+
+.fieldset-container {
+    border: 1px solid black;
+}
+
+.platform-form-legend {
+    display: flex;
+    justify-content: flex-start;
+    width: 550px;
+    position: relative;
+    top: -15px;
+    left: 0px;
+}
+
+.platforms-right-bottom-border {
+    display: flex;
+    border-bottom: 1px solid #2F2F2F;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.input-textarea {
+    resize: vertical;
+    min-height: 31px;
+    word-wrap: unset;
+    text-wrap: normal;
+    margin: 0;
+}
+
+.input-textarea:focus {
+   border: 1px solid #38c9ff;
+}
+
+.input-label {
+    width : 500px;
+    overflow:hidden;
+    display:inline-block;
+    text-overflow: ellipsis;
+    white-space: normal;
+    margin-bottom: -5px;
 }
 
 /* ---- ABOUT STYLE ---- */

@@ -8,6 +8,7 @@ import models.*;
 import javax.inject.Inject;
 import javax.inject.Provider;
 import javax.inject.Singleton;
+import javax.swing.text.StyledEditorKit;
 
 import play.data.Form;
 import play.data.FormFactory;
@@ -31,13 +32,22 @@ public class PlatformsController extends Controller {
         return ok(platforms.render(platformList));
     }
 
-    /* Render the platform details page without any data in the form so that a new entry can be created. */
+    /**
+     * Render the platform details page without any data in the form so that a new entry can be created.
+     *
+     * @return Render HTML template with http status code 400.
+     */
     public Result createNewPlatform() {
         return ok(platformcreate.render(informationList));
     }
 
-    /* This method renders the form data of a platform object that already exists. Editing possible. */
-    public Result showSelectedPlatform(Long platformId) {
+    /**
+     * This method renders the form data of a platform object that already exists. Editing possible.
+     *
+     * @param platformId Id of the selected platform on the platforms page.
+     * @return Render HTML template with http status code 400 or display NOT FOUND message.
+     */
+    public Result showSelectedPlatformInformation(Long platformId) {
         List<InformationContent> informationContents;
         Platform platform = Platform.findByPlatformId(platformId);
         informationContents = InformationContent.findAllByPlatformId(platformId);
@@ -45,14 +55,33 @@ public class PlatformsController extends Controller {
         if (platform == null) {
             return notFound(String.format("Platform %d does not exist.", platformId));
         }
-        return ok(platformdetails.render(informationContents));
+        return ok(platformgeneralinformation.render(informationContents, platform));
+    }
+
+    public Result showSelectedPlatformFunctions(Long platformId) {
+        List<FunctionContent> functionContents;
+        Platform platform = Platform.findByPlatformId(platformId);
+        System.out.println("PLATFORM: " + platform);
+        functionContents = FunctionContent.findAllByPlatformId(platformId);
+        System.out.println("CONTENTS: " + functionContents);
+        functionContents = FunctionContent.fillForeignKeyObjects(functionContents);
+        if (platform == null) {
+            return notFound(String.format("Platform %d does not exist.", platformId));
+        }
+        return ok(platformfunction.render(functionContents, platform));
     }
 
     /* Adding delete functionality, just for testing purposes. This will later be in the "Management" tab. */
+
+    /**
+     * Delete platform and all connected data in information/functions/impacts.
+     *
+     * @param platformId Id of the platform to delete.
+     * @return On successful delete, render HTML template with http status code 400. Else display NOT FOUND message.
+     */
     public Result deletePlatform(Long platformId) {
         Platform platform = Platform.findByPlatformId(platformId);
         List<InformationContent> informationContents = InformationContent.findAllByPlatformId(platformId);
-
         if (platform == null) {
             return notFound(String.format("Platform %s does not exist.", platformId));
         }
@@ -60,29 +89,26 @@ public class PlatformsController extends Controller {
             currentElement.delete();
         }
         platform.delete();
-
         return redirect(routes.PlatformsController.platforms(1));
     }
 
-    public Result updatePlatformInformation() {
+    /**
+     * Bind data from an html form and bind it to a dynamic form. Check all the input data for errors and whitespaces.
+     * If the data is valid, save or update all the data entered. Else redirect and display error messages.
+     *
+     * @return Either redirect to platforms page on successful save, or redirect to the same page and show errors.
+     */
+    public Result saveGeneralPlatformInformation() {
         Boolean platformHasErrors = false;
         Boolean informationContentHasErrors = false;
+        Boolean savedPlatform = false;
 
         List<InformationContent> informationContents;
         // Bind the data of the html form to the dynamic form object
         DynamicForm requestData = requestForm.bindFromRequest();
-        //System.out.println("DYNAMICFORM: " + requestData);
+        System.out.println("DYNAMICFORM: " + requestData);
         // Transfer all the data related to the platform entity into a platform object.
         Platform platform = Platform.formToPlatform(requestData);
-
-        /* Possible Error Messages
-        flash("error", "The platform name '" + platform.platformName + "' is not a valid name for a platform." +
-                " Please enter a valid platform name!");
-        flash("error", "The '" + currentElement.information.informationName + "' you entered is not valid!");
-
-           // Might be necessary for displaying proper error messages
-        informationContents = InformationContent.fillForeignKeyObjects(informationContents);
-        */
 
         // Remove leading or trailing whitespaces of the platform name before proceeding to save the platform object.
         platform.setPlatformName(platform.platformName.trim());
@@ -93,8 +119,10 @@ public class PlatformsController extends Controller {
                 // If there is no entry with the current platformId create a new entry, else update existing entries.
                 if (platform.platformId == null) {
                     platform.save();
+                    savedPlatform = true;
                 } else {
                     platform.update();
+                    savedPlatform = true;
                 }
             } else {
                 platformHasErrors = true;
@@ -121,17 +149,21 @@ public class PlatformsController extends Controller {
             if (currentElement.informationContent.isEmpty()
                     || currentElement.informationContent.matches(".*\\w.*")
                     || (currentElement.informationContent.matches(".*\\d.*"))) {
-                // If there is no entry with the current informationContentId create a new entry,
-                // else update existing entries.
-                if (currentElement.informationContentId == null) {
-                    currentElement.save();
-                } else {
-                    currentElement.update();
+                // Never save anything, if the platform hasn't been saved before. FOR NOW..
+                if (savedPlatform) {
+                    // If there is no entry with the current informationContentId create a new entry,
+                    // else update existing entries.
+                    if (currentElement.informationContentId == null) {
+                        currentElement.save();
+                    } else {
+                        currentElement.update();
+                    }
                 }
-                } else {
+            } else {
                 informationContentHasErrors = true;
-                flash("information_content_error" + currentElement.information.informationId, "'" + currentElement.informationContent
-                        + "' is not a valid input for this field. Please try using at least one letter or number!");
+                flash("information_content_error" + currentElement.information.informationId,
+                        "'" + currentElement.informationContent + "' is not a valid input for this field."
+                                + " Please try using at least one letter or number!");
             }
         }
         if (informationContentHasErrors || platformHasErrors) {
@@ -141,27 +173,11 @@ public class PlatformsController extends Controller {
                 return redirect(routes.PlatformsController.createNewPlatform());
             } else {
                 // Otherwise we need to redirect to the platform details page of the specific platform.;
-                return redirect(routes.PlatformsController.showSelectedPlatform(platform.platformId));
+                return redirect(routes.PlatformsController.showSelectedPlatformInformation(platform.platformId));
             }
         }
         // If none of the error flags is true, show a success message
-        flash("success", "Successfully saved platform '" + platform.platformName + "'.");
+        flash("success", "Successfully saved platform '" + platform.platformName + "'");
         return redirect(routes.PlatformsController.platforms(1));
     }
-
-/*    public Result saveNewPlatform() {
-        List<InformationContent> informationContents;
-        DynamicForm requestData = requestForm.bindFromRequest();
-        //System.out.println("DYNAMICFORM: " + requestData);
-        Platform platform = Platform.formToPlatform(requestData);
-        informationContents = InformationContent.formToInformationContents(requestData);
-
-        // If the form has errors, display an error message to the user.
-        if (requestData.hasErrors() || platform.platformName.isEmpty()) {
-            flash("error", "Please correct the form below.");
-            return badRequest(platformdetails.render(informationContents));
-            //return redirect(routes.PlatformsController.showSelectedPlatform(platform.platformId));
-        }
-    }
-    */
 }

@@ -22,9 +22,11 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
     public String impactContent;
     @DocEmbedded
     @ManyToOne
+    @JoinColumn(name = "impact_impact_id")
     public Impact impact;
     @DocEmbedded
     @ManyToOne
+    @JoinColumn(name = "platform_platform_id")
     public Platform platform;
 
     /* ----- Constructors ----- */

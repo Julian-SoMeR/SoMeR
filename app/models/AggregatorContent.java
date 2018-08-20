@@ -23,9 +23,11 @@ public class AggregatorContent extends BaseDomain implements PathBindable<Aggreg
     public String aggregatorContent;
     @DocEmbedded
     @ManyToOne
+    @JoinColumn(name = "aggregator_aggregator_id")
     public Aggregator aggregator;
     @DocEmbedded
     @ManyToOne
+    @JoinColumn(name = "platform_platform_id")
     public Platform platform;
 
     /* ----- Constructors ----- */

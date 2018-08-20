@@ -47,7 +47,7 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
         this.platform = platform;
     }
 
-    /* Methods necessary for the interface Pathbindable */
+    /* ---- Methods necessary for the interface Pathbindable ---- */
     @Override
     public InformationContent bind(String key, String id) {
         InformationContent informationContent = findByInformationContentId(new Long(id));
@@ -82,15 +82,14 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
     }
 
     /**
-     * This method uses the functionContentId of the functionContent entity to find data in the database and bind
-     * it to the corresponding model object.
+     * This method uses the platformId of the Platform entity to find data in the database and bind
+     * it to the InformationContent model object.
      */
     public static List<InformationContent> findAllByPlatformId(Long platformId) {
         List<InformationContent> informationContents = Ebean.find(InformationContent.class).where()
                 .eq("platform_platform_id", platformId).findList();
-        System.out.println("TEST: " + informationContents);
-        ArrayList<InformationContent> informationContentArrayList = new ArrayList<InformationContent>(informationContents);
-        //System.out.println("InformationContent ArrayList: " + informationContentArrayList);
+        ArrayList<InformationContent> informationContentArrayList =
+                new ArrayList<InformationContent>(informationContents);
         return informationContentArrayList;
     }
 
@@ -111,8 +110,14 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
         return informationContents;
     }
 
-    //Get list of informationIds -> run through Id
-
+    /**
+     * Map all the data of the request form to Platform and InformationContent objects. If the data is to be updated,
+     * load the existing data into the objects. Else create new objects to save everything.
+     *
+     * @param requestForm Form object containing all the data form an html form.
+     * @param platform    Platform object for use on update.
+     * @return List of InformationContents containing all the necessary data to render a page or save the objects.
+     */
     public static List<InformationContent> formToInformationContents(DynamicForm requestForm, Platform platform) {
         List<InformationContent> informationContents = new LinkedList<>();
         List<Information> informationList = Information.findAllInformation();
@@ -133,12 +138,6 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
                 newInformationContent.setInformationContent(contentString);
                 informationContents.add(newInformationContent);
             }
-                /*
-                Information informationObject = Information.findByInformationId(informationId);
-                List<InformationContent> informationContentsOfInformationObject = currentElement.getInformationContents();
-                informationContentsOfInformationObject.add(informationContent);
-                currentElement.setInformationContents(informationContentsOfInformationObject);
-                */
         }
         System.out.println("INFOCONTENT: " + informationContents);
         return informationContents;

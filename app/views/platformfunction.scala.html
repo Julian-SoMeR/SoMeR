@@ -1,0 +1,90 @@
+@(functionContents: List[FunctionContent], platform: models.Platform)
+@import helper._
+
+@platformName() = @{
+    platform.platformName
+}
+
+@platformId() = @{
+    if(platform != null) platform.platformId
+}
+
+@main("Platform Functions") {
+    @if(flash.containsKey("success")) {
+        <div class="alert alert-success">
+        @flash.get("success")
+        </div>
+    }
+        <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
+                Platforms</a></li>
+            <li>@platformName() <strong>(Functions)</strong></li>
+        </ul>
+    </div>
+
+    <div class="content-container">
+        <div class="platform-details-container">
+            <div class="platform-details-header-container">
+                <h1 class="platforms-headings">@platformName()</h1>
+            </div>
+            <div class="form-container">
+            @helper.form(action = routes.PlatformsController.saveGeneralPlatformInformation(),
+                'class -> "custom-form") {
+                <fieldset class="fieldset-container">
+                    <legend>
+                        <div class="platform-form-legend">
+                            <a class="platforms-top-navigation-link"
+                            href="@routes.PlatformsController.showSelectedPlatformInformation(platform.platformId)">
+                                General Information
+                            </a>
+                            <a class="platform-navigation-active platforms-top-navigation-link"
+                            href="@routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId)">
+                                Functions
+                            </a>
+                            <a class="platforms-top-navigation-link" href="@routes.PlatformsController.platforms()">
+                                Impacts
+                            </a>
+                            <div class="platforms-right-bottom-border"></div>
+                        </div>
+                    </legend>
+                    <input type="hidden" value="@platformId()" name="platformId"/>
+
+                    @for(contentObject <- functionContents) {
+                        <label for="functionId-@contentObject.function.functionId" class="input-label">
+                        @contentObject.function.functionName
+                        </label>
+                        <textarea class="input-textarea" rows="1"
+                        name="functionContent-@contentObject.function.functionId"
+                        id="functionContent-@contentObject.function.functionId"
+                        placeholder="Enter @contentObject.function.functionName.."
+                        >@contentObject.functionContent</textarea>
+                            <!-- Show an error message when there is an input
+                                    error on the general information content. -->
+                        @if(flash.containsKey("function_content_error"
+                                + contentObject.function.functionId)) {
+                            <div class="alert alert-error">
+                            @flash.get("function_content_error" + contentObject.function.functionId)
+                            </div>
+                        }
+                        <input type="hidden" value="@contentObject.function.functionId"
+                        name="functionId-@contentObject.function.functionId"/>
+                        <input type="hidden" value="@contentObject.functionContentId"
+                        name="functionContentId-@contentObject.function.functionId"/>
+
+                    }
+                    <div class="form-buttons-container">
+                        <input type="submit" class="custom-button" value="Save & Exit"/>
+                        <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
+                            Cancel
+                        </a>
+                    </div>
+                </fieldset>
+            }
+            </div>
+        </div>
+    </div>
+}

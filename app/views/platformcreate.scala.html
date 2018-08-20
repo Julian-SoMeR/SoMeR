@@ -1,71 +1,103 @@
 @import helper._
 @(informationList: List[Information])
-@main("Create New Platform") {
-    @if(flash.containsKey("success")){
-        <div class="alert alert-success">
-        @flash.get("success")
-        </div>
-    }
-    @if(flash.containsKey("error")){
-        <div class="alert alert-error">
-        @flash.get("error")
-        </div>
-    }
-    <!-- Breadcrumbs that get displayed before the content!
+    @main("Create New Platform") {
+        @if(flash.containsKey("success")) {
+            <div class="alert alert-success">
+            @flash.get("success")
+            </div>
+        }
+        @if(flash.containsKey("error")) {
+            <div class="alert alert-error">
+            @flash.get("error")
+            </div>
+        }
+            <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
-    <div class="breadcrumbs">
-        <p class="breadcrumb-paragraph">You are here: </p>
-        <ul class="breadcrumb-list">
-            <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
-                Platforms</a></li>
-            <li>Create new Platform</li>
-        </ul>
-    </div>
+        <div class="breadcrumbs">
+            <p class="breadcrumb-paragraph">You are here: </p>
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
+                    Platforms</a></li>
+                <li>Create new Platform</li>
+            </ul>
+        </div>
 
-    <div class="content-container">
-        <div class="platform-details-container">
-            <div class="platform-details-header-container">
-                <h1>Create new Platform</h1>
-                <a class="link-with-icon" href="@routes.PlatformsController.platforms()">
-                    View Functions
-                    <i class="material-icons button-right-arrow">arrow_forward</i>
-                </a>
-            </div>
-            <div class="form-container">
-            @helper.form(action = routes.PlatformsController.updatePlatformInformation(), 'class -> "custom-form") {
-                <fieldset class="fieldset-container">
-                    <legend><h3>General Platform Information</h3></legend>
+        <div class="content-container">
+            <div class="platform-details-container">
+                <div class="platform-details-header-container">
+                    <h2 class="platforms-headings">Create new Platform</h2>
+                </div>
+                <div class="form-container">
+                @helper.form(action = routes.PlatformsController.saveGeneralPlatformInformation(),
+                    'class -> "custom-form") {
+                    <fieldset class="fieldset-container">
+                        <legend>
+                            <div class="platform-form-legend">
+                                <a class="platforms-top-navigation-link platform-navigation-active"
+                                href="#">
+                                    General Information
+                                </a>
+                                <a class="platforms-top-navigation-link"
+                                href="#">
+                                    Functions
+                                </a>
+                                <a class="platforms-top-navigation-link"
+                                href="@routes.PlatformsController.platforms()">
+                                    Impacts
+                                </a>
+                                <div class="platforms-right-bottom-border"></div>
+                            </div>
+                        </legend>
 
-                    <div class="label-input-container">
-                        <label for="platformName">
-                            Platform Name
-                        </label>
-                        <input type="text" name="platformName" value=""
-                        placeholder="Enter Platform Name.. (Required)" required/>
-                        <input type="hidden" name="platformId"/>
-                    </div>
+                        <div class="label-input-container">
+                            <label for="platformName">
+                                Platform Name
+                            </label>
+                            <input type="text" name="platformName" value="" pattern=".*\w.*"
+                            placeholder="Enter Platform Name.. (Required)" required/>
+                                <!-- Show an error message when there is an input error on the platform name. -->
+                            @if(flash.containsKey("platform_error")) {
+                                <div class="alert alert-error">
+                                @flash.get("platform_error")
+                                </div>
+                            }
+                            <input type="hidden" name="platformId"/>
+                        </div>
 
 
-                    @for(informationObject <- informationList) {
-                        <label for="informationId-@informationObject.informationId">
-                        @informationObject.informationName
-                        </label>
-                        <input type="text" name="informationContent-@informationObject.informationId"
-                        value="" placeholder="Enter @informationObject.informationName.. "/>
-                        <input type="hidden" value="@informationObject.informationId"
-                        name="informationId-@informationObject.informationId"/>
-                        <input type="hidden" name="informationContentId-@informationObject.informationId"/>
-                    }
+                        @for(informationObject <- informationList) {
+                            <label for="informationId-@informationObject.informationId">
+                            @informationObject.informationName
+                            </label>
+                            <textarea class="input-textarea" rows="1"
+                            name="informationContent-@informationObject.informationId"
+                            id="informationContent-@informationObject.informationId"
+                            placeholder="Enter @informationObject.informationName.. "
+                            ></textarea>
 
-                    <div class="form-buttons-container">
-                        <input type="submit" class="custom-button" value="Save & Exit"/>
-                        <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
-                            Cancel
-                        </a>
-                    </div>
-                </fieldset>
-            }
+
+                                <!-- Show an error message when there is an input
+                                    error on the general information content. -->
+                            @if(flash.containsKey("information_content_error"
+                                    + informationObject.informationId)) {
+                                <div class="alert alert-error">
+                                @flash.get("information_content_error" + informationObject.informationId)
+                                </div>
+                            }
+                            <input type="hidden" value="@informationObject.informationId"
+                            name="informationId-@informationObject.informationId"/>
+                            <input type="hidden" name="informationContentId-@informationObject.informationId"/>
+                        }
+
+                        <div class="form-buttons-container">
+                            <input type="submit" class="custom-button" value="Save & Exit"/>
+                            <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
+                                Cancel
+                            </a>
+                        </div>
+                    </fieldset>
+                }
+                </div>
             </div>
         </div>
-    </div>
-}
+    }
