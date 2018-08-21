@@ -157,7 +157,7 @@ a:hover {
     display: flex;
     text-decoration: none;
     color: #FFF;
-    font-weight: bold;
+    font-weight: normal;
     padding: 10px 15px;
     background-color: #666666;
     border: 1px solid #505050;
@@ -168,6 +168,7 @@ a:hover {
 
 .navigation-link.active {
     color: #000;
+    font-weight: bold;
 }
 
 .active,
@@ -618,12 +619,18 @@ dd.error {
 .form-buttons-container {
     padding-top: 10px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
 }
+
 
 .form-buttons-container button {
     margin-left: 15px;
 }
+
+.form-buttons-container button:first-of-type {
+    margin-left: unset;
+}
+
 
 .button-right-arrow {
     position: relative;
@@ -645,14 +652,15 @@ dd.error {
 .platforms-top-navigation-link {
     display: flex;
     text-decoration: none;
+    font-size: 16px;
     color: #FFF;
-    font-weight: bold;
     padding: 5px 5px;
     background-color: #666666;
     border: 1px solid #505050;
     border-top-left-radius: unset;
     border-top-right-radius: unset;
     border-bottom: 1px solid black;
+    cursor: pointer;
 }
 
 .platforms-top-navigation-link:visited,
@@ -670,6 +678,11 @@ dd.error {
     color: #000;
     border: 1px solid black;
     border-bottom: 1px solid #F5F5F5;
+}
+
+.platform-navigation-active {
+    font-weight: bold;
+    cursor: unset;
 }
 
 .platform-table-container {

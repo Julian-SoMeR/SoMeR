@@ -1,108 +1,122 @@
 @(informationContents: List[InformationContent], platform: models.Platform)
-@import helper._
+    @import helper._
 
-@platformName() = @{
-    if(platform != null) platform.platformName
-}
+    @platformName() = @{
+        if(platform != null) platform.platformName
+    }
 
-@platformId() = @{
-    if(platform != null) platform.platformId
-}
+    @platformId() = @{
+        if(platform != null) platform.platformId
+    }
 
-@main("General Platform Information") {
-    @if(flash.containsKey("success")) {
-        <div class="alert alert-success">
-        @flash.get("success")
+    @main("General Platform Information") {
+        <!-- JavaScript Router to enable dialogs and routing from them. -->
+        <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
+
+        <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
+
+            <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+        <div class="breadcrumbs">
+            <p class="breadcrumb-paragraph">You are here: </p>
+            <ul class="breadcrumb-list">
+                <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
+                    Platforms</a></li>
+                <li>@platformName() <strong>(General Information)</strong></li>
+            </ul>
+        </div>
+
+        <div class="content-container">
+            <div class="platform-details-container">
+                <div class="platform-details-header-container">
+                    <h1 class="platforms-headings">@platformName()</h1>
+                </div>
+                    <!-- This enables flash messages on redirects. -->
+                @if(flash.containsKey("success")) {
+                    <div class="alert alert-success platforms-headings">
+                    @flash.get("success")
+                    </div>
+                }
+                <div class="form-container">
+                @helper.form(action = routes.PlatformsController.savePlatform(),
+                    'class -> "custom-form") {
+                    <fieldset class="fieldset-container">
+                        <legend>
+                            <div class="platform-form-legend">
+                                <a class="platforms-top-navigation-link platform-navigation-active">
+                                    General Information
+                                </a>
+                                <a class="platforms-top-navigation-link discard-warning"
+                                href="@routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId)">
+                                    Functions
+                                </a>
+                                <a class="platforms-top-navigation-link discard-warning"
+                                href="@routes.PlatformsController.platforms()">
+                                    Impacts
+                                </a>
+                                <div class="platforms-right-bottom-border"></div>
+                            </div>
+                        </legend>
+
+
+                        <div class="label-input-container">
+                            <label for="platformName">
+                                Platform Name
+                            </label>
+                            <input type="text" name="platformName" value="@platformName()" class="change-detection"
+                            placeholder="Enter Platform Name.. (Required)" required/>
+                                <!-- Show an error message when there is an input error on the platform name. -->
+                            @if(flash.containsKey("platform_error")) {
+                                <div class="alert alert-error">
+                                @flash.get("platform_error")
+                                </div>
+                            }
+                            <input type="hidden" value="@platformId()" name="platformId"/>
+                        </div>
+
+                        @for(contentObject <- informationContents) {
+
+                            <label for="informationId-@contentObject.information.informationId" class="input-label">
+                            @contentObject.information.informationName
+                            </label>
+                            <textarea class="input-textarea change-detection" rows="1"
+                            name="informationContent-@contentObject.information.informationId"
+                            id="informationContent-@contentObject.information.informationId"
+                            placeholder="@contentObject.information.informationName.."
+                            >@contentObject.informationContent</textarea>
+
+                                <!-- Show an error message when there is an input
+                                    error on the general information content. -->
+                            @if(flash.containsKey("information_content_error"
+                                    + contentObject.information.informationId)) {
+                                <div class="alert alert-error">
+                                @flash.get("information_content_error" + contentObject.information.informationId)
+                                </div>
+                            }
+                            <input type="hidden" value="@contentObject.information.informationId"
+                            name="informationId-@contentObject.information.informationId"/>
+                            <input type="hidden" value="@contentObject.informationContentId"
+                            name="informationContentId-@contentObject.information.informationId"/>
+
+                        }
+                        <div class="form-buttons-container">
+                            <button name="submit-button" type="submit" class="custom-button"
+                            id="form-submit-button" value="saveandexit">
+                                Save & Exit
+                            </button>
+                            <div>
+                                <button class="custom-button"
+                                onclick="submitWithValue('generalinformation-saveonly')">
+                                    Save
+                                </button>
+                                <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
+                                    Cancel
+                                </a>
+                            </div>
+                        </div>
+                    </fieldset>
+                }
+                </div>
+            </div>
         </div>
     }
-        <!-- Breadcrumbs that get displayed before the content!
-             This is a bit redundant BUT works without JS!!-->
-    <div class="breadcrumbs">
-        <p class="breadcrumb-paragraph">You are here: </p>
-        <ul class="breadcrumb-list">
-            <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
-                Platforms</a></li>
-            <li>@platformName() <strong>(General Information)</strong></li>
-        </ul>
-    </div>
-
-    <div class="content-container">
-        <div class="platform-details-container">
-            <div class="platform-details-header-container">
-                <h1 class="platforms-headings">@platformName()</h1>
-            </div>
-            <div class="form-container">
-            @helper.form(action = routes.PlatformsController.saveGeneralPlatformInformation(),
-                'class -> "custom-form") {
-                <fieldset class="fieldset-container">
-                    <legend>
-                        <div class="platform-form-legend">
-                            <a class="platforms-top-navigation-link platform-navigation-active"
-                            href="@routes.PlatformsController.showSelectedPlatformInformation(platform.platformId)">
-                                General Information
-                            </a>
-                            <a class="platforms-top-navigation-link"
-                            href="@routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId)">
-                                Functions
-                            </a>
-                            <a class="platforms-top-navigation-link"
-                            href="@routes.PlatformsController.platforms()">
-                                Impacts
-                            </a>
-                            <div class="platforms-right-bottom-border"></div>
-                        </div>
-                    </legend>
-
-
-                    <div class="label-input-container">
-                        <label for="platformName">
-                            Platform Name
-                        </label>
-                        <input type="text" name="platformName" value="@platformName()"
-                        placeholder="Enter Platform Name.. (Required)" required/>
-                            <!-- Show an error message when there is an input error on the platform name. -->
-                        @if(flash.containsKey("platform_error")) {
-                            <div class="alert alert-error">
-                            @flash.get("platform_error")
-                            </div>
-                        }
-                        <input type="hidden" value="@platformId()" name="platformId"/>
-                    </div>
-
-                    @for(contentObject <- informationContents) {
-
-                        <label for="informationId-@contentObject.information.informationId" class="input-label">
-                        @contentObject.information.informationName
-                        </label>
-                        <textarea class="input-textarea" rows="1"
-                        name="informationContent-@contentObject.information.informationId"
-                        id="informationContent-@contentObject.information.informationId"
-                        placeholder="Enter @contentObject.information.informationName.."
-                        >@contentObject.informationContent</textarea>
-
-                            <!-- Show an error message when there is an input
-                                    error on the general information content. -->
-                        @if(flash.containsKey("information_content_error"
-                                + contentObject.information.informationId)) {
-                            <div class="alert alert-error">
-                            @flash.get("information_content_error" + contentObject.information.informationId)
-                            </div>
-                        }
-                        <input type="hidden" value="@contentObject.information.informationId"
-                        name="informationId-@contentObject.information.informationId"/>
-                        <input type="hidden" value="@contentObject.informationContentId"
-                        name="informationContentId-@contentObject.information.informationId"/>
-
-                    }
-                    <div class="form-buttons-container">
-                        <input type="submit" class="custom-button" value="Save & Exit"/>
-                        <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
-                            Cancel
-                        </a>
-                    </div>
-                </fieldset>
-            }
-            </div>
-        </div>
-    </div>
-}

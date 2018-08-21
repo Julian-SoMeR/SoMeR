@@ -10,6 +10,8 @@
         </ul>
     </div>
 
+
+
     <div id="content-container" class="content-container">
 
         <div class="platform-table-container">
@@ -59,7 +61,7 @@
                                 @platform.platformName</a>
                             <div class="platform-icon-container">
                                 <a onclick=
-                                "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformId)')">
+                                "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformId)', '@platform.platformName')">
                                     <i class="material-icons delete">delete</i></a>
                             </div>
                         </td>

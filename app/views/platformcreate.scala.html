@@ -1,103 +1,109 @@
 @import helper._
 @(informationList: List[Information])
-    @main("Create New Platform") {
-        @if(flash.containsKey("success")) {
-            <div class="alert alert-success">
-            @flash.get("success")
-            </div>
-        }
-        @if(flash.containsKey("error")) {
-            <div class="alert alert-error">
-            @flash.get("error")
-            </div>
-        }
-            <!-- Breadcrumbs that get displayed before the content!
-             This is a bit redundant BUT works without JS!!-->
-        <div class="breadcrumbs">
-            <p class="breadcrumb-paragraph">You are here: </p>
-            <ul class="breadcrumb-list">
-                <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
-                    Platforms</a></li>
-                <li>Create new Platform</li>
-            </ul>
+@main("Create New Platform") {
+    <!-- JavaScript Router to enable dialogs and routing from them. -->
+    <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
+
+    <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
+
+    @if(flash.containsKey("error")) {
+        <div class="alert alert-error">
+        @flash.get("error")
         </div>
+    }
+        <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
+                Platforms</a></li>
+            <li>Create new Platform</li>
+        </ul>
+    </div>
 
-        <div class="content-container">
-            <div class="platform-details-container">
-                <div class="platform-details-header-container">
-                    <h2 class="platforms-headings">Create new Platform</h2>
-                </div>
-                <div class="form-container">
-                @helper.form(action = routes.PlatformsController.saveGeneralPlatformInformation(),
-                    'class -> "custom-form") {
-                    <fieldset class="fieldset-container">
-                        <legend>
-                            <div class="platform-form-legend">
-                                <a class="platforms-top-navigation-link platform-navigation-active"
-                                href="#">
-                                    General Information
-                                </a>
-                                <a class="platforms-top-navigation-link"
-                                href="#">
-                                    Functions
-                                </a>
-                                <a class="platforms-top-navigation-link"
-                                href="@routes.PlatformsController.platforms()">
-                                    Impacts
-                                </a>
-                                <div class="platforms-right-bottom-border"></div>
-                            </div>
-                        </legend>
-
-                        <div class="label-input-container">
-                            <label for="platformName">
-                                Platform Name
-                            </label>
-                            <input type="text" name="platformName" value="" pattern=".*\w.*"
-                            placeholder="Enter Platform Name.. (Required)" required/>
-                                <!-- Show an error message when there is an input error on the platform name. -->
-                            @if(flash.containsKey("platform_error")) {
-                                <div class="alert alert-error">
-                                @flash.get("platform_error")
-                                </div>
-                            }
-                            <input type="hidden" name="platformId"/>
+    <div class="content-container">
+        <div class="platform-details-container">
+            <div class="platform-details-header-container">
+                <h2 class="platforms-headings">Create new Platform</h2>
+            </div>
+            <div class="form-container">
+            @helper.form(action = routes.PlatformsController.savePlatform(),
+                'class -> "custom-form", 'id -> "create-new-platform-form", 'name -> "create-new-platform-form") {
+                <fieldset class="fieldset-container">
+                    <legend>
+                        <div class="platform-form-legend">
+                            <button type="button" class="platforms-top-navigation-link platform-navigation-active">
+                                General Information
+                            </button>
+                            <button type="button" class="platforms-top-navigation-link" id="functions-tab-link"
+                            onclick="submitWithValue('platformcreate-saveredirectfunctions')">
+                                Functions
+                            </button>
+                            <button type="button" class="platforms-top-navigation-link" id="impacts-tab-link"
+                            onclick="submitWithValue('platformcreate-saveredirectimpacts')">
+                                Impacts
+                            </button>
+                            <div class="platforms-right-bottom-border"></div>
                         </div>
+                    </legend>
 
-
-                        @for(informationObject <- informationList) {
-                            <label for="informationId-@informationObject.informationId">
-                            @informationObject.informationName
-                            </label>
-                            <textarea class="input-textarea" rows="1"
-                            name="informationContent-@informationObject.informationId"
-                            id="informationContent-@informationObject.informationId"
-                            placeholder="Enter @informationObject.informationName.. "
-                            ></textarea>
-
-
-                                <!-- Show an error message when there is an input
-                                    error on the general information content. -->
-                            @if(flash.containsKey("information_content_error"
-                                    + informationObject.informationId)) {
-                                <div class="alert alert-error">
-                                @flash.get("information_content_error" + informationObject.informationId)
-                                </div>
-                            }
-                            <input type="hidden" value="@informationObject.informationId"
-                            name="informationId-@informationObject.informationId"/>
-                            <input type="hidden" name="informationContentId-@informationObject.informationId"/>
+                    <div class="label-input-container">
+                        <label for="platformName">
+                            Platform Name
+                        </label>
+                        <input type="text" name="platformName" value="" pattern=".*\w.*"
+                        placeholder="Enter Platform Name.. (Required)" required/>
+                            <!-- Show an error message when there is an input error on the platform name. -->
+                        @if(flash.containsKey("platform_error")) {
+                            <div class="alert alert-error">
+                            @flash.get("platform_error")
+                            </div>
                         }
+                        <input type="hidden" name="platformId"/>
+                    </div>
 
-                        <div class="form-buttons-container">
-                            <input type="submit" class="custom-button" value="Save & Exit"/>
+
+                    @for(informationObject <- informationList) {
+                        <label for="informationId-@informationObject.informationId">
+                        @informationObject.informationName
+                        </label>
+                        <textarea class="input-textarea" rows="1"
+                        name="informationContent-@informationObject.informationId"
+                        id="informationContent-@informationObject.informationId"
+                        placeholder="@informationObject.informationName.. "
+                        ></textarea>
+                            <!-- Show an error message when there is an input
+                                    error on the general information content. -->
+                        @if(flash.containsKey("information_content_error"
+                                + informationObject.informationId)) {
+                            <div class="alert alert-error">
+                            @flash.get("information_content_error" + informationObject.informationId)
+                            </div>
+                        }
+                        <input type="hidden" value="@informationObject.informationId"
+                        name="informationId-@informationObject.informationId"/>
+                        <input type="hidden" name="informationContentId-@informationObject.informationId"/>
+                    }
+
+                    <div class="form-buttons-container">
+                        <button name="submit-button" type="submit" class="custom-button"
+                        id="form-submit-button" value="platformcreate-saveandexit">
+                            Save & Exit
+                        </button>
+                        <div>
+                            <button type="button" class="custom-button"
+                            onclick="submitWithValue('platformcreate-saveonly')">
+                                Save
+                            </button>
                             <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
                                 Cancel
                             </a>
                         </div>
-                    </fieldset>
-                }
-                </div>
+                    </div>
+                </fieldset>
+            }
             </div>
         </div>
-    }
+    </div>
+}

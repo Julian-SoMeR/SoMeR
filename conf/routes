@@ -50,8 +50,11 @@ GET     /platforms/generalinformation/:platformId   controllers.PlatformsControl
 #Show the selected platform functions
 GET     /platforms/functions/:platformId            controllers.PlatformsController.showSelectedPlatformFunctions(platformId: Long)
 
+#JavaScript Router
+GET     /javascriptRoutes           controllers.ApplicationController.javascriptRoutes
+
 #Delete a platform
 DELETE  /platforms/:platformId      controllers.PlatformsController.deletePlatform(platformId: Long)
 
 #Save a platform
-POST    /platforms                  controllers.PlatformsController.saveGeneralPlatformInformation()
+POST    /platforms                  controllers.PlatformsController.savePlatform()

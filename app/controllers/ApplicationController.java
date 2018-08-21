@@ -5,8 +5,7 @@ import play.mvc.*;
 import views.html.*;
 import models.*;
 import javax.inject.*;
-import play.data.Form;
-import play.data.FormFactory;
+import play.routing.JavaScriptReverseRouter;
 
 public class ApplicationController extends Controller {
 
@@ -41,5 +40,16 @@ public class ApplicationController extends Controller {
     // This renders the cookie-policy page.
     public  Result cookies() {
         return ok(cookiepolicy.render());
+    }
+
+    //Defining a Javascript Router
+    public Result javascriptRoutes() {
+        return ok(
+                JavaScriptReverseRouter.create("jsRoutes",
+                        routes.javascript.PlatformsController.savePlatform(),
+                        routes.javascript.PlatformsController.showSelectedPlatformFunctions(),
+                        routes.javascript.PlatformsController.platforms()
+                )
+        ).as("text/javascript");
     }
 }

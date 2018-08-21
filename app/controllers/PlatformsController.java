@@ -98,10 +98,36 @@ public class PlatformsController extends Controller {
      *
      * @return Either redirect to platforms page on successful save, or redirect to the same page and show errors.
      */
-    public Result saveGeneralPlatformInformation() {
+    public Result savePlatform() {
+        // Flags to check for errors and make routing decisions
         Boolean platformHasErrors = false;
         Boolean informationContentHasErrors = false;
-        Boolean savedPlatform = false;
+        Boolean createNewPlatformSubmission = false;
+
+        // Get the value of the submit button set by submitWithValue() javascript method from
+        // the http request by name to decide where to route next after successful saves.
+        int routingCaseSelector = 0;
+        String[] submitValues = request().body().asFormUrlEncoded().get("submit-button");
+        if(submitValues == null || submitValues.length == 0) {
+            return badRequest("No action provided!");
+        } else {
+            String submitValueString = submitValues[0];
+            // Default save on platform creation. Redirect to platforms list
+            if(submitValueString.equals("platformcreate-saveandexit")) {
+                routingCaseSelector = 1;
+                // Redirect to newly created platform after saving
+            } else if(submitValueString.equals("platformcreate-saveonly")) {
+                routingCaseSelector = 2;
+                // Redirect to functions of newly created platform after saving
+            } else if(submitValueString.equals("platformcreate-saveredirectfunctions")) {
+                routingCaseSelector = 3;
+                // Redirect to impacts of newly created platform after saving
+            } else if(submitValueString.equals("platformcreate-saveredirectimpacts")) {
+                routingCaseSelector = 4;
+            } else {
+                return badRequest("Action provided didn't match anything known.");
+            }
+        }
 
         List<InformationContent> informationContents;
         // Bind the data of the html form to the dynamic form object
@@ -119,10 +145,10 @@ public class PlatformsController extends Controller {
                 // If there is no entry with the current platformId create a new entry, else update existing entries.
                 if (platform.platformId == null) {
                     platform.save();
-                    savedPlatform = true;
+                    createNewPlatformSubmission = true;
                 } else {
                     platform.update();
-                    savedPlatform = true;
+                    createNewPlatformSubmission = true;
                 }
             } else {
                 platformHasErrors = true;
@@ -150,7 +176,7 @@ public class PlatformsController extends Controller {
                     || currentElement.informationContent.matches(".*\\w.*")
                     || (currentElement.informationContent.matches(".*\\d.*"))) {
                 // Never save anything, if the platform hasn't been saved before. FOR NOW..
-                if (savedPlatform) {
+                if (createNewPlatformSubmission) {
                     // If there is no entry with the current informationContentId create a new entry,
                     // else update existing entries.
                     if (currentElement.informationContentId == null) {
@@ -177,7 +203,20 @@ public class PlatformsController extends Controller {
             }
         }
         // If none of the error flags is true, show a success message
-        flash("success", "Successfully saved platform '" + platform.platformName + "'");
-        return redirect(routes.PlatformsController.platforms(1));
+        flash("success", "Save successful.");
+        // Decide where to route next.
+        switch (routingCaseSelector) {
+            case 0: return badRequest("RoutingCaseSelector didn't change. This should be impossible.");
+
+            case 1: return redirect(routes.PlatformsController.platforms(1));
+
+            case 2: return redirect(routes.PlatformsController.showSelectedPlatformInformation(platform.platformId));
+
+            case 3: return redirect(routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId));
+
+            case 4: return redirect(routes.PlatformsController.platforms(1));
+
+            default: return badRequest("Something went horribly wrong!");
+        }
     }
 }
