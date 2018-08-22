@@ -17,7 +17,7 @@ create table aggregator (
 create table aggregator_content (
   aggregator_content_id         bigint auto_increment not null,
   delete_status                 tinyint(1) default 0 not null,
-  aggregator_content            TEXT,
+  aggregator_content            TEXT default '' not null,
   aggregator_aggregator_id      bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,
@@ -39,7 +39,7 @@ create table function (
 create table function_content (
   function_content_id           bigint auto_increment not null,
   delete_status                 tinyint(1) default 0 not null,
-  function_content              TEXT,
+  function_content              TEXT default '' not null,
   function_function_id          bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,
@@ -61,7 +61,7 @@ create table impact (
 create table impact_content (
   impact_content_id             bigint auto_increment not null,
   delete_status                 tinyint(1) default 0 not null,
-  impact_content                TEXT,
+  impact_content                TEXT default '' not null,
   impact_impact_id              bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,
@@ -81,7 +81,7 @@ create table information (
 create table information_content (
   information_content_id        bigint auto_increment not null,
   delete_status                 tinyint(1) default 0 not null,
-  information_content           TEXT,
+  information_content           TEXT default '' not null,
   information_information_id    bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,

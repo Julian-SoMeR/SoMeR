@@ -58,3 +58,5 @@ DELETE  /platforms/:platformId      controllers.PlatformsController.deletePlatfo
 
 #Save a platform
 POST    /platforms                  controllers.PlatformsController.savePlatform()
+
+POST    /platforms/createnew        controllers.PlatformsController.saveNewPlatform()

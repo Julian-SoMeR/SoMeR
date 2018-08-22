@@ -21,7 +21,8 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long impactContentId;
-    @Column(columnDefinition = "TEXT")
+    @NotNull
+    @Column(columnDefinition = "TEXT default ''")
     public String impactContent;
     @DocEmbedded
     @ManyToOne

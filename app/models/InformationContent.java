@@ -1,5 +1,6 @@
 package models;
 
+
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
@@ -25,7 +26,8 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long informationContentId;
-    @Column(columnDefinition = "TEXT")
+    @NotNull
+    @Column(columnDefinition = "TEXT default ''")
     public String informationContent;
     @DocEmbedded
     @ManyToOne

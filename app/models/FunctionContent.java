@@ -3,12 +3,14 @@ package models;
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
+import play.data.DynamicForm;
 
 import javax.persistence.*;
 
 import play.mvc.*;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -24,7 +26,8 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long functionContentId;
-    @Column(columnDefinition = "TEXT")
+    @NotNull
+    @Column(columnDefinition = "TEXT default ''")
     public String functionContent;
     @DocEmbedded
     @ManyToOne
@@ -110,6 +113,40 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
                     Platform.findByPlatformId(currentElement.platform.platformId).getPlatformName());
             currentElement.function.setFunctionName(
                     Function.findByFunctionId(currentElement.function.functionId).getFunctionName());
+        }
+        return functionContents;
+    }
+
+    /**
+     * Map all the data of the request form to Platform and FunctionContent objects. If the data is to be updated,
+     * load the existing data into the objects. Else create new objects to save everything.
+     *
+     * @param requestForm Form object containing all the data form an html form.
+     * @param platform    Platform object for use on update.
+     * @return List of FunctionContents containing all the necessary data to render a page or save the objects.
+     */
+    public static List<FunctionContent> formToFunctionContents(DynamicForm requestForm, Platform platform) {
+        List<FunctionContent> functionContents = new LinkedList<>();
+        List<Function> functionList = Function.findAllFunctions();
+
+        for (Function currentElement : functionList) {
+            String functionContentIdString = requestForm.get("functionContentId-" + currentElement.functionId);
+
+            if (functionContentIdString != null && !functionContentIdString.isEmpty()) {
+                Long functionContentId = Long.parseLong(functionContentIdString);
+                FunctionContent existingFunctionContent =
+                        FunctionContent.findByFunctionContentId(functionContentId);
+                String contentString = requestForm.get("functionContent-" + currentElement.functionId);
+                existingFunctionContent.setFunctionContent(contentString);
+                functionContents.add(existingFunctionContent);
+            } else {
+                FunctionContent newFunctionContent = new FunctionContent();
+                newFunctionContent.setPlatform(platform);
+                newFunctionContent.setFunction(currentElement);
+                String contentString = requestForm.get("functionContent-" + currentElement.functionId);
+                newFunctionContent.setFunctionContent(contentString);
+                functionContents.add(newFunctionContent);
+            }
         }
         return functionContents;
     }

@@ -44,6 +44,13 @@ $(document).ready(function () {
 
 // Set value of submit button to predefined string that enables routing decisions in the savePlatform() method
 function submitWithValue(submitValue) {
+        let submitButton = document.getElementById("form-submit-button");
+        submitButton.value = submitValue;
+        submitButton.click();
+}
+
+/*
+function submitWithValue(submitValue) {
     if (submitValue === "platformcreate-saveredirectfunctions") {
         let dialogResult = confirm("You can only view functions after the platform is saved.\n" +
             "Save and proceed to the 'Functions' tab?");
@@ -61,11 +68,14 @@ function submitWithValue(submitValue) {
             submitButton.click();
         }
     } else if (submitValue === "platformcreate-saveonly" || submitValue === "generalinformation-saveonly") {
-        let submitButton = document.getElementById("form-submit-button");
-        submitButton.value = submitValue;
-        submitButton.click();
+
+    let submitButton = document.getElementById("form-submit-button");
+    submitButton.value = submitValue;
+    submitButton.click();
     }
 }
+*/
+
 
 /*Save and redirect to functions page
 function saveRedirectToFunctions() {

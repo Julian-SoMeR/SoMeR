@@ -38,7 +38,7 @@ public class PlatformsController extends Controller {
      * @return Render HTML template with http status code 400.
      */
     public Result createNewPlatform() {
-        return ok(platformcreate.render(informationList));
+        return ok(platformcreate.render());
     }
 
     /**
@@ -91,6 +91,74 @@ public class PlatformsController extends Controller {
         platform.update();
         return redirect(routes.PlatformsController.platforms(1));
     }
+
+    /**
+     * Creating a new platform and saving all necessary entities bound to the platform.
+     * On successful save, redirect to the newly created platform.
+     *
+     * @return Either stay on createPlatform page and show an error or redirect to newly created platform after saving.
+     */
+    public Result saveNewPlatform() {
+        // Bind the data of the html form to the dynamic form object
+        DynamicForm requestData = requestForm.bindFromRequest();
+        Boolean platformHasErrors = false;
+        // Transfer all the data related to the platform entity into a platform object.
+        Platform platform = Platform.formToPlatform(requestData);
+
+        // Remove leading or trailing whitespaces of the platform name before proceeding to save the platform object.
+        platform.setPlatformName(platform.platformName.trim());
+        // Only save or update a platform if its name did not contained only whitespaces
+        if (platform.platformName.length() > 0) {
+            // A platform name should also contain either an alphanumeric character or a number to be valid.
+            if (platform.platformName.matches(".*\\w.*") || (platform.platformName.matches(".*\\d.*"))) {
+                platform.save();
+
+                // If everything went okay, also save empty Information-, Function- and ImpactContent objects to the
+                // database.
+                List<Information> informationList = Information.findAllInformation();
+                for (Information currentElement : informationList) {
+                    InformationContent informationContent = new InformationContent();
+                    informationContent.setPlatform(platform);
+                    informationContent.setInformation(currentElement);
+                    informationContent.setInformationContent("");
+                    informationContent.save();
+                }
+                List<Function> functionList = Function.findAllFunctions();
+                for (Function currentElement : functionList) {
+                    FunctionContent functionContent = new FunctionContent();
+                    functionContent.setPlatform(platform);
+                    functionContent.setFunction(currentElement);
+                    functionContent.setFunctionContent("");
+                    functionContent.save();
+                }
+                List<Impact> impactList = Impact.findAllImpacts();
+                for (Impact currentElement : impactList) {
+                    ImpactContent impactContent = new ImpactContent();
+                    impactContent.setPlatform(platform);
+                    impactContent.setImpact(currentElement);
+                    impactContent.setImpactContent("");
+                    impactContent.save();
+                }
+            }
+        } else {
+            platformHasErrors = true;
+        }
+        if (platformHasErrors || platform.platformId == null) {
+            if (platform.platformName.isEmpty()) {
+                // Render this error message if there were only whitespaces
+                flash("platform_error", "Please enter a platform name!");
+            } else {
+                // Something goes wrong or the user entered something that didn't contain alphanumeric characters or
+                // numbers, render this error message
+                flash("platform_error", "'" + platform.platformName
+                        + "' is not a valid name for a platform. Please enter a platform name!");
+            }
+            return redirect(routes.PlatformsController.createNewPlatform());
+        } else {
+            return redirect(routes.PlatformsController.showSelectedPlatformInformation(platform.platformId));
+        }
+    }
+
 
     /**
      * Bind data from an html form and bind it to a dynamic form. Check all the input data for errors and whitespaces.

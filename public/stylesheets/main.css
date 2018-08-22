@@ -558,6 +558,7 @@ a:hover {
 
 .platforms-headings {
     margin-left: 15px;
+    margin-right: 15px;
 }
 
 .form-container {
@@ -816,6 +817,22 @@ edit {
     top: -15px;
     left: 0px;
 }
+
+.platformcreate-form-legend {
+    display: flex;
+    justify-content: flex-start;
+    width: 550px;
+    position: relative;
+    top: -26px;
+    left: 0px;
+}
+
+.platformcreate-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+}
+
 
 .platforms-right-bottom-border {
     display: flex;

@@ -1,11 +1,5 @@
 @import helper._
-@(informationList: List[Information])
 @main("Create New Platform") {
-    <!-- JavaScript Router to enable dialogs and routing from them. -->
-    <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
-
-    <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
-
     @if(flash.containsKey("error")) {
         <div class="alert alert-error">
         @flash.get("error")
@@ -23,26 +17,15 @@
     </div>
 
     <div class="content-container">
-        <div class="platform-details-container">
-            <div class="platform-details-header-container">
-                <h2 class="platforms-headings">Create new Platform</h2>
-            </div>
+        <div class="platformcreate-container">
             <div class="form-container">
-            @helper.form(action = routes.PlatformsController.savePlatform(),
+            @helper.form(action = routes.PlatformsController.saveNewPlatform(),
                 'class -> "custom-form", 'id -> "create-new-platform-form", 'name -> "create-new-platform-form") {
                 <fieldset class="fieldset-container">
                     <legend>
-                        <div class="platform-form-legend">
+                        <div class="platformcreate-form-legend">
                             <button type="button" class="platforms-top-navigation-link platform-navigation-active">
-                                General Information
-                            </button>
-                            <button type="button" class="platforms-top-navigation-link" id="functions-tab-link"
-                            onclick="submitWithValue('platformcreate-saveredirectfunctions')">
-                                Functions
-                            </button>
-                            <button type="button" class="platforms-top-navigation-link" id="impacts-tab-link"
-                            onclick="submitWithValue('platformcreate-saveredirectimpacts')">
-                                Impacts
+                                <h2 class="platforms-headings">Create New Platform</h2>
                             </button>
                             <div class="platforms-right-bottom-border"></div>
                         </div>
@@ -50,9 +33,9 @@
 
                     <div class="label-input-container">
                         <label for="platformName">
-                            Platform Name
+                            Enter Platform Name
                         </label>
-                        <input type="text" name="platformName" value="" pattern=".*\w.*"
+                        <input type="text" name="platformName" value=""
                         placeholder="Enter Platform Name.. (Required)" required/>
                             <!-- Show an error message when there is an input error on the platform name. -->
                         @if(flash.containsKey("platform_error")) {
@@ -63,38 +46,12 @@
                         <input type="hidden" name="platformId"/>
                     </div>
 
-                    @for(informationObject <- informationList) {
-                        <label for="informationId-@informationObject.informationId">
-                        @informationObject.informationName
-                        </label>
-                        <textarea class="input-textarea" rows="1"
-                        name="informationContent-@informationObject.informationId"
-                        id="informationContent-@informationObject.informationId"
-                        placeholder="@informationObject.informationName.. "
-                        ></textarea>
-                            <!-- Show an error message when there is an input
-                                    error on the general information content. -->
-                        @if(flash.containsKey("information_content_error"
-                                + informationObject.informationId)) {
-                            <div class="alert alert-error">
-                            @flash.get("information_content_error" + informationObject.informationId)
-                            </div>
-                        }
-                        <input type="hidden" value="@informationObject.informationId"
-                        name="informationId-@informationObject.informationId"/>
-                        <input type="hidden" name="informationContentId-@informationObject.informationId"/>
-                    }
-
                     <div class="form-buttons-container">
                         <button name="submit-button" type="submit" class="custom-button"
-                        id="form-submit-button" value="saveandexit">
-                            Save & Exit
+                        id="form-submit-button">
+                            Save & View
                         </button>
                         <div>
-                            <button type="button" class="custom-button"
-                            onclick="submitWithValue('platformcreate-saveonly')">
-                                Save
-                            </button>
                             <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
                                 Cancel
                             </a>

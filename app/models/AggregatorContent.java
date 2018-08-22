@@ -22,7 +22,8 @@ public class AggregatorContent extends BaseDomain implements PathBindable<Aggreg
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long aggregatorContentId;
-    @Column(columnDefinition = "TEXT")
+    @NotNull
+    @Column(columnDefinition = "TEXT default ''")
     public String aggregatorContent;
     @DocEmbedded
     @ManyToOne
