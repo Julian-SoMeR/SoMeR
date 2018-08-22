@@ -61,9 +61,7 @@ public class PlatformsController extends Controller {
     public Result showSelectedPlatformFunctions(Long platformId) {
         List<FunctionContent> functionContents;
         Platform platform = Platform.findByPlatformId(platformId);
-        System.out.println("PLATFORM: " + platform);
         functionContents = FunctionContent.findAllByPlatformId(platformId);
-        System.out.println("CONTENTS: " + functionContents);
         functionContents = FunctionContent.fillForeignKeyObjects(functionContents);
         if (platform == null) {
             return notFound(String.format("Platform %d does not exist.", platformId));
@@ -86,9 +84,11 @@ public class PlatformsController extends Controller {
             return notFound(String.format("Platform %s does not exist.", platformId));
         }
         for (InformationContent currentElement : informationContents) {
-            currentElement.delete();
+            currentElement.setDeleteStatus(true);
+            currentElement.update();
         }
-        platform.delete();
+        platform.setDeleteStatus(true);
+        platform.update();
         return redirect(routes.PlatformsController.platforms(1));
     }
 
@@ -108,22 +108,26 @@ public class PlatformsController extends Controller {
         // the http request by name to decide where to route next after successful saves.
         int routingCaseSelector = 0;
         String[] submitValues = request().body().asFormUrlEncoded().get("submit-button");
-        if(submitValues == null || submitValues.length == 0) {
+        if (submitValues == null || submitValues.length == 0) {
             return badRequest("No action provided!");
         } else {
             String submitValueString = submitValues[0];
-            // Default save on platform creation. Redirect to platforms list
-            if(submitValueString.equals("platformcreate-saveandexit")) {
+            // Default save on platforms and platform creation. Redirect to platforms list.
+            if (submitValueString.equals("saveandexit")) {
                 routingCaseSelector = 1;
                 // Redirect to newly created platform after saving
-            } else if(submitValueString.equals("platformcreate-saveonly")) {
+            } else if (submitValueString.equals("platformcreate-saveonly")) {
+                routingCaseSelector = 2;
+                // Stay on general information page after saving. Same action as above.
+            } else if (submitValueString.equals("generalinformation-saveonly")) {
                 routingCaseSelector = 2;
                 // Redirect to functions of newly created platform after saving
-            } else if(submitValueString.equals("platformcreate-saveredirectfunctions")) {
+            } else if (submitValueString.equals("platformcreate-saveredirectfunctions")) {
                 routingCaseSelector = 3;
                 // Redirect to impacts of newly created platform after saving
-            } else if(submitValueString.equals("platformcreate-saveredirectimpacts")) {
+            } else if (submitValueString.equals("platformcreate-saveredirectimpacts")) {
                 routingCaseSelector = 4;
+                // Action provided does not exist.
             } else {
                 return badRequest("Action provided didn't match anything known.");
             }
@@ -132,7 +136,7 @@ public class PlatformsController extends Controller {
         List<InformationContent> informationContents;
         // Bind the data of the html form to the dynamic form object
         DynamicForm requestData = requestForm.bindFromRequest();
-        System.out.println("DYNAMICFORM: " + requestData);
+
         // Transfer all the data related to the platform entity into a platform object.
         Platform platform = Platform.formToPlatform(requestData);
 
@@ -144,10 +148,15 @@ public class PlatformsController extends Controller {
             if (platform.platformName.matches(".*\\w.*") || (platform.platformName.matches(".*\\d.*"))) {
                 // If there is no entry with the current platformId create a new entry, else update existing entries.
                 if (platform.platformId == null) {
+
                     platform.save();
                     createNewPlatformSubmission = true;
                 } else {
-                    platform.update();
+                    // Only update a platform if there are changes
+                    Platform platformBeforeSave = Platform.findByPlatformId(platform.platformId);
+                    if (!platformBeforeSave.platformName.equals(platform.platformName)) {
+                        platform.update();
+                    }
                     createNewPlatformSubmission = true;
                 }
             } else {
@@ -174,7 +183,7 @@ public class PlatformsController extends Controller {
             // it is valid. This is done to prevent inputs only containing special characters.
             if (currentElement.informationContent.isEmpty()
                     || currentElement.informationContent.matches(".*\\w.*")
-                    || (currentElement.informationContent.matches(".*\\d.*"))) {
+                    || currentElement.informationContent.matches(".*\\d.*")) {
                 // Never save anything, if the platform hasn't been saved before. FOR NOW..
                 if (createNewPlatformSubmission) {
                     // If there is no entry with the current informationContentId create a new entry,
@@ -182,7 +191,12 @@ public class PlatformsController extends Controller {
                     if (currentElement.informationContentId == null) {
                         currentElement.save();
                     } else {
-                        currentElement.update();
+                        // Only update InformationContent if there are changes.
+                        InformationContent informationContentBeforeSave =
+                                InformationContent.findByInformationContentId(currentElement.informationContentId);
+                        if (!informationContentBeforeSave.informationContent.equals(currentElement.informationContent)) {
+                            currentElement.update();
+                        }
                     }
                 }
             } else {
@@ -206,17 +220,23 @@ public class PlatformsController extends Controller {
         flash("success", "Save successful.");
         // Decide where to route next.
         switch (routingCaseSelector) {
-            case 0: return badRequest("RoutingCaseSelector didn't change. This should be impossible.");
+            case 0:
+                return badRequest("RoutingCaseSelector didn't change. This should be impossible.");
 
-            case 1: return redirect(routes.PlatformsController.platforms(1));
+            case 1:
+                return redirect(routes.PlatformsController.platforms(1));
 
-            case 2: return redirect(routes.PlatformsController.showSelectedPlatformInformation(platform.platformId));
+            case 2:
+                return redirect(routes.PlatformsController.showSelectedPlatformInformation(platform.platformId));
 
-            case 3: return redirect(routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId));
+            case 3:
+                return redirect(routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId));
 
-            case 4: return redirect(routes.PlatformsController.platforms(1));
+            case 4:
+                return redirect(routes.PlatformsController.platforms(1));
 
-            default: return badRequest("Something went horribly wrong!");
+            default:
+                return badRequest("Something went horribly wrong!");
         }
     }
 }

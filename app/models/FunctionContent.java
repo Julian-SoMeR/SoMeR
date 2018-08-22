@@ -77,7 +77,10 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
      * @return Model object filled with data from the aggregatorContent table.
      */
     public static FunctionContent findByFunctionContentId(Long functionContentId) {
-        return Ebean.find(FunctionContent.class, functionContentId);
+        return Ebean.find(FunctionContent.class).where().and(
+                Expr.eq("functionContentId", functionContentId),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**
@@ -85,9 +88,10 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
      * it to the FunctionContent model object.
      */
     public static List<FunctionContent> findAllByPlatformId(Long platformId) {
-        List<FunctionContent> functionContents = Ebean.find(FunctionContent.class).where()
-                .eq("platform_platform_id", platformId).findList();
-        System.out.println("TEST: " + functionContents);
+        List<FunctionContent> functionContents = Ebean.find(FunctionContent.class).where().and(
+                Expr.eq("platform_platform_id", platformId),
+                Expr.eq("deleteStatus", 0)
+        ).findList();
         ArrayList<FunctionContent> functionContentArrayList =
                 new ArrayList<FunctionContent>(functionContents);
         return functionContentArrayList;

@@ -13,14 +13,14 @@ import play.mvc.*;
  * The JPA/Ebean annotations are used to tell Play how
  * to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "information")
 public class Information extends BaseDomain implements PathBindable<Information> {
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long informationId;
-    //@DocSortable
+    @DocSortable
     public String informationName;
     //@DocEmbedded
     @OneToMany(cascade=CascadeType.ALL, mappedBy = "information")
@@ -70,7 +70,10 @@ public class Information extends BaseDomain implements PathBindable<Information>
      * @return Model object filled with data from the information table.
      */
     public static Information findByInformationId(Long informationId) {
-        return Ebean.find(Information.class, informationId);
+        return Ebean.find(Information.class).where().and(
+                Expr.eq("informationId", informationId),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**
@@ -79,7 +82,10 @@ public class Information extends BaseDomain implements PathBindable<Information>
      * @return The information object filled with the data found in the database.
      */
     public static Information findByInformationName(String informationName) {
-        return Ebean.find(Information.class).where().eq("informationName", informationName).findOne();
+        return Ebean.find(Information.class).where().and(
+                Expr.eq("informationName", informationName),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**
@@ -87,15 +93,17 @@ public class Information extends BaseDomain implements PathBindable<Information>
      * @return List of all information objects filled by the data from the database.
      */
     public static List<Information> findAllInformation() {
-        informationList = Ebean.find(Information.class).findList();
+        informationList = Ebean.find(Information.class).where().eq("deleteStatus", 0).findList();
         ArrayList <Information> informationArrayList = new ArrayList<Information>(informationList);
         return informationArrayList;
     }
 
+    /*
     public static List<Information> findAllInformationIds() {
         informationIds = Ebean.find(Information.class).select("informationId").findList();
         return informationIds;
     }
+    */
 
     /* ---- Getters, Setters, ToString Method ---- */
 

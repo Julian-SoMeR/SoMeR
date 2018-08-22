@@ -1,13 +1,12 @@
 // Delete a platform after confirming a dialog
 function deletePlatform(urlToDelete, platformName) {
-    let dialogResult = confirm("Deleting this platform also deletes all the data connected to it!\n" +
-        "Do you want to proceed deleting '" + platformName + "' and all of its data?");
+    let dialogResult = confirm("Are you sure you want to delete '" +
+         platformName + "'?");
     if (dialogResult) {
         $.ajax({
             url: urlToDelete,
             type: 'DELETE',
             success: function (results) {
-                alert("Platform '" + platformName + "' has been successfully deleted!");
                 location.reload();
             }
         });
@@ -61,7 +60,7 @@ function submitWithValue(submitValue) {
             submitButton.value = submitValue;
             submitButton.click();
         }
-    } else if (submitValue === "platformcreate-saveonly") {
+    } else if (submitValue === "platformcreate-saveonly" || submitValue === "generalinformation-saveonly") {
         let submitButton = document.getElementById("form-submit-button");
         submitButton.value = submitValue;
         submitButton.click();

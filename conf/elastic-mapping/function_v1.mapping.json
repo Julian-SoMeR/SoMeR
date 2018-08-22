@@ -2,12 +2,12 @@
   "mappings" : {
     "function" : {
       "properties" : {
+        "deleteStatus": { "type": "boolean" },
         "functionName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
         "functionCategory": { "type": "text" },
         "functionDescription": { "type": "text" },
         "creationDate": { "type": "date" },
-        "modificationDate": { "type": "date" },
-        "versionNumber": { "type": "long" }
+        "modificationDate": { "type": "date" }
       }
     }
   }

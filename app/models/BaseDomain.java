@@ -9,6 +9,7 @@ import javax.persistence.MappedSuperclass;
 import javax.persistence.Version;
 import java.io.Serializable;
 import java.sql.Timestamp;
+
 import play.mvc.*;
 
 /**
@@ -20,14 +21,16 @@ import play.mvc.*;
 @MappedSuperclass
 public class BaseDomain extends Model {
 
+    // Auto-generated timestamp for the creation of any entity
     @WhenCreated
     Timestamp creationDate;
 
+    // Auto-generated timestamp for the creation of any entity
     @WhenModified
     Timestamp modificationDate;
 
-    @Version
-    Long versionNumber;
+    //Flag for all entities to signal deletion, without actually deleting anything.
+    boolean deleteStatus;
 
     public Timestamp getCreationDate() {
         return creationDate;
@@ -45,11 +48,11 @@ public class BaseDomain extends Model {
         this.modificationDate = modificationDate;
     }
 
-    public Long getVersionNumber() {
-        return versionNumber;
+    public boolean isDeleteStatus() {
+        return deleteStatus;
     }
 
-    public void setVersionNumber(Long versionNumber) {
-        this.versionNumber = versionNumber;
+    public void setDeleteStatus(boolean deleteStatus) {
+        this.deleteStatus = deleteStatus;
     }
 }

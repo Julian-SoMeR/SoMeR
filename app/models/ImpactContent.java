@@ -5,6 +5,9 @@ import io.ebean.annotation.*;
 import javax.persistence.*;
 import play.mvc.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *  This model contains all the impact data contents of the SoMeR. It can only be obtained via
  *  a cross reference between its impacts and a platform.
@@ -69,7 +72,24 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
      * @return Model object filled with data from the impactContent table.
      */
     public static ImpactContent findByImpactContentId(Long impactContentId) {
-        return Ebean.find(ImpactContent.class, impactContentId);
+        return Ebean.find(ImpactContent.class).where().and(
+                Expr.eq("impactContentId", impactContentId),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
+    }
+
+    /**
+     * This method uses the platformId of the Platform entity to find data in the database and bind
+     * it to the ImpactContent model object.
+     */
+    public static List<ImpactContent> findAllByPlatformId(Long platformId) {
+        List<ImpactContent> impactContents = Ebean.find(ImpactContent.class).where().and(
+                Expr.eq("impact_impact_id", platformId),
+                Expr.eq("deleteStatus", 0)
+        ).findList();
+        ArrayList<ImpactContent> impactContentArrayList =
+                new ArrayList<ImpactContent>(impactContents);
+        return impactContentArrayList;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */

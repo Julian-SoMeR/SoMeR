@@ -1,9 +1,7 @@
 package models;
 
 import play.data.validation.Constraints;
-
 import java.util.*;
-
 import io.ebean.*;
 import io.ebean.annotation.*;
 import io.ebean.Finder;
@@ -12,9 +10,8 @@ import io.ebean.DocumentStore;
 import io.ebean.EbeanServer;
 import io.ebean.Ebean;
 import play.data.DynamicForm;
-
+import io.ebean.Expr;
 import javax.persistence.*;
-
 import play.mvc.*;
 
 /**
@@ -35,19 +32,19 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
     @DocSortable
     public String platformName;
 
-    @DocEmbedded
+    //@DocEmbedded
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "platform")
     public List<FunctionContent> functionContents = new ArrayList<>();
 
-    @DocEmbedded
+    //@DocEmbedded
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "platform")
     public List<ImpactContent> impactContents = new ArrayList<>();
 
-    @DocEmbedded
+    //@DocEmbedded
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "platform")
     public List<InformationContent> informationContents = new ArrayList<InformationContent>();
 
-    @DocEmbedded
+    //@DocEmbedded
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "platform")
     public List<AggregatorContent> aggregatorContents = new ArrayList<AggregatorContent>();
 
@@ -100,7 +97,10 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
      * @return The platform object filled with the data found in the database.
      */
     public static Platform findByPlatformId(Long platformId) {
-        return Ebean.find(Platform.class, platformId);
+        return Ebean.find(Platform.class).where().and(
+                        Expr.eq("platformId", platformId),
+                        Expr.eq("deleteStatus", 0)
+                ).findOne();
     }
 
     /**
@@ -109,7 +109,10 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
      * @return The platform object filled with the data found in the database.
      */
     public static Platform findByPlatformName(String platformName) {
-        return Ebean.find(Platform.class).where().eq("platformName", platformName).findOne();
+        return Ebean.find(Platform.class).where().and(
+                Expr.eq("platformName", platformName),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**
@@ -117,7 +120,7 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
      * @return List of all platform objects filled by the data from the database.
      */
     public static List<Platform> findAllPlatforms() {
-        platformList = Ebean.find(Platform.class).orderBy("platformName asc").findList();
+        platformList = Ebean.find(Platform.class).where().eq("deleteStatus", 0).orderBy("platformName asc").findList();
         ArrayList <Platform> platformArrayList = new ArrayList<Platform>(platformList);
         //System.out.println("Platform ArrayList: " + platformArrayList);
         return platformArrayList;

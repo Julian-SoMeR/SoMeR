@@ -6,6 +6,9 @@ import io.ebean.annotation.*;
 import javax.persistence.*;
 import play.mvc.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *  This model contains all the aggregator data contents of the SoMeR. It can only be obtained via
  *  a cross reference between its aggregators and a platform.
@@ -69,7 +72,24 @@ public class AggregatorContent extends BaseDomain implements PathBindable<Aggreg
      * @return Model object filled with data from the aggregatorContent table.
      */
     public static AggregatorContent findByAggregatorContentId(Long aggregatorContentId) {
-        return Ebean.find(AggregatorContent.class, aggregatorContentId);
+        return Ebean.find(AggregatorContent.class).where().and(
+                Expr.eq("aggregatorContentId", aggregatorContentId),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
+    }
+
+    /**
+     * This method uses the platformId of the Platform entity to find data in the database and bind
+     * it to the AggregatorContent model object.
+     */
+    public static List<AggregatorContent> findAllByPlatformId(Long platformId) {
+        List<AggregatorContent> aggregatorContents = Ebean.find(AggregatorContent.class).where().and(
+                Expr.eq("aggregator_aggregator_id", platformId),
+                Expr.eq("deleteStatus", 0)
+        ).findList();
+        ArrayList<AggregatorContent> aggregatorContentArrayList =
+                new ArrayList<AggregatorContent>(aggregatorContents);
+        return aggregatorContentArrayList;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */

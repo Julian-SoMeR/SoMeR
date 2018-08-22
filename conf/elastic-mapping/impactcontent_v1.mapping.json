@@ -2,30 +2,30 @@
   "mappings" : {
     "impactcontent" : {
       "properties" : {
+        "deleteStatus": { "type": "boolean" },
         "impactContent": { "type": "text" },
         "impact" : {
           "properties" : {
             "impactId": { "type": "long" },
+            "deleteStatus": { "type": "boolean" },
             "impactName": { "type": "text" },
             "impactCategory": { "type": "text" },
             "impactDescription": { "type": "text" },
             "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
+            "modificationDate": { "type": "date" }
           }
         },
         "platform" : {
           "properties" : {
             "platformId": { "type": "long" },
+            "deleteStatus": { "type": "boolean" },
             "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
             "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
+            "modificationDate": { "type": "date" }
           }
         },
         "creationDate": { "type": "date" },
-        "modificationDate": { "type": "date" },
-        "versionNumber": { "type": "long" }
+        "modificationDate": { "type": "date" }
       }
     }
   }

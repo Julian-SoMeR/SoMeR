@@ -78,7 +78,10 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
      * @return Model object filled with data from the information_content table.
      */
     public static InformationContent findByInformationContentId(Long informationContentId) {
-        return Ebean.find(InformationContent.class, informationContentId);
+        return Ebean.find(InformationContent.class).where().and(
+                Expr.eq("informationContentId", informationContentId),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**
@@ -86,8 +89,11 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
      * it to the InformationContent model object.
      */
     public static List<InformationContent> findAllByPlatformId(Long platformId) {
-        List<InformationContent> informationContents = Ebean.find(InformationContent.class).where()
-                .eq("platform_platform_id", platformId).findList();
+        List<InformationContent> informationContents =
+                Ebean.find(InformationContent.class).where().and(
+                Expr.eq("platform_platform_id", platformId),
+                Expr.eq("deleteStatus", 0)
+        ).findList();
         ArrayList<InformationContent> informationContentArrayList =
                 new ArrayList<InformationContent>(informationContents);
         return informationContentArrayList;
@@ -121,8 +127,10 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
     public static List<InformationContent> formToInformationContents(DynamicForm requestForm, Platform platform) {
         List<InformationContent> informationContents = new LinkedList<>();
         List<Information> informationList = Information.findAllInformation();
+
         for (Information currentElement : informationList) {
             String informationContentIdString = requestForm.get("informationContentId-" + currentElement.informationId);
+
             if (informationContentIdString != null && !informationContentIdString.isEmpty()) {
                 Long informationContentId = Long.parseLong(informationContentIdString);
                 InformationContent existingInformationContent =
@@ -139,7 +147,6 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
                 informationContents.add(newInformationContent);
             }
         }
-        System.out.println("INFOCONTENT: " + informationContents);
         return informationContents;
     }
 

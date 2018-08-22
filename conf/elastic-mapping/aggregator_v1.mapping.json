@@ -2,12 +2,12 @@
   "mappings" : {
     "aggregator" : {
       "properties" : {
-        "aggregatorName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+        "deleteStatus": { "type": "boolean" },
+        "aggregatorName": { "type": "text" },
         "aggregatorCategory": { "type": "text" },
         "aggregatorDescription": { "type": "text" },
         "creationDate": { "type": "date" },
-        "modificationDate": { "type": "date" },
-        "versionNumber": { "type": "long" }
+        "modificationDate": { "type": "date" }
       }
     }
   }

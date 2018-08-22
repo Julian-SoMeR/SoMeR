@@ -2,50 +2,10 @@
   "mappings" : {
     "platform" : {
       "properties" : {
+        "deleteStatus": { "type": "boolean" },
         "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
-        "functionContents" : {
-          "type" : "nested",
-          "properties" : {
-            "functionContentId": { "type": "long" },
-            "functionContent": { "type": "text" },
-            "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
-          }
-        },
-        "impactContents" : {
-          "type" : "nested",
-          "properties" : {
-            "impactContentId": { "type": "long" },
-            "impactContent": { "type": "text" },
-            "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
-          }
-        },
-        "informationContents" : {
-          "type" : "nested",
-          "properties" : {
-            "informationContentId": { "type": "long" },
-            "informationContent": { "type": "text" },
-            "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
-          }
-        },
-        "aggregatorContents" : {
-          "type" : "nested",
-          "properties" : {
-            "aggregatorContentId": { "type": "long" },
-            "aggregatorContent": { "type": "text" },
-            "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
-          }
-        },
         "creationDate": { "type": "date" },
-        "modificationDate": { "type": "date" },
-        "versionNumber": { "type": "long" }
+        "modificationDate": { "type": "date" }
       }
     }
   }

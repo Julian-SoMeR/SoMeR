@@ -2,12 +2,12 @@
   "mappings" : {
     "impact" : {
       "properties" : {
-        "impactName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
+        "deleteStatus": { "type": "boolean" },
+        "impactName": { "type": "text" },
         "impactCategory": { "type": "text" },
         "impactDescription": { "type": "text" },
         "creationDate": { "type": "date" },
-        "modificationDate": { "type": "date" },
-        "versionNumber": { "type": "long" }
+        "modificationDate": { "type": "date" }
       }
     }
   }

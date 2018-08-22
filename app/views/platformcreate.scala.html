@@ -63,7 +63,6 @@
                         <input type="hidden" name="platformId"/>
                     </div>
 
-
                     @for(informationObject <- informationList) {
                         <label for="informationId-@informationObject.informationId">
                         @informationObject.informationName
@@ -88,7 +87,7 @@
 
                     <div class="form-buttons-container">
                         <button name="submit-button" type="submit" class="custom-button"
-                        id="form-submit-button" value="platformcreate-saveandexit">
+                        id="form-submit-button" value="saveandexit">
                             Save & Exit
                         </button>
                         <div>

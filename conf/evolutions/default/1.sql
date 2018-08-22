@@ -5,97 +5,106 @@
 
 create table aggregator (
   aggregator_id                 bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   aggregator_name               varchar(255),
   aggregator_category           varchar(255),
   aggregator_description        TEXT,
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_aggregator primary key (aggregator_id)
 );
 
 create table aggregator_content (
   aggregator_content_id         bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   aggregator_content            TEXT,
   aggregator_aggregator_id      bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_aggregator_content primary key (aggregator_content_id)
 );
 
 create table function (
   function_id                   bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   function_name                 varchar(255),
   function_category             varchar(255),
   function_description          TEXT,
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_function primary key (function_id)
 );
 
 create table function_content (
   function_content_id           bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   function_content              TEXT,
   function_function_id          bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_function_content primary key (function_content_id)
 );
 
 create table impact (
   impact_id                     bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   impact_name                   varchar(255),
   impact_category               varchar(255),
   impact_description            TEXT,
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_impact primary key (impact_id)
 );
 
 create table impact_content (
   impact_content_id             bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   impact_content                TEXT,
   impact_impact_id              bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_impact_content primary key (impact_content_id)
 );
 
 create table information (
   information_id                bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   information_name              varchar(255),
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_information primary key (information_id)
 );
 
 create table information_content (
   information_content_id        bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   information_content           TEXT,
   information_information_id    bigint,
   platform_platform_id          bigint,
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_information_content primary key (information_content_id)
 );
 
 create table platform (
   platform_id                   bigint auto_increment not null,
+  delete_status                 tinyint(1) default 0 not null,
   platform_name                 varchar(255),
   creation_date                 datetime(6) not null,
   modification_date             datetime(6) not null,
-  version_number                bigint not null,
   constraint pk_platform primary key (platform_id)
+);
+
+create table platform_history (
+  platform_history_id           bigint auto_increment not null,
+  platform_platform_id          bigint,
+  platform_name                 varchar(255),
+  history_creation_date         datetime(6),
+  delete_status                 tinyint(1),
+  constraint pk_platform_history primary key (platform_history_id)
 );
 
 create index ix_aggregator_content_aggregator_aggregator_id on aggregator_content (aggregator_aggregator_id);
@@ -121,6 +130,9 @@ alter table information_content add constraint fk_information_content_informatio
 
 create index ix_information_content_platform_platform_id on information_content (platform_platform_id);
 alter table information_content add constraint fk_information_content_platform_platform_id foreign key (platform_platform_id) references platform (platform_id) on delete restrict on update restrict;
+
+create index ix_platform_history_platform_platform_id on platform_history (platform_platform_id);
+alter table platform_history add constraint fk_platform_history_platform_platform_id foreign key (platform_platform_id) references platform (platform_id) on delete restrict on update restrict;
 
 
 # --- !Downs
@@ -149,6 +161,9 @@ drop index ix_information_content_information_information_id on information_cont
 alter table information_content drop foreign key fk_information_content_platform_platform_id;
 drop index ix_information_content_platform_platform_id on information_content;
 
+alter table platform_history drop foreign key fk_platform_history_platform_platform_id;
+drop index ix_platform_history_platform_platform_id on platform_history;
+
 drop table if exists aggregator;
 
 drop table if exists aggregator_content;
@@ -166,4 +181,6 @@ drop table if exists information;
 drop table if exists information_content;
 
 drop table if exists platform;
+
+drop table if exists platform_history;
 

@@ -14,7 +14,7 @@ import java.util.List;
  * The JPA/Ebean annotations are used to tell Play how
  * to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "impact")
 public class Impact extends BaseDomain implements PathBindable<Impact> {
@@ -74,7 +74,10 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
      * @return Model object filled with data from the impact table.
      */
     public static Impact findByImpactId(Long impactId) {
-        return Ebean.find(Impact.class, impactId);
+        return Ebean.find(Impact.class).where().and(
+                Expr.eq("impactId", impactId),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**

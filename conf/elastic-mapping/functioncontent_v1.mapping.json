@@ -2,30 +2,30 @@
   "mappings" : {
     "functioncontent" : {
       "properties" : {
+        "deleteStatus": { "type": "boolean" },
         "functionContent": { "type": "text" },
         "function" : {
           "properties" : {
             "functionId": { "type": "long" },
-            "functionName": { "type": "text" },
+            "deleteStatus": { "type": "boolean" },
+            "functionName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
             "functionCategory": { "type": "text" },
             "functionDescription": { "type": "text" },
             "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
+            "modificationDate": { "type": "date" }
           }
         },
         "platform" : {
           "properties" : {
             "platformId": { "type": "long" },
+            "deleteStatus": { "type": "boolean" },
             "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
             "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
+            "modificationDate": { "type": "date" }
           }
         },
         "creationDate": { "type": "date" },
-        "modificationDate": { "type": "date" },
-        "versionNumber": { "type": "long" }
+        "modificationDate": { "type": "date" }
       }
     }
   }

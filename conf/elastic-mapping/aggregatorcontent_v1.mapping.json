@@ -2,30 +2,30 @@
   "mappings" : {
     "aggregatorcontent" : {
       "properties" : {
+        "deleteStatus": { "type": "boolean" },
         "aggregatorContent": { "type": "text" },
         "aggregator" : {
           "properties" : {
             "aggregatorId": { "type": "long" },
+            "deleteStatus": { "type": "boolean" },
             "aggregatorName": { "type": "text" },
             "aggregatorCategory": { "type": "text" },
             "aggregatorDescription": { "type": "text" },
             "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
+            "modificationDate": { "type": "date" }
           }
         },
         "platform" : {
           "properties" : {
             "platformId": { "type": "long" },
+            "deleteStatus": { "type": "boolean" },
             "platformName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
             "creationDate": { "type": "date" },
-            "modificationDate": { "type": "date" },
-            "versionNumber": { "type": "long" }
+            "modificationDate": { "type": "date" }
           }
         },
         "creationDate": { "type": "date" },
-        "modificationDate": { "type": "date" },
-        "versionNumber": { "type": "long" }
+        "modificationDate": { "type": "date" }
       }
     }
   }

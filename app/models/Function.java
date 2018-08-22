@@ -13,14 +13,14 @@ import play.mvc.*;
  * The JPA/Ebean annotations are used to tell Play how
  * to generate the tables, contents and relations of the database and provide evolutions.
  */
-//@DocStore
+@DocStore
 @Entity
 @Table(name = "function")
 public class Function extends BaseDomain implements PathBindable<Function> {
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long functionId;
-    //@DocSortable
+    @DocSortable
     public String functionName;
     public String functionCategory;
     @Column(columnDefinition = "TEXT")
@@ -73,7 +73,10 @@ public class Function extends BaseDomain implements PathBindable<Function> {
      * @return Model object filled with data from the function table.
      */
     public static Function findByFunctionId(Long functionId) {
-        return Ebean.find(Function.class, functionId);
+        return Ebean.find(Function.class).where().and(
+                Expr.eq("functionId", functionId),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**
@@ -82,7 +85,10 @@ public class Function extends BaseDomain implements PathBindable<Function> {
      * @return The function object filled with the data found in the database.
      */
     public static Function findByFunctionName(String functionName) {
-        return Ebean.find(Function.class).where().eq("functionName", functionName).findOne();
+        return Ebean.find(Function.class).where().and(
+                Expr.eq("functionName", functionName),
+                Expr.eq("deleteStatus", 0)
+        ).findOne();
     }
 
     /**
@@ -90,7 +96,7 @@ public class Function extends BaseDomain implements PathBindable<Function> {
      * @return List of all function objects filled by the data from the database.
      */
     public static List<Function> findAllFunctions() {
-        functionList = Ebean.find(Function.class).orderBy("functionName asc").findList();
+        functionList = Ebean.find(Function.class).where().eq("deleteStatus", 0).orderBy("functionName asc").findList();
         ArrayList <Function> functionArrayList = new ArrayList<Function>(functionList);
         return functionArrayList;
     }
