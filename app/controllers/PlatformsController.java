@@ -159,6 +159,48 @@ public class PlatformsController extends Controller {
         }
     }
 
+    /**
+     * Saving changes on the platforms functions page.
+     * Decide where to route next after successful save. Otherwise display error messages.
+     *
+     * @return Either stay on the functions page or redirect to platforms page.
+     */
+    public Result savePlatformFunctions() {
+        List<FunctionContent> functionContents;
+        // Bind the data of the html form to the dynamic form object
+        DynamicForm requestData = requestForm.bindFromRequest();
+        Boolean platformHasErrors = false;
+        // Transfer all the data related to the platform entity into a platform object.
+        Platform platform = Platform.formToPlatform(requestData);
+
+        // Transfer all the data related to the InformationContent entity into a InformationContent object.
+        functionContents = FunctionContent.formToFunctionContents(requestData, platform);
+
+        for (FunctionContent currentElement : functionContents) {
+            // If the element contains information content remove leading or trailing whitespaces.
+            if (!currentElement.functionContent.isEmpty()) {
+                currentElement.setFunctionContent(currentElement.functionContent.trim());
+            }
+
+            // If the information content is either empty, contains an alphanumeric character or contains a number,
+            // it is valid. This is done to prevent inputs only containing special characters.
+            if (currentElement.functionContent.isEmpty()
+                    || currentElement.functionContent.matches(".*\\w.*")
+                    || currentElement.functionContent.matches(".*\\d.*")) {
+                // Only update InformationContent if there are changes.
+                FunctionContent functionContentBeforeSave =
+                        FunctionContent.findByFunctionContentId(currentElement.functionContentId);
+                if (!functionContentBeforeSave.functionContent.equals(currentElement.functionContent)) {
+                    currentElement.update();
+                }
+            } else {
+                flash("function_content_error" + currentElement.function.functionId,
+                        "'" + currentElement.functionContent + "' is not a valid input for this field."
+                                + " Please try using at least one letter or number!");
+            }
+        }
+        return redirect(routes.PlatformsController.platforms(1));
+    }
 
     /**
      * Bind data from an html form and bind it to a dynamic form. Check all the input data for errors and whitespaces.
