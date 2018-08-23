@@ -6,15 +6,20 @@
 #Redirect to Home page
 GET     /                           controllers.Default.redirect(to ="/home")
 
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.at(path="/public", file)
+
+#JavaScript Router
+GET     /javascriptRoutes           controllers.ApplicationController.javascriptRoutes
+
 # Home page
 GET     /home                       controllers.ApplicationController.home()
 
 #Platforms page (List all platforms)
-#Add parameter for pagination with default value 1
-GET     /platforms                  controllers.PlatformsController.platforms(page: Integer ?= 1)
+GET     /platforms                  controllers.PlatformsController.platforms()
 
 #Aggregators page
-GET     /aggregators                controllers.ApplicationController.aggregators()
+GET     /aggregators/:category   controllers.ApplicationController.aggregators(category: String)
 
 #How To page
 GET     /howtoparticipate           controllers.ApplicationController.howTo()
@@ -23,16 +28,13 @@ GET     /howtoparticipate           controllers.ApplicationController.howTo()
 GET     /about                      controllers.ApplicationController.about()
 
 #Management page
-GET     /management                 controllers.ApplicationController.management()
+GET     /management                 controllers.Default.redirect(to ="/management/commentfeed")
 
 #Search page
 GET     /search                     controllers.SearchController.search(searchQuery: models.Search)
 
 #Imprint page
 GET     /imprint                    controllers.ApplicationController.imprint()
-
-# Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 #Redirect to metrics page
 GET     /metrics                    controllers.ApplicationController.metrics()
@@ -45,13 +47,13 @@ GET     /cookiepolicy               controllers.ApplicationController.cookies()
 GET     /platforms/createnew        controllers.PlatformsController.createNewPlatform()
 
 #Show the selected platform information
-GET     /platforms/generalinformation/:platformId   controllers.PlatformsController.showSelectedPlatformInformation(platformId: Long)
+GET     /platforms/:platformId/generalinformation   controllers.PlatformsController.showSelectedPlatformInformation(platformId: Long)
 
 #Show the selected platform functions
-GET     /platforms/functions/:platformId            controllers.PlatformsController.showSelectedPlatformFunctions(platformId: Long)
+GET     /platforms/:platformId/functions    controllers.PlatformsController.showSelectedPlatformFunctions(platformId: Long)
 
-#JavaScript Router
-GET     /javascriptRoutes           controllers.ApplicationController.javascriptRoutes
+#Show the selected platform impacts
+GET     /platforms/:platformId/impacts  controllers.PlatformsController.showSelectedPlatformImpacts(platformId: Long)
 
 #Delete a platform
 DELETE  /platforms/:platformId      controllers.PlatformsController.deletePlatform(platformId: Long)
@@ -59,6 +61,28 @@ DELETE  /platforms/:platformId      controllers.PlatformsController.deletePlatfo
 #Save a platform
 POST    /platforms                  controllers.PlatformsController.savePlatform()
 
+#Save a newly created platform
 POST    /platforms/createnew        controllers.PlatformsController.saveNewPlatform()
 
+#Save a platforms functions
 POST    /platforms/functions        controllers.PlatformsController.savePlatformFunctions()
+
+#Save a platforms impacts
+POST    /platforms/impacts          controllers.PlatformsController.savePlatformImpacts()
+
+# ---- Special routes for Management page ----#
+
+#Management page comment feed
+GET     /management/commentfeed     controllers.ManagementController.management()
+
+#Management page platform properties
+GET     /management/platformproperties  controllers.Default.redirect(to ="/management/platformproperties/generalinformation")
+
+#Management page platform properties general information
+GET     /management/platformproperties/generalinformation   controllers.ManagementController.platformPropertiesInformation()
+
+#Management page platform properties function
+GET     /management/platformproperties/function   controllers.ManagementController.platformPropertiesFunction()
+
+#Management page platform properties impact
+GET     /management/platformproperties/impact   controllers.ManagementController.platformPropertiesImpact()

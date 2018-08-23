@@ -4,8 +4,10 @@ import io.ebean.*;
 import io.ebean.annotation.*;
 import javax.persistence.*;
 import play.mvc.*;
+import play.data.DynamicForm;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -85,12 +87,63 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
      */
     public static List<ImpactContent> findAllByPlatformId(Long platformId) {
         List<ImpactContent> impactContents = Ebean.find(ImpactContent.class).where().and(
-                Expr.eq("impact_impact_id", platformId),
+                Expr.eq("platform_platform_id", platformId),
                 Expr.eq("deleteStatus", 0)
         ).findList();
         ArrayList<ImpactContent> impactContentArrayList =
                 new ArrayList<ImpactContent>(impactContents);
         return impactContentArrayList;
+    }
+
+    /**
+     * This method is used to insert attribute values that need to be displayed in a view
+     * because a ImpactContent object does only contain the id of the included platform or impact object.
+     *
+     * @param impactContents Given list contain all the necessary ImpactContent objects.
+     * @return List of ImpactContent objects with all necessary attributes inserted.
+     */
+    public static List<ImpactContent> fillForeignKeyObjects(List<ImpactContent> impactContents) {
+        for (ImpactContent currentElement : impactContents) {
+            currentElement.platform.setPlatformName(
+                    Platform.findByPlatformId(currentElement.platform.platformId).getPlatformName());
+            currentElement.impact.setImpactName(
+                    Impact.findByImpactId(currentElement.impact.impactId).getImpactName());
+        }
+        return impactContents;
+    }
+
+    /**
+     * Map all the data of the request form to Platform and ImpactContent objects. If the data is to be updated,
+     * load the existing data into the objects. Else create new objects to save everything.
+     *
+     * @param requestForm Form object containing all the data form an html form.
+     * @param platform    Platform object for use on update.
+     * @return List of ImpactContents containing all the necessary data to render a page or save the objects.
+     */
+    public static List<ImpactContent> formToImpactContents(DynamicForm requestForm, Platform platform) {
+        List<ImpactContent> impactContents = new LinkedList<>();
+        List<Impact> impactList = Impact.findAllImpacts();
+
+        for (Impact currentElement : impactList) {
+            String impactContentIdString = requestForm.get("impactContentId-" + currentElement.impactId);
+
+            if (impactContentIdString != null && !impactContentIdString.isEmpty()) {
+                Long impactContentId = Long.parseLong(impactContentIdString);
+                ImpactContent existingImpactContent =
+                        ImpactContent.findByImpactContentId(impactContentId);
+                String contentString = requestForm.get("impactContent-" + currentElement.impactId);
+                existingImpactContent.setImpactContent(contentString);
+                impactContents.add(existingImpactContent);
+            } else {
+                ImpactContent newImpactContent = new ImpactContent();
+                newImpactContent.setPlatform(platform);
+                newImpactContent.setImpact(currentElement);
+                String contentString = requestForm.get("impactContent-" + currentElement.impactId);
+                newImpactContent.setImpactContent(contentString);
+                impactContents.add(newImpactContent);
+            }
+        }
+        return impactContents;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */

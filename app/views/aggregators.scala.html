@@ -1,3 +1,4 @@
+@(functionContents: List[Function])
 @main("Aggregators Page") {
 
     <!-- Breadcrumbs that get displayed before the content!
@@ -9,6 +10,37 @@
         </ul>
     </div>
     <div id="content-container" class="content-container">
-        Content
+
+        <div class="platforms-category-subnavigation">
+            @for(function <- functionContents) {
+                @if(request.path.contains(function.functionDescription)) {
+                    <div class="platforms-category-active-subnavigation">
+                        <a class="platforms-subnavigation-link platforms-subnavigation-active">
+                        @function.functionCategory
+                        </a>
+                    </div>
+                }
+            }
+            <div class="platforms-category-inactive-subnavigation">
+            @for(function <- functionContents) {
+                @if(!request().path.contains(function.functionDescription)) {
+                    <div class="platforms-subnavigation-link-container">
+                        <a class="platforms-subnavigation-link"
+                        href="@routes.ApplicationController.aggregators(function.functionDescription)">
+                        @function.functionCategory
+                        </a>
+                    </div>
+                }
+                @if(!request().path.contains(function.functionDescription)) {
+                    <div class="platforms-subnavigation-link-container">
+                        <a class="platforms-subnavigation-link"
+                        href="@routes.ApplicationController.aggregators(function.functionDescription)">
+                        @function.functionCategory
+                        </a>
+                    </div>
+                }
+            }
+            </div>
+        </div>
     </div>
 }

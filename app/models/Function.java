@@ -101,6 +101,20 @@ public class Function extends BaseDomain implements PathBindable<Function> {
         return functionArrayList;
     }
 
+    public static List<Function> findDistinctCategories() {
+        functionList = Ebean.find(Function.class).select("functionCategory").setDistinct(true).findList();
+        for(Function currentElement: functionList) {
+            String currentFunctionCategory = currentElement.functionCategory;
+            currentFunctionCategory = currentFunctionCategory.replaceAll("[^A-Za-z0-9]", "");
+            currentFunctionCategory = currentFunctionCategory.toLowerCase();
+            // As long as this is never saved, this is the easiest way to have the pathname and
+            // the category in the same object
+            currentElement.setFunctionDescription(currentFunctionCategory);
+        }
+        System.out.println("TEST: " + functionList);
+        return functionList;
+    }
+
     /* ---- Getters, Setters, ToString Method ---- */
 
     public Long getFunctionId() {
@@ -142,11 +156,13 @@ public class Function extends BaseDomain implements PathBindable<Function> {
     public void setFunctionContents(List<FunctionContent> functionContents) {
         this.functionContents = functionContents;
     }
-
+    
     public String toString() {
         return "Function{" +
                 "functionId=" + functionId +
                 ", functionName='" + functionName + '\'' +
+                ", functionCategory='" + functionCategory + '\'' +
+                ", functionDescription='" + functionDescription + '\'' +
                 '}';
     }
 }

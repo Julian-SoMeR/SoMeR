@@ -6,6 +6,7 @@ import views.html.*;
 import models.*;
 import javax.inject.*;
 import play.routing.JavaScriptReverseRouter;
+import java.util.*;
 
 public class ApplicationController extends Controller {
 
@@ -13,8 +14,9 @@ public class ApplicationController extends Controller {
         return ok(home.render());
     }
 
-    public Result aggregators() {
-        return ok(aggregators.render());
+    public Result aggregators(String category) {
+        List<Function> functionList = Function.findDistinctCategories();
+        return ok(aggregators.render(functionList));
     }
 
     public Result howTo() {
@@ -23,10 +25,6 @@ public class ApplicationController extends Controller {
 
     public Result about() {
         return ok(about.render());
-    }
-
-    public Result management() {
-        return ok(management.render());
     }
 
     public Result imprint() {

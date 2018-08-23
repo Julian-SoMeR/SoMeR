@@ -18,11 +18,10 @@
 
             <div class="management-navigation-container">
                 <div class="management-left-bottom-border"></div>
-                <a class="management-top-navigation-link management-top-navigation-active">
+                <a class="management-top-navigation-link">
                     Comment Feed
                 </a>
-                <a class="management-top-navigation-link"
-                href="@routes.ManagementController.platformPropertiesInformation()">
+                <a class="management-top-navigation-link management-top-navigation-active">
                     Platform Properties
                 </a>
                 <a class="management-top-navigation-link">
@@ -35,8 +34,21 @@
             </div>
 
             <div class="management-content-container">
+                <div class="management-subnavigation-container">
+                    <a class="management-subnavigation-link"
+                    href="@routes.ManagementController.platformPropertiesInformation()">
+                        General Information
+                    </a>
+                    <a class="management-subnavigation-link management-subnavigation-active">
+                        Function
+                    </a>
+                    <a class="management-subnavigation-link"
+                    href="@routes.ManagementController.platformPropertiesImpact()">
+                        Impact
+                    </a>
+                </div>
                 <div class="management-height-placeholder">
-                    Content
+
                 </div>
             </div>
         </div>
