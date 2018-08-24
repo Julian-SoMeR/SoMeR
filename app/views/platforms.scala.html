@@ -10,15 +10,12 @@
         </ul>
     </div>
 
-
-
     <div id="content-container" class="content-container">
-
         <div class="platform-table-container">
             <div class="select-or-create-new-container">
                 <h2 class="select-platform-heading">Select Platform</h2>
                 <a href="@routes.PlatformsController.createNewPlatform()">
-                    <button class="custom-button add-platform-button">
+                    <button class="custom-button add-button">
                         <i class="material-icons add">add</i> Create new Platform</button>
                 </a>
             </div>
@@ -30,8 +27,8 @@
             <table id="platform-table" class="platform-table">
                 <thead>
                     <tr>
-                        <th class="platform-table-header">
-                            <div class="platform-table-name">
+                        <th class="table-header">
+                            <div class="table-name">
                                 <span>
                                     Platform Name
                                 </span>
@@ -43,7 +40,7 @@
                                     Filter
                                 </button>
                                 <hr class="filter-button-separator"/>
-                                <button class="custom-button" onclick="resetPlatformFilter()">
+                                <button class="custom-button custom-reset-button" onclick="resetPlatformFilter()">
                                     Reset
                                 </button>
                             </div>
@@ -53,13 +50,13 @@
                 <tbody>
 
                 @for(platform <- platforms) {
-                    <tr id="platform-table-row" class="platform-table-row">
-                        <td id="platform-table-column" class="platform-table-column">
+                    <tr id="platform-table-row" class="table-row">
+                        <td id="platform-table-column" class="table-column">
                                 <a href=
                                 "@routes.PlatformsController.showSelectedPlatformInformation(platform.platformId)"
-                                class="platform-table-row-link">
+                                class="table-row-link">
                                 @platform.platformName</a>
-                            <div class="platform-icon-container">
+                            <div class="delete-icon-container">
                                 <a onclick=
                                 "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformId)', '@platform.platformName')">
                                     <i class="material-icons delete">delete</i></a>

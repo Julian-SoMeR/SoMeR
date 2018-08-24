@@ -40,7 +40,8 @@ public class ManagementController extends Controller {
     }
 
     public Result platformPropertiesInformation() {
-        return ok(managementplatformpropertiesinformation.render());
+        List<Information> informationList = Information.findAllInformation();
+        return ok(managementplatformpropertiesinformation.render(informationList));
     }
 
     public Result platformPropertiesFunction() {
@@ -54,6 +55,4 @@ public class ManagementController extends Controller {
     public Result aggregatorProperties() {
         return TODO;
     }
-
-
 }

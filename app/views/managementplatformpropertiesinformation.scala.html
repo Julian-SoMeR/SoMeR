@@ -1,3 +1,4 @@
+@(informationList: List[Information])
 @main("Management Page") {
 
     <!-- Breadcrumbs that get displayed before the content!
@@ -36,7 +37,7 @@
             <div class="management-content-container">
                 <div class="management-subnavigation-container">
                     <a class="management-subnavigation-link management-subnavigation-active">
-                        General Information
+                        Platform Information
                     </a>
                     <a class="management-subnavigation-link"
                     href="@routes.ManagementController.platformPropertiesFunction()">
@@ -47,8 +48,61 @@
                         Impact
                     </a>
                 </div>
-                <div class="management-height-placeholder">
+                <div class=".management-platform-information-table-container">
+                    <div class="select-or-create-new-information-container">
+                        <h2 class="select-management-platform-information-heading">Manage Platform Information</h2>
+                        <a href="@routes.PlatformsController.createNewPlatform()">
+                            <button class="custom-button add-button">
+                                <i class="material-icons add">add</i> Create new Platform Information</button>
+                        </a>
+                    </div>
+                    @if(flash.containsKey("success")) {
+                        <div class="alert alert-success">
+                        @flash.get("success")
+                        </div>
+                    }
+                    <table id="management-platform-information-table"
+                    class="management-platform-information-table">
+                        <thead>
+                            <tr>
+                                <th class="table-header">
+                                    <div class="table-name">
+                                        <span>
+                                            Information Name
+                                        </span>
+                                    </div>
+                                    <div class="platforms-filter-container">
+                                        <input type="text" id="platform-filter" class="platform-filter"
+                                        placeholder="Filter information..">
+                                        <button class="custom-button custom-filter-button" onclick="filterPlatforms()">
+                                            Filter
+                                        </button>
+                                        <hr class="filter-button-separator"/>
+                                        <button class="custom-button custom-reset-button" onclick="resetPlatformFilter()">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
+                        @for(information <- informationList) {
+                            <tr id="platform-table-row" class="management-table-row">
+                                <td id="platform-table-column" class="table-column">
+                                    <a class="management-table-row-link">
+                                        @information.informationName</a>
+                                    <div class="delete-icon-container">
+                                        <a>
+                                            <i class="material-icons delete">delete</i>
+                                        </a>
+                                    </div>
+                                </td>
+
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>

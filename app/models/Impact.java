@@ -70,7 +70,7 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
     /**
      * This method uses the impactId of the impact entity to find data in the database and bind in to the
      * corresponding model object.
-     * @param impactId Unique identifier of functions.
+     * @param impactId Unique identifier of impacts.
      * @return Model object filled with data from the impact table.
      */
     public static Impact findByImpactId(Long impactId) {
@@ -81,9 +81,9 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
     }
 
     /**
-     * Uses the name of the function to look up data in the database.
+     * Uses the name of the impact to look up data in the database.
      * @param impactName Name of the corresponding impact.
-     * @return The function object filled with the data found in the database.
+     * @return The impact object filled with the data found in the database.
      */
     public static Impact findByImpactName(String impactName) {
         return Ebean.find(Impact.class).where().eq("impactName", impactName).findOne();
@@ -97,6 +97,41 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
         impactList = Ebean.find(Impact.class).orderBy("impactName asc").findList();
         ArrayList <Impact> impactArrayList = new ArrayList<Impact>(impactList);
         return impactArrayList;
+    }
+
+    /**
+     * Get all distinct categories from the Impact entity and generate a usable url string from them.
+     * The url string is saved in the description field since the entity itself will never be saved and
+     * the unchanged category names are needed to display in a view.
+     *
+     * @return List of Impacts with all distinct categories and their url strings.
+     */
+    public static List<Impact> findDistinctCategories() {
+        impactList = Ebean.find(Impact.class).select("impactCategory").where()
+                .eq("deleteStatus", 0).setDistinct(true).findList();
+        for (Impact currentElement : impactList) {
+            String currentImpactCategory = currentElement.impactCategory;
+            currentImpactCategory = currentImpactCategory.replaceAll("[^A-Za-z0-9]", "");
+            currentImpactCategory = currentImpactCategory.toLowerCase();
+            // As long as this is never saved, this is the easiest way to have the pathname and
+            // the category in the same object
+            currentElement.setImpactDescription(currentImpactCategory);
+        }
+        return impactList;
+    }
+
+    /**
+     * Get one category from the Impact entity and generate a usable url string. This is necessary when
+     * routing to the view where the categories are displayed for the first time.
+     *
+     * @return Generated category url string.
+     */
+    public static String generateFirstCategoryUrlString() {
+        impactList = Ebean.find(Impact.class).select("impactCategory").setDistinct(true).findList();
+        String categoryUrlString = impactList.get(1).impactCategory;
+        categoryUrlString = categoryUrlString.replaceAll("[^A-Za-z0-9]", "");
+        categoryUrlString = categoryUrlString.toLowerCase();
+        return categoryUrlString;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */

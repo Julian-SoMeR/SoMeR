@@ -67,20 +67,50 @@ public class PlatformsController extends Controller {
     }
 
     /**
+     * When routing to the platform functions to the first time, a category must be selected. In this case it is always
+     * the first one with a delete status of 0.
+     *
+     * @param platformId Id of the platform of which the functions are displayed.
+     * @return Render the functions first category of the platform functions page.
+     */
+    public Result showSelectedPlatformFunctions(Long platformId) {
+        Platform platform = Platform.findByPlatformId(platformId);
+        String categoryUrlString = Function.generateFirstCategoryUrlString();
+        return redirect(routes.PlatformsController
+                .showSelectedPlatformFunctionsCategories(platform.platformId, categoryUrlString));
+    }
+
+    /**
      * This method renders the function data of a platform object that already exists. Editing possible.
      *
      * @param platformId Id of the selected platform on the platforms page.
      * @return Render HTML template with http status code 400 or display NOT FOUND message.
      */
-    public Result showSelectedPlatformFunctions(Long platformId) {
+    public Result showSelectedPlatformFunctionsCategories(Long platformId, String categoryUrl) {
         List<FunctionContent> functionContents;
+        List<Function> functions = Function.findDistinctCategories();
         Platform platform = Platform.findByPlatformId(platformId);
         functionContents = FunctionContent.findAllByPlatformId(platformId);
         functionContents = FunctionContent.fillForeignKeyObjects(functionContents);
+        functionContents = FunctionContent.filterCurrentCategory(functionContents, categoryUrl);
         if (platform == null) {
             return notFound(String.format("Platform %d does not exist.", platformId));
         }
-        return ok(platformfunction.render(functionContents, platform));
+        return ok(platformfunction.render(functionContents, functions, platform));
+    }
+
+    /**
+     * When routing to the platform impacts to the first time, a category must be selected. In this case it is always
+     * the first one with a delete status of 0.
+     *
+     * @param platformId Id of the platform of which the impacts are displayed.
+     * @return Render the impacts first category of the platform functions page.
+     */
+    public Result showSelectedPlatformImpacts(Long platformId) {
+        Platform platform = Platform.findByPlatformId(platformId);
+        String categoryUrlString = Impact.generateFirstCategoryUrlString();
+        return redirect(routes.PlatformsController
+                .showSelectedPlatformImpactsCategories(platform.platformId, categoryUrlString));
     }
 
     /**
@@ -89,18 +119,18 @@ public class PlatformsController extends Controller {
      * @param platformId Id of the selected platform on the platforms page.
      * @return Render HTML template with http status code 400 or display NOT FOUND message.
      */
-    public Result showSelectedPlatformImpacts(Long platformId) {
+    public Result showSelectedPlatformImpactsCategories(Long platformId, String categoryUrl) {
         List<ImpactContent> impactContents;
+        List<Impact> impacts = Impact.findDistinctCategories();
         Platform platform = Platform.findByPlatformId(platformId);
         impactContents = ImpactContent.findAllByPlatformId(platformId);
         impactContents = ImpactContent.fillForeignKeyObjects(impactContents);
+        impactContents = ImpactContent.filterCurrentCategory(impactContents, categoryUrl);
         if (platform == null) {
             return notFound(String.format("Platform %d does not exist.", platformId));
         }
-        return ok(platformimpact.render(impactContents, platform));
+        return ok(platformimpact.render(impactContents, impacts, platform));
     }
-
-    /* Adding delete functionality, just for testing purposes. This will later be in the "Management" tab. */
 
     /**
      * Delete platform and all connected data in information/functions/impacts.
@@ -258,7 +288,9 @@ public class PlatformsController extends Controller {
             case 1:
                 return redirect(routes.PlatformsController.platforms());
             case 2:
-                return redirect(routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId));
+                String categoryUrlString = Function.generateFirstCategoryUrlString();
+                return redirect(routes.PlatformsController
+                        .showSelectedPlatformFunctionsCategories(platform.platformId, categoryUrlString));
             default:
                 return badRequest("Something went horribly wrong!");
         }

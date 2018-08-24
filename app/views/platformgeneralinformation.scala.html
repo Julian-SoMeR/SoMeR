@@ -22,7 +22,7 @@
             <ul class="breadcrumb-list">
                 <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
                     Platforms</a></li>
-                <li>@platformName() <strong>(General Information)</strong></li>
+                <li>@platformName() <strong>(Platform Information)</strong></li>
             </ul>
         </div>
 
@@ -44,15 +44,15 @@
                         <legend>
                             <div class="platform-form-legend">
                                 <a class="platforms-top-navigation-link platform-navigation-active">
-                                    General Information
+                                    Platform Information
                                 </a>
                                 <a class="platforms-top-navigation-link discard-warning"
                                 href="@routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId)">
-                                    Functions
+                                    Function Categories
                                 </a>
                                 <a class="platforms-top-navigation-link discard-warning"
                                 href="@routes.PlatformsController.showSelectedPlatformImpacts(platform.platformId)">
-                                    Impacts
+                                    Impact Categories
                                 </a>
                                 <div class="platforms-right-bottom-border"></div>
                             </div>

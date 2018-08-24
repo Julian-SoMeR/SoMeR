@@ -1,4 +1,4 @@
-@(functionContents: List[FunctionContent], platform: models.Platform)
+@(functionContents: List[FunctionContent], functions: List[Function], platform: models.Platform)
     @import helper._
 
     @platformName() = @{
@@ -15,14 +15,25 @@
 
         <script src="@routes.Assets.at("javascripts/platformscripts.js")" type="text/javascript"></script>
 
-        <!-- Breadcrumbs that get displayed before the content!
+            <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
         <div class="breadcrumbs">
             <p class="breadcrumb-paragraph">You are here: </p>
             <ul class="breadcrumb-list">
                 <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
                     Platforms</a></li>
-                <li>@platformName() <strong>(Functions)</strong></li>
+                <li>
+                    <a href="@routes.PlatformsController.showSelectedPlatformInformation(platform.platformId)"
+                    class="list-item-link">
+                    @platformName()
+                    </a>
+                </li>
+                <li>Functions by Category
+                    <strong>
+<!-- Horrible Formatting...But otherwise there are whitespaces...-->
+(@for(function <- functions){@if(request.path.contains(function.functionDescription)){@function.functionCategory}})
+                    </strong>
+                </li>
             </ul>
         </div>
 
@@ -45,55 +56,82 @@
                             <div class="platform-form-legend">
                                 <a class="platforms-top-navigation-link"
                                 href="@routes.PlatformsController.showSelectedPlatformInformation(platform.platformId)">
-                                    General Information
+                                    Platform Information
                                 </a>
                                 <a class="platform-navigation-active platforms-top-navigation-link">
-                                    Functions
+                                    Functions (by Category)
                                 </a>
                                 <a class="platforms-top-navigation-link"
                                 href="@routes.PlatformsController.showSelectedPlatformImpacts(platform.platformId)">
-                                    Impacts
+                                    Impacts (by Category)
                                 </a>
                                 <div class="platforms-right-bottom-border"></div>
                             </div>
                         </legend>
                         <input type="hidden" value="@platformId()" name="platformId"/>
 
-                        @for(contentObject <- functionContents) {
-                            <label for="functionId-@contentObject.function.functionId" class="input-label">
-                            @contentObject.function.functionName
-                            </label>
-                            <textarea class="input-textarea" rows="1"
-                            name="functionContent-@contentObject.function.functionId"
-                            id="functionContent-@contentObject.function.functionId"
-                            placeholder="@contentObject.function.functionName.."
-                            >@contentObject.functionContent</textarea>
-                                <!-- Show an error message when there is an input
-                                    error on the general information content. -->
-                            @if(flash.containsKey("function_content_error"
-                                    + contentObject.function.functionId)) {
-                                <div class="alert alert-error">
-                                @flash.get("function_content_error" + contentObject.function.functionId)
-                                </div>
+                        <div class="platforms-category-subnavigation">
+                            @for(function <- functions) {
+                                @if(request.path.contains(function.functionDescription)) {
+                                    <div class="platforms-category-active-subnavigation">
+                                        <div class="platform-subnavigation-bottom-border"></div>
+                                        <a class="platforms-subnavigation-link platforms-subnavigation-active">
+                                        @function.functionCategory
+                                        </a>
+                                        <div class="platform-subnavigation-bottom-border"></div>
+                                    </div>
+                                }
                             }
-                            <input type="hidden" value="@contentObject.function.functionId"
-                            name="functionId-@contentObject.function.functionId"/>
-                            <input type="hidden" value="@contentObject.functionContentId"
-                            name="functionContentId-@contentObject.function.functionId"/>
+                            <div class="platforms-category-inactive-subnavigation">
+                            @for(function <- functions) {
+                                @if(!request().path.contains(function.functionDescription)) {
+                                    <div class="platforms-subnavigation-link-container">
+                                        <a class="platforms-subnavigation-link"
+                                        href="@routes.PlatformsController.showSelectedPlatformFunctionsCategories(platform.platformId, function.functionDescription)">
+                                        @function.functionCategory
+                                        </a>
+                                    </div>
+                                }
+                            }
+                            </div>
+                        </div>
+                        <div class="inner-fieldset-container">
+                            @for(contentObject <- functionContents) {
+                                <label for="functionId-@contentObject.function.functionId" class="input-label">
+                                @contentObject.function.functionName
+                                </label>
+                                <textarea class="input-textarea" rows="1"
+                                name="functionContent-@contentObject.function.functionId"
+                                id="functionContent-@contentObject.function.functionId"
+                                placeholder="@contentObject.function.functionName.."
+                                >@contentObject.functionContent</textarea>
+                                    <!-- Show an error message when there is an input
+                                    error on the general information content. -->
+                                @if(flash.containsKey("function_content_error"
+                                        + contentObject.function.functionId)) {
+                                    <div class="alert alert-error">
+                                    @flash.get("function_content_error" + contentObject.function.functionId)
+                                    </div>
+                                }
+                                <input type="hidden" value="@contentObject.function.functionId"
+                                name="functionId-@contentObject.function.functionId"/>
+                                <input type="hidden" value="@contentObject.functionContentId"
+                                name="functionContentId-@contentObject.function.functionId"/>
 
-                        }
-                        <div class="form-buttons-container">
-                            <button name="submit-button" type="submit" class="custom-button"
-                            id="form-submit-button" value="saveandexit">
-                                Save & Exit
-                            </button>
-                            <div>
-                                <button class="custom-button" onclick="submitWithValue('functions-saveonly')">
-                                    Save
+                            }
+                            <div class="form-buttons-container">
+                                <button name="submit-button" type="submit" class="custom-button"
+                                id="form-submit-button" value="saveandexit">
+                                    Save & Exit
                                 </button>
-                                <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
-                                    Cancel
-                                </a>
+                                <div>
+                                    <button class="custom-button" onclick="submitWithValue('functions-saveonly')">
+                                        Save
+                                    </button>
+                                    <a class="custom-button custom-link-button" href="@routes.PlatformsController.platforms()">
+                                        Cancel
+                                    </a>
+                                </div>
                             </div>
                         </div>
                     </fieldset>

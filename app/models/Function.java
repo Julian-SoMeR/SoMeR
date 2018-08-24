@@ -2,10 +2,13 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
+
 import javax.persistence.*;
+
 import play.mvc.*;
 
 /**
@@ -27,14 +30,15 @@ public class Function extends BaseDomain implements PathBindable<Function> {
     public String functionDescription;
 
     //@DocEmbedded
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "function")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "function")
     public List<FunctionContent> functionContents = new ArrayList<>();
 
     // List to collect all function objects to render them on the platforms -> functions page.
     private static List<Function> functionList;
 
     /* ----- Constructors ----- */
-    public Function() {}
+    public Function() {
+    }
 
     public Function(Long functionId, String functionName, String functionCategory, String functionDescription, List<FunctionContent> functionContents) {
         this.functionId = functionId;
@@ -66,9 +70,11 @@ public class Function extends BaseDomain implements PathBindable<Function> {
 
 
     /* ---- Methods ---- */
+
     /**
      * This method uses the functionId of the function entity to find data in the database and bind in to the
      * corresponding model object.
+     *
      * @param functionId Unique identifier of functions.
      * @return Model object filled with data from the function table.
      */
@@ -81,6 +87,7 @@ public class Function extends BaseDomain implements PathBindable<Function> {
 
     /**
      * Uses the name of the function to look up data in the database.
+     *
      * @param functionName Name of the corresponding function.
      * @return The function object filled with the data found in the database.
      */
@@ -93,17 +100,26 @@ public class Function extends BaseDomain implements PathBindable<Function> {
 
     /**
      * Looks up all function data in the database, sorts this data and saves it in a list.
+     *
      * @return List of all function objects filled by the data from the database.
      */
     public static List<Function> findAllFunctions() {
         functionList = Ebean.find(Function.class).where().eq("deleteStatus", 0).orderBy("functionName asc").findList();
-        ArrayList <Function> functionArrayList = new ArrayList<Function>(functionList);
+        ArrayList<Function> functionArrayList = new ArrayList<Function>(functionList);
         return functionArrayList;
     }
 
+    /**
+     * Get all distinct categories from the Function entity and generate a usable url string from them.
+     * The url string is saved in the description field since the entity itself will never be saved and
+     * the unchanged category names are needed to display in a view.
+     *
+     * @return List of Functions with all distinct categories and their url strings.
+     */
     public static List<Function> findDistinctCategories() {
-        functionList = Ebean.find(Function.class).select("functionCategory").setDistinct(true).findList();
-        for(Function currentElement: functionList) {
+        functionList = Ebean.find(Function.class).select("functionCategory").where()
+                .eq("deleteStatus", 0).setDistinct(true).findList();
+        for (Function currentElement : functionList) {
             String currentFunctionCategory = currentElement.functionCategory;
             currentFunctionCategory = currentFunctionCategory.replaceAll("[^A-Za-z0-9]", "");
             currentFunctionCategory = currentFunctionCategory.toLowerCase();
@@ -111,8 +127,22 @@ public class Function extends BaseDomain implements PathBindable<Function> {
             // the category in the same object
             currentElement.setFunctionDescription(currentFunctionCategory);
         }
-        System.out.println("TEST: " + functionList);
         return functionList;
+    }
+
+    /**
+     * Get one category from the Function entity and generate a usable url string. This is necessary when
+     * routing to the view where the categories are displayed for the first time.
+     *
+     * @return Generated category url string.
+     */
+    public static String generateFirstCategoryUrlString() {
+        functionList = Ebean.find(Function.class).select("functionCategory").where()
+                .eq("deleteStatus", 0).setDistinct(true).findList();
+        String categoryUrlString = functionList.get(1).functionCategory;
+        categoryUrlString = categoryUrlString.replaceAll("[^A-Za-z0-9]", "");
+        categoryUrlString = categoryUrlString.toLowerCase();
+        return categoryUrlString;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */
@@ -156,7 +186,7 @@ public class Function extends BaseDomain implements PathBindable<Function> {
     public void setFunctionContents(List<FunctionContent> functionContents) {
         this.functionContents = functionContents;
     }
-    
+
     public String toString() {
         return "Function{" +
                 "functionId=" + functionId +

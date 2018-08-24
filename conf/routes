@@ -52,8 +52,15 @@ GET     /platforms/:platformId/generalinformation   controllers.PlatformsControl
 #Show the selected platform functions
 GET     /platforms/:platformId/functions    controllers.PlatformsController.showSelectedPlatformFunctions(platformId: Long)
 
+#Show the selected platform functions with categories
+GET     /platforms/:platformId/functions/:category    controllers.PlatformsController.showSelectedPlatformFunctionsCategories(platformId: Long, category: String)
+
 #Show the selected platform impacts
 GET     /platforms/:platformId/impacts  controllers.PlatformsController.showSelectedPlatformImpacts(platformId: Long)
+
+#Show the selected platform impacts with categories
+GET     /platforms/:platformId/impacts/:category    controllers.PlatformsController.showSelectedPlatformImpactsCategories(platformId: Long, category: String)
+
 
 #Delete a platform
 DELETE  /platforms/:platformId      controllers.PlatformsController.deletePlatform(platformId: Long)

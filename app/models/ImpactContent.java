@@ -146,6 +146,29 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
         return impactContents;
     }
 
+    /**
+     * Filter the ImpactContents by the category that is currently displayed in the view. The currently
+     * active category is received by the category url string.
+     *
+     * @param impactContents Impact Content objects to filter.
+     * @param categoryUrl Category url string as filter criteria.
+     * @return Filtered list of Impact Content objects for display in a view.
+     */
+    public static List<ImpactContent> filterCurrentCategory(
+            List<ImpactContent> impactContents,String categoryUrl) {
+        List<ImpactContent> filteredImpactContents = new LinkedList<>();
+
+        for (ImpactContent currentElement: impactContents) {
+            String currentCategory = currentElement.impact.getImpactCategory();
+            currentCategory = currentCategory.replaceAll("[^A-Za-z0-9]", "");
+            currentCategory = currentCategory.toLowerCase();
+            if (currentCategory.equals(categoryUrl)) {
+                filteredImpactContents.add(currentElement);
+            }
+        }
+        return  filteredImpactContents;
+    }
+
     /* ---- Getters, Setters, ToString Method ---- */
 
     public Long getImpactContentId() {

@@ -31,14 +31,6 @@
                         </a>
                     </div>
                 }
-                @if(!request().path.contains(function.functionDescription)) {
-                    <div class="platforms-subnavigation-link-container">
-                        <a class="platforms-subnavigation-link"
-                        href="@routes.ApplicationController.aggregators(function.functionDescription)">
-                        @function.functionCategory
-                        </a>
-                    </div>
-                }
             }
             </div>
         </div>

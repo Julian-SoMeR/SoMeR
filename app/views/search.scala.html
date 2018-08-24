@@ -17,8 +17,8 @@
                     <tbody>
 
                         @for(platformResult <- platformResultList) {
-                            <tr id="platform-table-row" class="platform-table-row">
-                                <td id="platform-table-column" class="platform-table-column">
+                            <tr id="platform-table-row" class="table-row">
+                                <td id="platform-table-column" class="table-column">
                                     <p>Result found in platforms:</p>
                                     <h3>
                                         <a href="@routes.PlatformsController.showSelectedPlatformInformation(platformResult.platformId)">
@@ -29,8 +29,8 @@
                             </tr>
                         }
                         @for(functionContentResult <- functionContentResultList) {
-                            <tr id="platform-table-row" class="platform-table-row">
-                                <td id="platform-table-column" class="platform-table-column">
+                            <tr id="platform-table-row" class="table-row">
+                                <td id="platform-table-column" class="table-column">
                                     <p>Result found in functions of platform "@functionContentResult.platform.platformName":</p>
                                     <h4>@functionContentResult.function.functionName :</h4>
                                     <h5>

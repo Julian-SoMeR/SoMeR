@@ -120,6 +120,7 @@ a:hover {
     top: 0;
     /*border-bottom: 5px solid #999999;*/
     background-color: #0572CE;
+    z-index: 50;
 }
 
 .header-container .logo {
@@ -288,7 +289,11 @@ a:hover {
 }
 
 .custom-filter-button {
-    color: blue;
+    color: black;
+}
+
+.custom-reset-button {
+    color: darkred;
 }
 
 .login-separator {
@@ -375,7 +380,8 @@ a:hover {
     font-size: 14px;
     margin-top: 2px;
     border-top: 13px solid #F5F5F5;
-    z-index: auto;
+    z-index: 49;
+
 }
 
 .breadcrumb-list,
@@ -422,6 +428,10 @@ a:hover {
     cursor: default;
 }
 
+.list-item-link {
+    font-weight: bold;
+}
+
 /* ---- Flash alert styles ---- */
 .alert {
     margin: 0px;
@@ -455,6 +465,13 @@ a:hover {
     padding: 10px;
     background-color: #F5F5F5;
 }
+
+/*
+.content-container * {
+    position: relative;
+    z-index: -2;
+}
+*/
 
 /* ---- BACK TO TOP BUTTON ----*/
 .back-to-top-button {
@@ -549,11 +566,16 @@ a:hover {
     font-size: 16px;
 }
 
-.add-platform-button {
+.add-button {
     display: block;
     padding: 0 10px 10px 2px;
     font-size: 14px;
     cursor: pointer;
+    color: #006699;
+}
+
+.add-button:visited {
+    color: #006699
 }
 
 .platforms-headings {
@@ -568,6 +590,7 @@ a:hover {
 .fieldset-container {
     padding: 0 15px 10px 15px;
     width: 600px;
+
 }
 
 .fieldset-container input[type="text"],
@@ -694,7 +717,7 @@ dd.error {
     margin-top: 5px;
 }
 
-.platform-table-header {
+.table-header {
     display: flex;
     justify-content: space-between;
     margin: 0px;
@@ -704,7 +727,7 @@ dd.error {
     padding-left: 10px;
 }
 
-.platform-table-name {
+.table-name {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
@@ -732,21 +755,20 @@ dd.error {
     width: 600px;
 }
 
-.platform-table-row-link {
+.table-row-link {
     width: 100%;
     min-height: 100%;
     padding: 5px 0;
     padding-left: 10px;
 }
 
-.platform-table-header,
-.platform-table-column {
+.table-header,
+.table-column {
     text-align: left;
     padding: 0;
-
 }
 
-.platform-table-column {
+.table-column {
     display: flex;
     justify-content: space-between;
     font-size: 18px;
@@ -758,7 +780,7 @@ dd.error {
 .platform-table a:link,
 .platform-table a:active {
     text-decoration: none;
-    color: black;
+
 }
 
 edit {
@@ -778,17 +800,17 @@ edit {
     color: #FF8C00;
 }
 
-.platform-table-row:hover {
+.table-row:hover {
     background-color: #CCCCCC;
     cursor: pointer;
 }
 
-.platform-table-header:hover {
+.table-header:hover {
     background-color: initial;
     color: black;
 }
 
-.platform-icon-container {
+.delete-icon-container {
     display: flex;
     text-align: right;
     justify-content: flex-end;
@@ -805,16 +827,12 @@ edit {
     font-size: 30px;
 }
 
-.fieldset-container {
-    border: 1px solid black;
-}
-
 .platform-form-legend {
     display: flex;
     justify-content: flex-start;
     width: 550px;
     position: relative;
-    top: -15px;
+    top: -16px;
     left: 0px;
 }
 
@@ -854,6 +872,7 @@ edit {
 }
 
 .input-label {
+    font-size: 14px;
     width : 500px;
     overflow:hidden;
     display:inline-block;
@@ -874,7 +893,7 @@ edit {
     align-items: center;
     white-space: nowrap;
     justify-content: center;
-    padding: 0 10px;
+    flex: 1;
 
 }
 
@@ -882,6 +901,7 @@ edit {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+    align-items: flex-end;
 }
 
 .platforms-subnavigation-link-container {
@@ -899,10 +919,7 @@ edit {
     color: #006699;
     padding: 5px 5px;
     background-color: #e2e2e2;
-    border-left: 1px solid #505050;
-    border-right: none;
-    border-bottom: 1px solid black;
-    border-top: 1px solid black;
+    border: 1px solid #505050;
     cursor: pointer;
     width: 100%;
 
@@ -920,22 +937,53 @@ edit {
     background-color: #F5F5F5;
     text-decoration: underline;
     color: #006699;
-    border-top: 1px solid #F5F5F5;
-    border-bottom: 1px solid #F5F5F5;
-}
-
-.platforms-subnavigation-link:hover {
-
+    border-bottom: none;
 }
 
 .platforms-subnavigation-active,
 .platforms-subnavigation-active:hover {
     color: black;
+    font-size: 18px;
     font-weight: bold;
     background-color: #F5F5F5;
     text-decoration: none;
-    border: none;
+    border: 1px solid black;
+    border-bottom: none;
     cursor: unset;
+}
+
+.platform-subnavigation-bottom-border {
+    display: flex;
+    border-bottom: 1px solid black;
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.inner-fieldset-container {
+    padding: 15px 15px 10px 15px;
+    width: 600px;
+    border: 1px solid #404040;
+    border-top: none;
+}
+
+.inner-fieldset-container input[type="text"],
+.inner-fieldset-container textarea {
+    width: 100%;
+    padding: 5px;
+    font-size: 15px;
+    margin-bottom: 10px;
+    margin-top: 2px;
+    border-radius: 2px;
+    border: 1px solid black;
+}
+
+.inner-fieldset-container input[type="text"]:focus {
+    border: 1px solid rgba(81, 203, 238, 1);
+}
+
+.inner-fieldset-container label {
+    font-weight: bold;
+    padding-right: 50px;
 }
 
 /* ---- ABOUT STYLE ---- */
@@ -1098,6 +1146,56 @@ edit {
 
 .management-height-placeholder {
     height: 1000px;
+}
+
+.select-management-platform-information-heading {
+    font-size: 20px;
+    padding-top: 8px;
+}
+
+.select-or-create-new-information-container {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 15px 15px;
+}
+
+.management-platform-information-table-container {
+    display: flex;
+    flex-direction: column;
+    width: 570px;
+    margin-top: 5px;
+    padding: 0 15px;
+}
+
+.management-platform-information-table {
+    width: 570px;
+    margin-left: 15px;
+}
+
+.management-platform-information-table a,
+.management-platform-information-table a:hover,
+.management-platform-information-table a:visited,
+.management-platform-information-table a:link,
+.management-platform-information-table a:active {
+    text-decoration: none;
+    color: black;
+}
+
+.management-table-row-link {
+    width: 100%;
+    min-height: 100%;
+    padding: 5px 0;
+    padding-left: 10px;
+}
+
+.management-table-row-link:hover {
+    background-color: #F5F5F5;
+}
+
+.management-table-row:hover {
+    background-color: #F5F5F5;
+    cursor: unset;
 }
 
 /* ---- COOKIE MESSAGE ---- */

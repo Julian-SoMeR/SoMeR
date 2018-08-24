@@ -113,6 +113,8 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
                     Platform.findByPlatformId(currentElement.platform.platformId).getPlatformName());
             currentElement.function.setFunctionName(
                     Function.findByFunctionId(currentElement.function.functionId).getFunctionName());
+            currentElement.function.setFunctionCategory(
+                    Function.findByFunctionId(currentElement.function.functionId).getFunctionCategory());
         }
         return functionContents;
     }
@@ -149,6 +151,29 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
             }
         }
         return functionContents;
+    }
+
+    /**
+     * Filter the FunctionContents by the category that is currently displayed in the view. The currently
+     * active category is received by the category url string.
+     *
+     * @param functionContents Function Content objects to filter.
+     * @param categoryUrl Category url string as filter criteria.
+     * @return Filtered list of Function Content objects for display in a view.
+     */
+    public static List<FunctionContent> filterCurrentCategory(
+            List<FunctionContent> functionContents,String categoryUrl) {
+        List<FunctionContent> filteredFunctionContents = new LinkedList<>();
+
+        for (FunctionContent currentElement: functionContents) {
+            String currentCategory = currentElement.function.getFunctionCategory();
+            currentCategory = currentCategory.replaceAll("[^A-Za-z0-9]", "");
+            currentCategory = currentCategory.toLowerCase();
+            if (currentCategory.equals(categoryUrl)) {
+                filteredFunctionContents.add(currentElement);
+            }
+        }
+        return  filteredFunctionContents;
     }
 
     /* ---- Getters, Setters, ToString Method ---- */
