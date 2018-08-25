@@ -44,6 +44,71 @@ public class ManagementController extends Controller {
         return ok(managementplatformpropertiesinformation.render(informationList));
     }
 
+    public Result saveInformation() {
+        // Bind the data of the html form to the dynamic form object
+        DynamicForm requestData = requestForm.bindFromRequest();
+        List<Information> informationList = Information.formToInformation(requestData);
+        System.out.println("DATA: " + informationList);
+
+        for (Information currentElement : informationList) {
+            if (!(currentElement.informationName == null)) {
+                // If the element contains information remove leading or trailing whitespaces.
+                if (!currentElement.informationName.isEmpty()) {
+                    currentElement.setInformationName(currentElement.informationName.trim());
+                }
+
+                // If the information is either empty, contains an alphanumeric character, it is valid.
+                // This is done to prevent inputs only containing special characters.
+                if (currentElement.informationName.isEmpty()
+                        || currentElement.informationName.matches(".*\\w.*")
+                        || currentElement.informationName.matches(".*\\d.*")) {
+                    // If there is no entry with the current informationContentId create a new entry,
+                    // else update existing entries.
+                    if (currentElement.informationId == null) {
+                        currentElement.save();
+                    } else {
+                        // Only update Information if there are changes.
+                        Information informationNameBeforeSave =
+                                Information.findByInformationId(currentElement.informationId);
+                        if (!informationNameBeforeSave.informationName.equals(currentElement.informationName)) {
+                            currentElement.update();
+                        }
+                    }
+                } else {
+                    flash("information_name_error" + currentElement.informationId,
+                            "'" + currentElement.informationName + "' is not a valid information name."
+                                    + " Please try using at least one letter or number!");
+                }
+            } else {
+                return badRequest("This won't work!");
+            }
+        }
+        flash("success", "Save successful.");
+        return ok(managementplatformpropertiesinformation.render(informationList));
+    }
+
+    /**
+     * Delete information and all connected data in InformationContent.
+     *
+     * @param informationId Id of the information to delete.
+     * @return On successful delete, render HTML template with http status code 400. Else display NOT FOUND message.
+     */
+    public Result deleteInformation(Long informationId) {
+        Information information = Information.findByInformationId(informationId);
+        List<InformationContent> informationContents = InformationContent.findAllByInformationId(informationId);
+        if (information == null) {
+            return notFound(String.format("Information %s does not exist.", informationId));
+        }
+        for (InformationContent currentElement : informationContents) {
+            currentElement.setDeleteStatus(true);
+            currentElement.update();
+        }
+        information.setDeleteStatus(true);
+        information.update();
+        flash("delete-success", "Deletion successful.");
+        return redirect(routes.ManagementController.platformPropertiesInformation());
+    }
+
     public Result platformPropertiesFunction() {
         return ok(managementplatformpropertiesfunction.render());
     }

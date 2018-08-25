@@ -89,13 +89,34 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
     /**
      * This method uses the platformId of the Platform entity to find data in the database and bind
      * it to the InformationContent model object.
+     *
+     * @param platformId Id of the Platform object.
+     * @return List of Information Content objects with the platformId as a foreign key.
      */
     public static List<InformationContent> findAllByPlatformId(Long platformId) {
         List<InformationContent> informationContents =
                 Ebean.find(InformationContent.class).where().and(
-                Expr.eq("platform_platform_id", platformId),
-                Expr.eq("deleteStatus", 0)
-        ).findList();
+                        Expr.eq("platform_platform_id", platformId),
+                        Expr.eq("deleteStatus", 0)
+                ).findList();
+        ArrayList<InformationContent> informationContentArrayList =
+                new ArrayList<InformationContent>(informationContents);
+        return informationContentArrayList;
+    }
+
+    /**
+     * This method uses the informationId of the Information entity to find data in the database and bind
+     * it to the InformationContent model object.
+     *
+     * @param informationId Id of the Information object.
+     * @return List of Information Content objects with the informationId as a foreign key.
+     */
+    public static List<InformationContent> findAllByInformationId(Long informationId) {
+        List<InformationContent> informationContents =
+                Ebean.find(InformationContent.class).where().and(
+                        Expr.eq("information_information_id", informationId),
+                        Expr.eq("deleteStatus", 0)
+                ).findList();
         ArrayList<InformationContent> informationContentArrayList =
                 new ArrayList<InformationContent>(informationContents);
         return informationContentArrayList;

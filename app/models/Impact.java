@@ -100,6 +100,20 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
     }
 
     /**
+     * Looks up all impact data from one category in the database, sorts this data and saves it in a list.
+     *
+     * @return List of all impact objects filled by the data of one category from the database.
+     */
+    public static List<Impact> findAllImpactsOfCategory(String impactCategory) {
+        impactList = Ebean.find(Impact.class).where().and(
+                Expr.eq("impactCategory", impactCategory),
+                Expr.eq("deleteStatus", 0)
+        ).orderBy("impactName asc").findList();
+        ArrayList<Impact> impactArrayList = new ArrayList<Impact>(impactList);
+        return impactArrayList;
+    }
+
+    /**
      * Get all distinct categories from the Impact entity and generate a usable url string from them.
      * The url string is saved in the description field since the entity itself will never be saved and
      * the unchanged category names are needed to display in a view.

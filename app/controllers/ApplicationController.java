@@ -46,7 +46,8 @@ public class ApplicationController extends Controller {
                 JavaScriptReverseRouter.create("jsRoutes",
                         routes.javascript.PlatformsController.savePlatform(),
                         routes.javascript.PlatformsController.showSelectedPlatformFunctions(),
-                        routes.javascript.PlatformsController.platforms()
+                        routes.javascript.PlatformsController.platforms(),
+                        routes.javascript.ManagementController.saveInformation()
                 )
         ).as("text/javascript");
     }

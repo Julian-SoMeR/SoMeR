@@ -122,7 +122,8 @@ public class ImpactContent extends BaseDomain implements PathBindable<ImpactCont
      */
     public static List<ImpactContent> formToImpactContents(DynamicForm requestForm, Platform platform) {
         List<ImpactContent> impactContents = new LinkedList<>();
-        List<Impact> impactList = Impact.findAllImpacts();
+        String categoryString = requestForm.get("impactCategory");
+        List<Impact> impactList = Impact.findAllImpactsOfCategory(categoryString);
 
         for (Impact currentElement : impactList) {
             String impactContentIdString = requestForm.get("impactContentId-" + currentElement.impactId);

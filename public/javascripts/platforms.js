@@ -42,11 +42,21 @@ $(document).ready(function () {
     });
 });
 
-// Set value of submit button to predefined string that enables routing decisions in the savePlatform() method
+// Set value of submit button to predefined string that enables routing decisions.
 function submitWithValue(submitValue) {
         let submitButton = document.getElementById("form-submit-button");
         submitButton.value = submitValue;
         submitButton.click();
+}
+
+// Set value of submit button to predefined category string that enables routing decisions.
+function submitWithCategory(submitValue) {
+    let submitButton = document.getElementById("form-submit-button");
+    let categoryUrl = document.getElementById("category-url").value;
+    submitValue = submitValue + categoryUrl;
+    submitButton.value = submitValue;
+    console.log(submitValue);
+    submitButton.click();
 }
 
 /*

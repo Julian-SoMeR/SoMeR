@@ -63,7 +63,7 @@ public class PlatformsController extends Controller {
         if (platform == null) {
             return notFound(String.format("Platform %d does not exist.", platformId));
         }
-        return ok(platformgeneralinformation.render(informationContents, platform));
+        return ok(platforminformation.render(informationContents, platform));
     }
 
     /**
@@ -228,7 +228,7 @@ public class PlatformsController extends Controller {
      */
     public Result savePlatformFunctions() {
         List<FunctionContent> functionContents;
-
+        String categoryUrlString = Function.generateFirstCategoryUrlString();
         // Get the value of the submit button set by submitWithValue() javascript method from
         // the http request by name to decide where to route next after successful saves.
         int routingCaseSelector = 0;
@@ -237,11 +237,12 @@ public class PlatformsController extends Controller {
             return badRequest("No action provided!");
         } else {
             String submitValueString = submitValues[0];
-            // Default save on platforms and platform creation. Redirect to platforms list.
+            // Default save on platforms functions. Redirect to platforms list.
             if (submitValueString.equals("saveandexit")) {
                 routingCaseSelector = 1;
-                // Redirect to newly created platform after saving
-            } else if (submitValueString.equals("functions-saveonly")) {
+                // Stay on functions category after saving.
+            } else if (submitValueString.contains("savefunctioncategory-")) {
+                categoryUrlString = submitValueString.replace("savefunctioncategory-", "");
                 routingCaseSelector = 2;
             } else {
                 return badRequest("Action provided didn't match anything known.");
@@ -255,28 +256,33 @@ public class PlatformsController extends Controller {
 
         // Transfer all the data related to the FunctionContent entity into a FunctionContent object.
         functionContents = FunctionContent.formToFunctionContents(requestData, platform);
-
         for (FunctionContent currentElement : functionContents) {
             // If the element contains function content remove leading or trailing whitespaces.
-            if (!currentElement.functionContent.isEmpty()) {
-                currentElement.setFunctionContent(currentElement.functionContent.trim());
-            }
+            if (!(currentElement.functionContent == null)) {
 
-            // If the function  content is either empty, contains an alphanumeric character or contains a number,
-            // it is valid. This is done to prevent inputs only containing special characters.
-            if (currentElement.functionContent.isEmpty()
-                    || currentElement.functionContent.matches(".*\\w.*")
-                    || currentElement.functionContent.matches(".*\\d.*")) {
-                // Only update FunctionContent if there are changes.
-                FunctionContent functionContentBeforeSave =
-                        FunctionContent.findByFunctionContentId(currentElement.functionContentId);
-                if (!functionContentBeforeSave.functionContent.equals(currentElement.functionContent)) {
-                    currentElement.update();
+
+                if (!currentElement.functionContent.isEmpty()) {
+                    currentElement.setFunctionContent(currentElement.functionContent.trim());
+                }
+
+                // If the function  content is either empty, contains an alphanumeric character or contains a number,
+                // it is valid. This is done to prevent inputs only containing special characters.
+                if (currentElement.functionContent.isEmpty()
+                        || currentElement.functionContent.matches(".*\\w.*")
+                        || currentElement.functionContent.matches(".*\\d.*")) {
+                    // Only update FunctionContent if there are changes.
+                    FunctionContent functionContentBeforeSave =
+                            FunctionContent.findByFunctionContentId(currentElement.functionContentId);
+                    if (!functionContentBeforeSave.functionContent.equals(currentElement.functionContent)) {
+                        currentElement.update();
+                    }
+                } else {
+                    flash("function_content_error" + currentElement.function.functionId,
+                            "'" + currentElement.functionContent + "' is not a valid input for this field."
+                                    + " Please try using at least one letter or number!");
                 }
             } else {
-                flash("function_content_error" + currentElement.function.functionId,
-                        "'" + currentElement.functionContent + "' is not a valid input for this field."
-                                + " Please try using at least one letter or number!");
+                return badRequest("This won't work!");
             }
         }
         // If none of the error flags is true, show a success message
@@ -288,7 +294,6 @@ public class PlatformsController extends Controller {
             case 1:
                 return redirect(routes.PlatformsController.platforms());
             case 2:
-                String categoryUrlString = Function.generateFirstCategoryUrlString();
                 return redirect(routes.PlatformsController
                         .showSelectedPlatformFunctionsCategories(platform.platformId, categoryUrlString));
             default:
@@ -304,7 +309,7 @@ public class PlatformsController extends Controller {
      */
     public Result savePlatformImpacts() {
         List<ImpactContent> impactContents;
-
+        String categoryUrlString = Function.generateFirstCategoryUrlString();
         // Get the value of the submit button set by submitWithValue() javascript method from
         // the http request by name to decide where to route next after successful saves.
         int routingCaseSelector = 0;
@@ -313,11 +318,12 @@ public class PlatformsController extends Controller {
             return badRequest("No action provided!");
         } else {
             String submitValueString = submitValues[0];
-            // Default save on platforms and platform creation. Redirect to platforms list.
+            // Default save on platform impacts. Redirect to platforms list.
             if (submitValueString.equals("saveandexit")) {
                 routingCaseSelector = 1;
-                // Redirect to newly created platform after saving
-            } else if (submitValueString.equals("impacts-saveonly")) {
+                // Stay on impacts category after saving.
+            } else if (submitValueString.contains("saveimpactcategory-")) {
+                categoryUrlString = submitValueString.replace("saveimpactcategory-", "");
                 routingCaseSelector = 2;
             } else {
                 return badRequest("Action provided didn't match anything known.");
@@ -332,26 +338,31 @@ public class PlatformsController extends Controller {
         // Transfer all the data related to the ImpactContent entity into a ImpactContent object.
         impactContents = ImpactContent.formToImpactContents(requestData, platform);
         for (ImpactContent currentElement : impactContents) {
-            // If the element contains impact content remove leading or trailing whitespaces.
-            if (!currentElement.impactContent.isEmpty()) {
-                currentElement.setImpactContent(currentElement.impactContent.trim());
-            }
+            if (!(currentElement.impactContent == null)) {
 
-            // If the impact content is either empty, contains an alphanumeric character or contains a number,
-            // it is valid. This is done to prevent inputs only containing special characters.
-            if (currentElement.impactContent.isEmpty()
-                    || currentElement.impactContent.matches(".*\\w.*")
-                    || currentElement.impactContent.matches(".*\\d.*")) {
-                // Only update ImpactContent if there are changes.
-                ImpactContent impactContentBeforeSave =
-                        ImpactContent.findByImpactContentId(currentElement.impactContentId);
-                if (!impactContentBeforeSave.impactContent.equals(currentElement.impactContent)) {
-                    currentElement.update();
+                // If the element contains impact content remove leading or trailing whitespaces.
+                if (!currentElement.impactContent.isEmpty()) {
+                    currentElement.setImpactContent(currentElement.impactContent.trim());
+                }
+
+                // If the impact content is either empty, contains an alphanumeric character or contains a number,
+                // it is valid. This is done to prevent inputs only containing special characters.
+                if (currentElement.impactContent.isEmpty()
+                        || currentElement.impactContent.matches(".*\\w.*")
+                        || currentElement.impactContent.matches(".*\\d.*")) {
+                    // Only update ImpactContent if there are changes.
+                    ImpactContent impactContentBeforeSave =
+                            ImpactContent.findByImpactContentId(currentElement.impactContentId);
+                    if (!impactContentBeforeSave.impactContent.equals(currentElement.impactContent)) {
+                        currentElement.update();
+                    }
+                } else {
+                    flash("impact_content_error" + currentElement.impact.impactId,
+                            "'" + currentElement.impactContent + "' is not a valid input for this field."
+                                    + " Please try using at least one letter or number!");
                 }
             } else {
-                flash("impact_content_error" + currentElement.impact.impactId,
-                        "'" + currentElement.impactContent + "' is not a valid input for this field."
-                                + " Please try using at least one letter or number!");
+                return badRequest("This won't work!");
             }
         }
         // If none of the error flags is true, show a success message
@@ -363,7 +374,8 @@ public class PlatformsController extends Controller {
             case 1:
                 return redirect(routes.PlatformsController.platforms());
             case 2:
-                return redirect(routes.PlatformsController.showSelectedPlatformImpacts(platform.platformId));
+                return redirect(routes.PlatformsController.
+                        showSelectedPlatformImpactsCategories(platform.platformId, categoryUrlString));
             default:
                 return badRequest("Something went horribly wrong!");
         }
@@ -445,36 +457,40 @@ public class PlatformsController extends Controller {
         informationContents = InformationContent.formToInformationContents(requestData, platform);
 
         for (InformationContent currentElement : informationContents) {
-            // If the element contains information content remove leading or trailing whitespaces.
-            if (!currentElement.informationContent.isEmpty()) {
-                currentElement.setInformationContent(currentElement.informationContent.trim());
-            }
+            if (!(currentElement.informationContent == null)) {
+                // If the element contains information content remove leading or trailing whitespaces.
+                if (!currentElement.informationContent.isEmpty()) {
+                    currentElement.setInformationContent(currentElement.informationContent.trim());
+                }
 
-            // If the information content is either empty, contains an alphanumeric character or contains a number,
-            // it is valid. This is done to prevent inputs only containing special characters.
-            if (currentElement.informationContent.isEmpty()
-                    || currentElement.informationContent.matches(".*\\w.*")
-                    || currentElement.informationContent.matches(".*\\d.*")) {
-                // Never save anything, if the platform hasn't been saved before. FOR NOW..
-                if (createNewPlatformSubmission) {
-                    // If there is no entry with the current informationContentId create a new entry,
-                    // else update existing entries.
-                    if (currentElement.informationContentId == null) {
-                        currentElement.save();
-                    } else {
-                        // Only update InformationContent if there are changes.
-                        InformationContent informationContentBeforeSave =
-                                InformationContent.findByInformationContentId(currentElement.informationContentId);
-                        if (!informationContentBeforeSave.informationContent.equals(currentElement.informationContent)) {
-                            currentElement.update();
+                // If the information content is either empty, contains an alphanumeric character or contains a number,
+                // it is valid. This is done to prevent inputs only containing special characters.
+                if (currentElement.informationContent.isEmpty()
+                        || currentElement.informationContent.matches(".*\\w.*")
+                        || currentElement.informationContent.matches(".*\\d.*")) {
+                    // Never save anything, if the platform hasn't been saved before. FOR NOW..
+                    if (createNewPlatformSubmission) {
+                        // If there is no entry with the current informationContentId create a new entry,
+                        // else update existing entries.
+                        if (currentElement.informationContentId == null) {
+                            currentElement.save();
+                        } else {
+                            // Only update InformationContent if there are changes.
+                            InformationContent informationContentBeforeSave =
+                                    InformationContent.findByInformationContentId(currentElement.informationContentId);
+                            if (!informationContentBeforeSave.informationContent.equals(currentElement.informationContent)) {
+                                currentElement.update();
+                            }
                         }
                     }
+                } else {
+                    informationContentHasErrors = true;
+                    flash("information_content_error" + currentElement.information.informationId,
+                            "'" + currentElement.informationContent + "' is not a valid input for this field."
+                                    + " Please try using at least one letter or number!");
                 }
             } else {
-                informationContentHasErrors = true;
-                flash("information_content_error" + currentElement.information.informationId,
-                        "'" + currentElement.informationContent + "' is not a valid input for this field."
-                                + " Please try using at least one letter or number!");
+                return badRequest("This won't work!");
             }
         }
         if (informationContentHasErrors || platformHasErrors) {

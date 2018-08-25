@@ -1,12 +1,14 @@
 package models;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
 import javax.persistence.*;
 import play.mvc.*;
+import play.data.DynamicForm;
 
 /**
  * This model contains all the general platform information data for the platforms of the SoMeR.
@@ -98,12 +100,38 @@ public class Information extends BaseDomain implements PathBindable<Information>
         return informationArrayList;
     }
 
-    /*
-    public static List<Information> findAllInformationIds() {
-        informationIds = Ebean.find(Information.class).select("informationId").findList();
-        return informationIds;
+    /**
+     * Map all the data of the request form to Platform and InformationContent objects. If the data is to be updated,
+     * load the existing data into the objects. Else create new objects to save everything.
+     *
+     * @param requestForm Form object containing all the data form an html form.
+     * @param platform    Platform object for use on update.
+     * @return List of InformationContents containing all the necessary data to render a page or save the objects.
+     */
+    public static List<Information> formToInformation(DynamicForm requestForm) {
+        List<Information> informationList = Information.findAllInformation();
+        List<Information> resultInformationList = new LinkedList<Information>();
+        System.out.println("INFO LIST:" + informationList);
+        for (Information currentElement : informationList) {
+            String informationIdString = requestForm.get("informationId-" + currentElement.informationId);
+            System.out.println("INFO LIST:" + informationList);
+            if (informationIdString != null && !informationIdString.isEmpty()) {
+                Long informationId = Long.parseLong(informationIdString);
+                Information existingInformation =
+                        Information.findByInformationId(informationId);
+                String informationNameString = requestForm.get("informationName-" + currentElement.informationId);
+                existingInformation.setInformationName(informationNameString);
+                resultInformationList.add(existingInformation);
+            } else {
+                Information newInformation = new Information();
+
+                String informationNameString = requestForm.get("informationName-" + currentElement.informationId);
+                newInformation.setInformationName(informationNameString);
+                resultInformationList.add(newInformation);
+            }
+        }
+        return resultInformationList;
     }
-    */
 
     /* ---- Getters, Setters, ToString Method ---- */
 

@@ -1,6 +1,6 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
-# ~~~~
+# Sadly every route has to be in one line, so the formatting is not great.
 
 # ---- Basic Routing for navigation functionalities ---- #
 #Redirect to Home page
@@ -19,7 +19,7 @@ GET     /home                       controllers.ApplicationController.home()
 GET     /platforms                  controllers.PlatformsController.platforms()
 
 #Aggregators page
-GET     /aggregators/:category   controllers.ApplicationController.aggregators(category: String)
+GET     /aggregators/:category      controllers.ApplicationController.aggregators(category: String)
 
 #How To page
 GET     /howtoparticipate           controllers.ApplicationController.howTo()
@@ -47,49 +47,54 @@ GET     /cookiepolicy               controllers.ApplicationController.cookies()
 GET     /platforms/createnew        controllers.PlatformsController.createNewPlatform()
 
 #Show the selected platform information
-GET     /platforms/:platformId/generalinformation   controllers.PlatformsController.showSelectedPlatformInformation(platformId: Long)
+GET     /platforms/:platformId/platforminformation      controllers.PlatformsController.showSelectedPlatformInformation(platformId: Long)
 
 #Show the selected platform functions
-GET     /platforms/:platformId/functions    controllers.PlatformsController.showSelectedPlatformFunctions(platformId: Long)
+GET     /platforms/:platformId/functions                controllers.PlatformsController.showSelectedPlatformFunctions(platformId: Long)
 
 #Show the selected platform functions with categories
-GET     /platforms/:platformId/functions/:category    controllers.PlatformsController.showSelectedPlatformFunctionsCategories(platformId: Long, category: String)
+GET     /platforms/:platformId/functions/:category      controllers.PlatformsController.showSelectedPlatformFunctionsCategories(platformId: Long, category: String)
 
 #Show the selected platform impacts
-GET     /platforms/:platformId/impacts  controllers.PlatformsController.showSelectedPlatformImpacts(platformId: Long)
+GET     /platforms/:platformId/impacts                  controllers.PlatformsController.showSelectedPlatformImpacts(platformId: Long)
 
 #Show the selected platform impacts with categories
-GET     /platforms/:platformId/impacts/:category    controllers.PlatformsController.showSelectedPlatformImpactsCategories(platformId: Long, category: String)
-
+GET     /platforms/:platformId/impacts/:category        controllers.PlatformsController.showSelectedPlatformImpactsCategories(platformId: Long, category: String)
 
 #Delete a platform
-DELETE  /platforms/:platformId      controllers.PlatformsController.deletePlatform(platformId: Long)
+DELETE  /platforms/:platformId          controllers.PlatformsController.deletePlatform(platformId: Long)
 
 #Save a platform
-POST    /platforms                  controllers.PlatformsController.savePlatform()
+POST    /platforms                      controllers.PlatformsController.savePlatform()
 
 #Save a newly created platform
-POST    /platforms/createnew        controllers.PlatformsController.saveNewPlatform()
+POST    /platforms/createnew            controllers.PlatformsController.saveNewPlatform()
 
 #Save a platforms functions
-POST    /platforms/functions        controllers.PlatformsController.savePlatformFunctions()
+POST    /platforms/functions            controllers.PlatformsController.savePlatformFunctions()
 
 #Save a platforms impacts
-POST    /platforms/impacts          controllers.PlatformsController.savePlatformImpacts()
+POST    /platforms/impacts              controllers.PlatformsController.savePlatformImpacts()
 
 # ---- Special routes for Management page ----#
 
 #Management page comment feed
-GET     /management/commentfeed     controllers.ManagementController.management()
+GET     /management/commentfeed         controllers.ManagementController.management()
 
 #Management page platform properties
-GET     /management/platformproperties  controllers.Default.redirect(to ="/management/platformproperties/generalinformation")
+GET     /management/platformproperties  controllers.Default.redirect(to ="/management/platformproperties/platforminformation")
 
 #Management page platform properties general information
-GET     /management/platformproperties/generalinformation   controllers.ManagementController.platformPropertiesInformation()
+GET     /management/platformproperties/platforminformation   controllers.ManagementController.platformPropertiesInformation()
 
 #Management page platform properties function
-GET     /management/platformproperties/function   controllers.ManagementController.platformPropertiesFunction()
+GET     /management/platformproperties/function             controllers.ManagementController.platformPropertiesFunction()
 
 #Management page platform properties impact
-GET     /management/platformproperties/impact   controllers.ManagementController.platformPropertiesImpact()
+GET     /management/platformproperties/impact               controllers.ManagementController.platformPropertiesImpact()
+
+#Update information
+POST    /management/platformproperties/platforminformation  controllers.ManagementController.saveInformation()
+
+#Delete information
+DELETE  /management/platformproperties/platforminformation/:informationId  controllers.ManagementController.deleteInformation(informationId: Long)

@@ -110,6 +110,20 @@ public class Function extends BaseDomain implements PathBindable<Function> {
     }
 
     /**
+     * Looks up all function data from one category in the database, sorts this data and saves it in a list.
+     *
+     * @return List of all function objects filled by the data of one category from the database.
+     */
+    public static List<Function> findAllFunctionsOfCategory(String functionCategory) {
+        functionList = Ebean.find(Function.class).where().and(
+                Expr.eq("functionCategory", functionCategory),
+                Expr.eq("deleteStatus", 0)
+        ).orderBy("functionName asc").findList();
+        ArrayList<Function> functionArrayList = new ArrayList<Function>(functionList);
+        return functionArrayList;
+    }
+
+    /**
      * Get all distinct categories from the Function entity and generate a usable url string from them.
      * The url string is saved in the description field since the entity itself will never be saved and
      * the unchanged category names are needed to display in a view.

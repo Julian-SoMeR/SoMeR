@@ -1,32 +1,32 @@
 @(title: String)(content: Html)
-        <!--
+<!--
     Method to set current pages top navigation item.
     If the current pages path matches the item,
     set it to "active"
 -->
-        @setTopLinkActive(pathName: String) = @{
-            if(request.path.contains(pathName)) "active"
-        }
+    @setTopLinkActive(pathName: String) = @{
+        if(request.path.contains(pathName)) "active"
+    }
 
-        <!--
+    <!--
     Method to set searchbar active.
     If the first 7 characters of the current pages path matches the "/search",
     set it to "active"
 -->
-        @setSearchbarActive(searchPath: String) = @{
-            if(request.path.subSequence(0, 5).equals(searchPath)) "active"
-        }
+    @setSearchbarActive(searchPath: String) = @{
+        if(request.path.subSequence(0, 5).equals(searchPath)) "active"
+    }
 
-        <!--
+    <!--
     Method to set current pages footer navigation item.
     If the current pages path matches the item,
     set it to "footer-active"
 -->
-        @setFooterLinkActive(pathName: String) = @{
-            if(request.path.equals(pathName)) "footer-active"
-        }
+    @setFooterLinkActive(pathName: String) = @{
+        if(request.path.equals(pathName)) "footer-active"
+    }
 
-    <!DOCTYPE html>
+<!DOCTYPE html>
     <html lang="en">
         <head>
             <title>@title</title>
@@ -42,66 +42,75 @@
             <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
         </head>
         <body>
-            @if(flash.containsKey("success")){
-                <div class="alert alert-success">
+            @if(flash.containsKey("success")) {
+                <div class="alert alert-success" id="alert-success">
                 @flash.get("success")
                 </div>
             }
-            @if(flash.containsKey("error")){
+            @if(flash.containsKey("delete-success")) {
+                <div class="alert alert-success" id="alert-success">
+                @flash.get("delete-success")
+                </div>
+            }
+            @if(flash.containsKey("error")) {
                 <div class="alert alert-error">
                 @flash.get("error")
                 </div>
             }
-                <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
-            <header>
-                    <!-- Show flash messages on all pages. Still need to think about where to place them. -->
+            <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
+        <header>
+                <!-- Show flash messages on all pages. Still need to think about where to place them. -->
 
-                <p id="js-message" class="js-message">This website uses JavaScript.
-                    Please enable it for the best experience!</p>
-                <div id="header-container" class="header-container">
-                    <div class="logo">
-                        <a href="@routes.ApplicationController.home()">
-                            <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
+            <p id="js-message" class="js-message">This website uses JavaScript.
+                Please enable it for the best experience!</p>
+            <div id="header-container" class="header-container">
+                <div class="logo">
+                    <a href="@routes.ApplicationController.home()">
+                        <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
+                    </a>
+                </div>
+                <nav class="top-navigation">
+                    <div class="mobile-top-nav">
+                        Menu
+                        <a href="javascript:void(0);" class="menu-icon-link" onclick="showMobileNavigation()">
+                            <i class="material-icons menu-icon" id="menu-icon">menu</i>
                         </a>
                     </div>
-                    <nav class="top-navigation">
-                        <div class="mobile-top-nav">
-                        Menu
-                            <a href="javascript:void(0);" class="menu-icon-link" onclick="showMobileNavigation()">
-                                <i class="material-icons menu-icon" id="menu-icon">menu</i>
-                            </a>
-                        </div>
-                            <!-- Global navigation elements -->
-                        <div id="navigation-items" class="navigation-items">
-                            <a class="@setTopLinkActive("/home") navigation-link"
-                            href="@routes.ApplicationController.home()">
+                        <!-- Global navigation elements -->
+                    <div id="navigation-items" class="navigation-items">
+                        <a class="@setTopLinkActive("/home") navigation-link discard-warning"
+                        href="@routes.ApplicationController.home()">
                             Home</a>
-                            <a class="@setTopLinkActive("/platforms") navigation-link"
-                            href="@routes.PlatformsController.platforms()">
+                        <a class="@setTopLinkActive("/platforms") navigation-link discard-warning"
+                        href="@routes.PlatformsController.platforms()">
                             Platforms</a>
-                            <a class="@setTopLinkActive("/aggregators") navigation-link"
-                            href="@routes.ApplicationController.aggregators("networkingandcollaboration")">
+                        <a class="@setTopLinkActive("/aggregators") navigation-link discard-warning"
+                        href="@routes.ApplicationController.aggregators("networkingandcollaboration")">
                             Aggregators</a>
-                            <!--<a class="@setTopLinkActive("/howtoparticipate") navigation-link"
+
+                            <!--<a class="     @setTopLinkActive("/howtoparticipate") navigation-link"
                             href="@routes.ApplicationController.howTo()">
-                            How To Participate</a>-->
-                            <a class="@setTopLinkActive("/about") navigation-link"
-                            href="@routes.ApplicationController.about()">
+                            How To Participate
+                        </a>
+                        -->
+
+                        <a class="@setTopLinkActive("/about") navigation-link discard-warning"
+                        href="@routes.ApplicationController.about()">
                             About Us</a>
-                            <a class="@setTopLinkActive("/management") navigation-link"
-                            href="@routes.ManagementController.management()">
+                        <a class="@setTopLinkActive("/management") navigation-link discard-warning"
+                        href="@routes.ManagementController.management()">
                             SoMeR Management</a>
+                    </div>
+
+                    <div class="inbetween-bottom-border"></div>
+                    <div class="right-header-container">
+                        <div class="login-container">
+                            <input class="custom-button" type="button" onclick="registerVisible()" value="Register"/>
+                            <hr class="login-separator"/>
+                            <input class="custom-button" type="button" onclick="loginVisible()" value="Login"/>
                         </div>
 
-                        <div class="inbetween-bottom-border"></div>
-                        <div class="right-header-container">
-                            <div class="login-container">
-                                <input class="custom-button" type="button" onclick="registerVisible()" value="Register"/>
-                                <hr class="login-separator"/>
-                                <input class="custom-button" type="button" onclick="loginVisible()" value="Login"/>
-                            </div>
-
-                                <!--
+                            <!--
                             helper.form(action = routes.SearchController.search(searchForm("searchQuery")
                                     .getValue().orElse("")
                                 ), 'class -> "setTopLinkActive(" / search") search-container"
@@ -120,128 +129,143 @@
                             }
                             -->
 
-                            <form id="search-container" class="search-container"
-                                    action="/search">
-                                <input id="search-input" name="query" class="search-box" type="search"
-                                placeholder="Search.."/>
-                                    <button class="search-button" type="submit">
-                                        <i class="material-icons search-icon">
+                        <form id="search-container" class="search-container"
+                        action="/search">
+                            <input id="search-input" name="query" class="search-box" type="search"
+                            placeholder="Search.."/>
+                            <button class="search-button discard-warning" type="submit">
+                                <i class="material-icons search-icon">
                                                 search
-                                        </i>
-                                    </button>
+                                </i>
+                            </button>
 
-                            </form>
+                        </form>
 
-                        </div>
+                    </div>
 
-                        <div id="register-overlay" class="register-overlay">
-                            <form class="register-overlay-container">
-                                <h1 class="overlay-h1">Register</h1>
+                    <div id="register-overlay" class="register-overlay">
+                        <form class="register-overlay-container">
+                            <h1 class="overlay-h1">Register</h1>
 
-                                <div class="register-overlay-username">
-                                    <label for="register-username" ><b>Username:</b></label>
-                                    <input id="register-username" name="register-username" class="input-box"
-                                    type="text" placeholder="Enter Username.."/>
-                                </div>
+                            <div class="register-overlay-username">
+                                <label for="register-username" ><b>Username:</b></label>
+                                <input id="register-username" name="register-username" class="input-box"
+                                type="text" placeholder="Enter Username.."/>
+                            </div>
 
-                                <div class="register-overlay-email">
-                                    <label for="register-email" ><b>E-Mail:</b></label>
-                                    <input id="register-email" name="register-email" class="input-box" type="email"
-                                    placeholder="Enter E-Mail.."/>
-                                    <input id="register-email-repeat" name="register-email-repeat" class="input-box"
-                                    type="email" placeholder="Repeat E-Mail.."/>
-                                </div>
+                            <div class="register-overlay-email">
+                                <label for="register-email" ><b>E-Mail:</b></label>
+                                <input id="register-email" name="register-email" class="input-box" type="email"
+                                placeholder="Enter E-Mail.."/>
+                                <input id="register-email-repeat" name="register-email-repeat" class="input-box"
+                                type="email" placeholder="Repeat E-Mail.."/>
+                            </div>
 
-                                <div class="register-overlay-password">
-                                    <label for="register-password" ><b>Password:</b></label>
-                                    <input id="register-password" name="register-password" class="input-box"
-                                    type="password" placeholder="Enter Password.."/>
-                                    <input id="register-password-repeat" name="register-password-repeat"
-                                    class="input-box" type="password" placeholder="Repeat Password.."/>
-                                </div>
+                            <div class="register-overlay-password">
+                                <label for="register-password" ><b>Password:</b></label>
+                                <input id="register-password" name="register-password" class="input-box"
+                                type="password" placeholder="Enter Password.."/>
+                                <input id="register-password-repeat" name="register-password-repeat"
+                                class="input-box" type="password" placeholder="Repeat Password.."/>
+                            </div>
 
-                                <div class="register-overlay-button-container">
-                                    <input class="custom-button" type="submit" name="register-button" value="Register"/>
-                                    <input class="custom-button" type="button" onclick="registerInvisible()"
-                                    name="register-cancel-button" value="Cancel"/>
-                                </div>
-                            </form>
-                        </div>
+                            <div class="register-overlay-button-container">
+                                <input class="custom-button" type="submit" name="register-button" value="Register"/>
+                                <input class="custom-button" type="button" onclick="registerInvisible()"
+                                name="register-cancel-button" value="Cancel"/>
+                            </div>
+                        </form>
+                    </div>
 
-                        <div id="login-overlay" class="login-overlay">
-                            <form class="login-overlay-container">
-                                <h1 class="overlay-h1">Login</h1>
+                    <div id="login-overlay" class="login-overlay">
+                        <form class="login-overlay-container">
+                            <h1 class="overlay-h1">Login</h1>
 
-                                <div class="login-overlay-username">
-                                    <label for="login-username"><b>Username:</b></label>
-                                    <input id="login-username" name="login-username" class="input-box" type="text"
-                                    placeholder="Enter Username.."/>
-                                </div>
+                            <div class="login-overlay-username">
+                                <label for="login-username"><b>Username:</b></label>
+                                <input id="login-username" name="login-username" class="input-box" type="text"
+                                placeholder="Enter Username.."/>
+                            </div>
 
-                                <div class="login-overlay-password">
-                                    <label for="login-password"><b>Password:</b></label>
-                                    <input id="login-password" name="login-password" class="input-box" type="password"
-                                    placeholder="Enter Password.."/>
-                                    <a href="#None">Forgot password?</a>
-                                </div>
+                            <div class="login-overlay-password">
+                                <label for="login-password"><b>Password:</b></label>
+                                <input id="login-password" name="login-password" class="input-box" type="password"
+                                placeholder="Enter Password.."/>
+                                <a href="#None">Forgot password?</a>
+                            </div>
 
-                                <div class="login-overlay-button-container">
-                                    <input class="custom-button" type="submit" name="login-button" value="Login"/>
-                                    <input class="custom-button" type="button" onclick="loginInvisible()"
-                                    name="login-cancel-button" value="Cancel"/>
-                                </div>
-                            </form>
-                        </div>
-                    </nav>
-                </div>
-            </header>
-
-            <div class="content-margin">
-            @content
+                            <div class="login-overlay-button-container">
+                                <input class="custom-button" type="submit" name="login-button" value="Login"/>
+                                <input class="custom-button" type="button" onclick="loginInvisible()"
+                                name="login-cancel-button" value="Cancel"/>
+                            </div>
+                        </form>
+                    </div>
+                </nav>
             </div>
-                <!-- Footer after each pages content! -->
-            <footer class="footer-container">
+        </header>
 
-                    <!-- Back to top button!! -->
-                <button class="back-to-top-button" id="back-to-top-button" onclick="backToTop()">
+        <div class="content-margin">
+        @content
+        </div>
+            <!-- Footer after each pages content! -->
+        <footer class="footer-container">
+
+                <!-- Back to top button!! -->
+            <button class="back-to-top-button" id="back-to-top-button" onclick="backToTop()">
                 Back to top
-                    <i class="material-icons arrow-up">keyboard_arrow_up</i>
-                </button>
-                <ul class="footer-link-list">
-                    <li><a href="@routes.ApplicationController.metrics()">*metrics Project</a></li>
+                <i class="material-icons arrow-up">keyboard_arrow_up</i>
+            </button>
+            <ul class="footer-link-list">
+                <li>
+                    <a class="discard-warning"
+                    href="@routes.ApplicationController.metrics()">
+                    *metrics Project
+                    </a>
+                </li>
 
-                    <li><a class="@setFooterLinkActive("/about")" href="@routes.ApplicationController.about()">About</a>
-                    </li>
-                    <li><a class="@setFooterLinkActive("/cookiepolicy")" href="@routes.ApplicationController.cookies()">
-                    Cookie Policy</a>
-                    </li>
-                    <li><a class="@setFooterLinkActive("/imprint")" href="@routes.ApplicationController.imprint()">
-                    Imprint</a>
-                    </li>
-                </ul>
+                <li>
+                    <a class="@setFooterLinkActive("/about") discard-warning"
+                    href="@routes.ApplicationController.about()">
+                    About
+                    </a>
+                </li>
+                <li>
+                    <a class="@setFooterLinkActive("/cookiepolicy") discard-warning"
+                    href="@routes.ApplicationController.cookies()">
+                    Cookie Policy
+                    </a>
+                </li>
+                <li>
+                    <a class="@setFooterLinkActive("/imprint") discard-warning"
+                    href="@routes.ApplicationController.imprint()">
+                    Imprint
+                    </a>
+                </li>
+            </ul>
 
-                    <!-- Cookie message for EU Cookie Law. Derived from "https://github.com/studio24/cookie-message".
+                <!-- Cookie message for EU Cookie Law. Derived from "https://github.com/studio24/cookie-message".
                 View "MIT License.md" in "/public/" folder. -->
-                <div class="cookie-message" id="cookie-message" data-cookie-expiry="60">
+            <div class="cookie-message" id="cookie-message" data-cookie-expiry="60">
 
-                    <div class="cookie-message-text-container">
-                        <p>
+                <div class="cookie-message-text-container">
+                    <p>
                         The *metrics SoMeR uses cookies to ensure we give you the best experience on our website.
-                            By using our site, you acknowledge that you have read and understand our
-                            <a href="@routes.ApplicationController.cookies()">Cookie Policy</a>.
-                            Your use of *metrics SoMeR services is subject to these policies. </p>
-                    </div>
-                    <div class="cookie-message-button-container">
-                        <button class="custom-button close-cookie-message-button" onclick="hideCookieMessage()">
-                        Close
-                        </button>
-                    </div>
+                        By using our site, you acknowledge that you have read and understand our
+                        <a href="@routes.ApplicationController.cookies()">Cookie Policy</a>.
+                        Your use of *metrics SoMeR services is subject to these policies. </p>
                 </div>
-            </footer>
-                <!-- JavaScript for most functionality on the site. -->
-            <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
-                <!-- Handle the display of cookie message -->
-            <script src="@routes.Assets.at("javascripts/cookie-message.js")" type="text/javascript"></script>
+                <div class="cookie-message-button-container">
+                    <button class="custom-button close-cookie-message-button" onclick="hideCookieMessage()">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </footer>
+            <!-- JavaScript for most functionality on the site. -->
+        <script src="@routes.Assets.at("javascripts/main.js")" type="text/javascript"></script>
+            <!-- Handle the display of cookie message -->
+        <script src="@routes.Assets.at("javascripts/cookie-message.js")" type="text/javascript"></script>
 
         </body>
 

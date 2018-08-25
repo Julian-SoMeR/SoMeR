@@ -129,7 +129,8 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
      */
     public static List<FunctionContent> formToFunctionContents(DynamicForm requestForm, Platform platform) {
         List<FunctionContent> functionContents = new LinkedList<>();
-        List<Function> functionList = Function.findAllFunctions();
+        String categoryString = requestForm.get("functionCategory");
+        List<Function> functionList = Function.findAllFunctionsOfCategory(categoryString);
 
         for (Function currentElement : functionList) {
             String functionContentIdString = requestForm.get("functionContentId-" + currentElement.functionId);

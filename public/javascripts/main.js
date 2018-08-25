@@ -117,6 +117,14 @@ function highlightSearchbox() {
     }
 }
 
+/* After 3 seconds, make alert success message invisible. */
+setInterval(function () {
+    let successAlert = document.getElementById("alert-success");
+    if (successAlert != null || successAlert != undefined) {
+        successAlert.style.display = "none";
+    }
+}, 3000);
+
 /*let searchContainer = document.getElementById("search-container");
 searchContainer.addEventListener("load",highlightSearchbox);
 function highlightSearchbox() {
