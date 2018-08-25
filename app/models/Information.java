@@ -3,10 +3,13 @@ package models;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+
 import play.data.validation.Constraints;
 import io.ebean.*;
 import io.ebean.annotation.*;
+
 import javax.persistence.*;
+
 import play.mvc.*;
 import play.data.DynamicForm;
 
@@ -25,7 +28,7 @@ public class Information extends BaseDomain implements PathBindable<Information>
     @DocSortable
     public String informationName;
     //@DocEmbedded
-    @OneToMany(cascade=CascadeType.ALL, mappedBy = "information")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "information")
     public List<InformationContent> informationContents = new ArrayList<>();
 
     // List to collect all information objects to render them on the platforms -> general information page.
@@ -35,7 +38,8 @@ public class Information extends BaseDomain implements PathBindable<Information>
 
 
     /* ----- Constructors ----- */
-    public Information() {}
+    public Information() {
+    }
 
     public Information(Long informationId, String informationName, List<InformationContent> informationContents) {
         this.informationId = informationId;
@@ -65,9 +69,11 @@ public class Information extends BaseDomain implements PathBindable<Information>
 
 
     /* ---- Methods ---- */
+
     /**
      * This method uses the informationId of the information entity to find data in the database and bind in to the
      * corresponding model object.
+     *
      * @param informationId Unique identifier of information.
      * @return Model object filled with data from the information table.
      */
@@ -80,6 +86,7 @@ public class Information extends BaseDomain implements PathBindable<Information>
 
     /**
      * Uses the name of the function to look up data in the database.
+     *
      * @param informationName Name of the corresponding function.
      * @return The information object filled with the data found in the database.
      */
@@ -92,11 +99,12 @@ public class Information extends BaseDomain implements PathBindable<Information>
 
     /**
      * Looks up all information data in the database, sorts this data and saves it in a list.
+     *
      * @return List of all information objects filled by the data from the database.
      */
     public static List<Information> findAllInformation() {
         informationList = Ebean.find(Information.class).where().eq("deleteStatus", 0).findList();
-        ArrayList <Information> informationArrayList = new ArrayList<Information>(informationList);
+        ArrayList<Information> informationArrayList = new ArrayList<Information>(informationList);
         return informationArrayList;
     }
 
@@ -129,6 +137,12 @@ public class Information extends BaseDomain implements PathBindable<Information>
                 newInformation.setInformationName(informationNameString);
                 resultInformationList.add(newInformation);
             }
+        }
+        String createNewInformationString = requestForm.get("createNewInformation");
+        if (createNewInformationString != null || !(createNewInformationString.isEmpty())) {
+            Information newInformation = new Information();
+            newInformation.setInformationName(createNewInformationString);
+            resultInformationList.add(newInformation);
         }
         return resultInformationList;
     }

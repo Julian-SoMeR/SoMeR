@@ -68,7 +68,7 @@
                                 <tr>
                                     <th class="table-header">
                                         <div class="table-name">
-                                            <span>
+                                            <span class="column-name">
                                                 Information Name
                                             </span>
                                         </div>
@@ -91,15 +91,37 @@
                             <tbody>
                             @helper.form(action = routes.ManagementController.management(),
                                 'class -> "custom-form", 'id -> "management-form") {
+
+                                <tr id="platform-table-row" class="management-table-row">
+                                    <td class="table-cell">
+                                        <div class="table-column">
+                                            <input type="text" placeholder="Enter new information name.."
+                                            value=""
+                                            name="createNewInformation"
+                                            class="management-create-new-input"
+                                            id="create-new-input">
+                                            <div class="create-new-save-cancel-icon-container "
+                                            id="create-new-save-cancel-icon-container">
+                                                <a id="submit-form" onclick="submitForm()">
+                                                    <i class="material-icons save">
+                                                        save
+                                                    </i>
+                                                </a>
+                                                <a>
+                                                    <i class="material-icons cancel"
+                                                    onclick="hideCreateNewInput()">
+                                                        close
+                                                    </i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
                                 @for(information <- informationList) {
-                                    <input type="text" placeholder="Enter information name.."
-                                    value="@information.informationName"
-                                    class="management-table-row-input"
-                                    name="informationName-@information.informationId"
-                                    id="table-row-input-@information.informationId">
                                     <tr id="platform-table-row" class="management-table-row">
-                                        <td id="platform-table-column">
-                                            <div class="table-column">
+                                        <td class="table-cell" id="table-cell">
+                                            <div class="table-column"
+                                            id="table-column">
                                                 <a class="management-table-row-link"
                                                 id="table-row-link-@information.informationId"
                                                 value="@information.informationName">

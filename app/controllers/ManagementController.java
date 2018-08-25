@@ -44,6 +44,10 @@ public class ManagementController extends Controller {
         return ok(managementplatformpropertiesinformation.render(informationList));
     }
 
+    public Result createNewInformation() {
+        return ok();
+    }
+
     public Result saveInformation() {
         // Bind the data of the html form to the dynamic form object
         DynamicForm requestData = requestForm.bindFromRequest();
@@ -84,7 +88,7 @@ public class ManagementController extends Controller {
             }
         }
         flash("success", "Save successful.");
-        return ok(managementplatformpropertiesinformation.render(informationList));
+        return redirect(routes.ManagementController.platformPropertiesInformation());
     }
 
     /**

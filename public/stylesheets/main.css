@@ -35,6 +35,14 @@ h4 {
 
 }
 
+textarea:focus {
+    border: 1px solid #38c9ff;
+}
+
+input:focus {
+    border: 1px solid #38c9ff;
+}
+
 /* General paragraph stylings. */
 p {
     font-size: 16px;
@@ -782,9 +790,13 @@ dd.error {
 }
 
 .table-column {
-    display: flex;
-    justify-content: space-between;
-    font-size: 18px;
+     display: flex;
+     justify-content: space-between;
+     font-size: 18px;
+}
+
+.table-cell {
+    padding: 0px !important;
 }
 
 .platform-table a,
@@ -1167,7 +1179,7 @@ dd.error {
 }
 
 .select-management-platform-information-heading {
-    font-size: 20px;
+    font-size: 22px;
     padding-top: 8px;
 }
 
@@ -1175,7 +1187,7 @@ dd.error {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    padding: 15px;
+    padding: 15px 14px 5px 14px;
 }
 
 .management-platform-information-table-container {
@@ -1248,8 +1260,23 @@ dd.error {
     color: #FF8C00;
 }
 
-.create-new-platform-information {
+.management-create-new-input {
+    display: block;
+    width: 100%;
+    margin: 5px;
+    padding: 5px;
+    border: 1px solid lightgreen;
+}
 
+.create-new-save-cancel-icon-container {
+    display: flex;
+    text-align: right;
+    justify-content: flex-end;
+    padding-top: 5px;
+}
+
+.column-name {
+    font-size: 20px;
 }
 
 /* ---- COOKIE MESSAGE ---- */

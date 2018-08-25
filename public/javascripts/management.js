@@ -38,11 +38,9 @@ function hideInput(informationId) {
 
 // Submit the form with ajax, to avoid reloading the window.
 function submitForm() {
-    console.log("click");
     jsRoutes.controllers.ManagementController.saveInformation().ajax({
         data: $('#management-form').serialize(),
         success: function (data) {
-            console.log("YAAAAY");
             location.reload();
         },
         error: function (err) {
