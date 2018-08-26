@@ -1,3 +1,4 @@
+@(functionList: List[Function])
 @main("Management Page") {
 
     <!-- Breadcrumbs that get displayed before the content!
@@ -6,7 +7,7 @@
         <p class="breadcrumb-paragraph">You are here: </p>
         <ul class="breadcrumb-list">
             <li class="breadcrumb-firstItem">SoMeR Management</li>
-            <li>Comment Feed</li>
+            <li>Platform Properties <strong>(Function)</strong></li>
         </ul>
     </div>
 
@@ -37,7 +38,7 @@
                 <div class="management-subnavigation-container">
                     <a class="management-subnavigation-link"
                     href="@routes.ManagementController.platformPropertiesInformation()">
-                        General Information
+                        Platform Information
                     </a>
                     <a class="management-subnavigation-link management-subnavigation-active">
                         Function
@@ -47,10 +48,115 @@
                         Impact
                     </a>
                 </div>
-                <div class="management-height-placeholder">
+                <div class=".management-platform-information-table-container">
+                    <div class="select-or-create-new-information-container">
+                        <h2 class="select-management-platform-information-heading">Manage Function Categories</h2>
+                        <a href=""
+                        class="create-new-platform-information">
+                            <button class="custom-button add-button" id="add-button">
+                                <i class="material-icons add">add</i>
+                                Create new Function Category</button>
+                        </a>
 
+                    </div>
+
+                    <table id="management-platform-information-table"
+                    class="management-platform-information-table">
+                        <thead>
+                            <tr>
+                                <th class="table-header">
+                                    <div class="table-name">
+                                        <span class="column-name">
+                                            Function Category Name
+                                        </span>
+                                    </div>
+                                    <div class="filter-container">
+                                        <input type="text" id="information-filter" class="platform-filter"
+                                        placeholder="Filter function categories..">
+                                        <button type="button" id="filter-button"
+                                        class="custom-button custom-filter-button"
+                                        onclick="filterInformations()">
+                                            Filter
+                                        </button>
+                                        <hr class="filter-button-separator"/>
+                                        <button type="button"
+                                        class="custom-button custom-reset-button"
+                                        onclick="resetInformationFilter()">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                        @helper.form(action = routes.ManagementController.management(),
+                            'class -> "custom-form", 'id -> "management-form") {
+
+                            @for(function <- functionList) {
+                                <tr id="platform-table-row" class="management-table-row">
+                                    <td class="table-cell" id="table-cell">
+                                        <div class="table-column"
+                                        id="table-column">
+                                            <a class="management-table-row-link"
+                                            id="table-row-link-@function.functionDescription"
+                                            value="@function.functionCategory">
+                                            @function.functionCategory</a>
+                                            <div class="delete-edit-icon-container unselectable"
+                                            id="delete-edit-icon-container-@function.functionDescription">
+                                                <a class="unselectable"
+                                                onclick="showInput('@function.functionDescription')">
+                                                    <i class="material-icons edit">edit</i>
+                                                </a>
+
+                                                    <!-- Very ugly formatting but line breaks break everything-->
+                                                <a class="unselectable"
+                                                onclick="deleteFunctionCategory('@routes.ManagementController.deleteFunctionCategory(function)', '@function.functionCategory')">
+                                                    <i class="material-icons delete">delete</i>
+                                                </a>
+                                            </div>
+                                            <input type="text" placeholder="Enter function category name.."
+                                            value="@function.functionCategory"
+                                            class="management-table-row-input"
+                                            name="functionCategory-@function.functionDescription"
+                                            id="table-row-input-@function.functionDescription">
+
+                                            <input type="hidden" value="@function.functionDescription"
+                                            name="functionCategoryUrl-@function.functionDescription"/>
+
+                                            <div class="save-cancel-icon-container unselectable"
+                                            id="save-cancel-icon-container-@function.functionDescription">
+                                                <a class="unselectable" id="submit-form" onclick="submitForm()">
+                                                    <i class="material-icons save unselectable">
+                                                    save
+                                                    </i>
+                                                </a>
+                                                <a class="unselectable">
+                                                    <i class="material-icons cancel unselectable"
+                                                    onclick="hideInput('@function.functionDescription')">
+                                                    close
+                                                    </i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                            <!-- Show an error message when there is an input
+                                                error on the function categories. -->
+                                        @if(flash.containsKey("function_name_error"
+                                                + function.functionDescription)) {
+                                            <div class="alert alert-error">
+                                            @flash.get("function_name_error" + function.functionDescription)
+                                            </div>
+                                        }
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+    <script src="@routes.Assets.at("javascripts/management.js")" type="text/javascript"></script>
 }

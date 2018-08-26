@@ -150,6 +150,7 @@ public class PlatformsController extends Controller {
         }
         platform.setDeleteStatus(true);
         platform.update();
+        flash("delete-success", "Deletion successful.");
         return redirect(routes.PlatformsController.platforms());
     }
 

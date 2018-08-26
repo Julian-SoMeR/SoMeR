@@ -101,6 +101,24 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
     }
 
     /**
+     * This method uses the functionId of the Function entity to find data in the database and bind
+     * it to the FunctionContent model object.
+     *
+     * @param functionId Id of the Function object.
+     * @return List of Function Content objects with the functionId as a foreign key.
+     */
+    public static List<FunctionContent> findAllByFunctionId(Long functionId) {
+        List<FunctionContent> functionContents =
+                Ebean.find(FunctionContent.class).where().and(
+                        Expr.eq("function_function_id", functionId),
+                        Expr.eq("deleteStatus", 0)
+                ).findList();
+        ArrayList<FunctionContent> functionContentArrayList =
+                new ArrayList<FunctionContent>(functionContents);
+        return functionContentArrayList;
+    }
+
+    /**
      * This method is used to insert attribute values that need to be displayed in a view
      * because a FunctionContent object does only contain the id of the included platform or function object.
      *

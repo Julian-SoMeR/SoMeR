@@ -44,15 +44,59 @@ public class ManagementController extends Controller {
         return ok(managementplatformpropertiesinformation.render(informationList));
     }
 
+
+    /**
+     * Creating a new platform and saving all necessary entities bound to the platform.
+     * On successful save, redirect to the newly created platform.
+     *
+     * @return Either stay on createPlatform page and show an error or redirect to newly created platform after saving.
+     */
     public Result createNewInformation() {
-        return ok();
+        // Bind the data of the html form to the dynamic form object
+        DynamicForm requestData = requestForm.bindFromRequest();
+        // Transfer all the data related to the platform entity into a platform object.
+        Information information = Information.formToNewInformation(requestData);
+
+        if (information.informationName != null || !(information.informationName.isEmpty())) {
+            // Remove leading or trailing whitespaces of the information name before proceeding
+            // to save the information object.
+            information.setInformationName(information.informationName.trim());
+            // Only save a new information if its name did not contained only whitespaces
+            if (information.informationName.length() > 0) {
+                // A platform name should also contain either an alphanumeric character or a number to be valid.
+                if (information.informationName.matches(".*\\w.*")
+                        || (information.informationName.matches(".*\\d.*"))) {
+                    information.save();
+                    // If everything went okay, also save a new empty InformationContent with platformId and
+                    // informationId set.
+                    List<Platform> platforms = Platform.findAllPlatforms();
+                    for (Platform currentElement : platforms) {
+                        InformationContent informationContent = new InformationContent();
+                        informationContent.setPlatform(currentElement);
+                        informationContent.setInformation(information);
+                        informationContent.setInformationContent("");
+                        informationContent.save();
+                    }
+                    flash("success", "Save successful.");
+                } else {
+                    flash("new_information_name_error",
+                            "'" + information.informationName + "' is not a valid information name."
+                                    + " Please try using at least one letter or number!");
+                }
+            } else {
+                flash("new_information_name_error",
+                        "Please enter information name!");
+            }
+        } else {
+            return badRequest("This won't work!");
+        }
+        return redirect(routes.ManagementController.platformPropertiesInformation());
     }
 
     public Result saveInformation() {
         // Bind the data of the html form to the dynamic form object
         DynamicForm requestData = requestForm.bindFromRequest();
         List<Information> informationList = Information.formToInformation(requestData);
-        System.out.println("DATA: " + informationList);
 
         for (Information currentElement : informationList) {
             if (!(currentElement.informationName == null)) {
@@ -70,12 +114,14 @@ public class ManagementController extends Controller {
                     // else update existing entries.
                     if (currentElement.informationId == null) {
                         currentElement.save();
+                        flash("success", "Save successful.");
                     } else {
                         // Only update Information if there are changes.
                         Information informationNameBeforeSave =
                                 Information.findByInformationId(currentElement.informationId);
                         if (!informationNameBeforeSave.informationName.equals(currentElement.informationName)) {
                             currentElement.update();
+                            flash("success", "Save successful.");
                         }
                     }
                 } else {
@@ -114,7 +160,59 @@ public class ManagementController extends Controller {
     }
 
     public Result platformPropertiesFunction() {
-        return ok(managementplatformpropertiesfunction.render());
+        List<Function> functions = Function.findDistinctCategories();
+        return ok(managementplatformpropertiesfunction.render(functions));
+    }
+
+    /**
+     * Delete function and all connected data in FunctionContent.
+     *
+     * @param functionId Id of the function to delete.
+     * @return On successful delete, render HTML template with http status code 400. Else display NOT FOUND message.
+     */
+    public Result deleteFunction(Long functionId) {
+        Function function = Function.findByFunctionId(functionId);
+        List<FunctionContent> functionContents = FunctionContent.findAllByFunctionId(functionId);
+        if (function == null) {
+            return notFound(String.format("Function %s does not exist.", functionId));
+        }
+        for (FunctionContent currentElement : functionContents) {
+            currentElement.setDeleteStatus(true);
+            currentElement.update();
+        }
+        function.setDeleteStatus(true);
+        function.update();
+        flash("delete-success", "Deletion successful.");
+        return redirect(routes.ManagementController.platformPropertiesFunction());
+    }
+
+    /**
+     * Delete function and all connected data in FunctionContent.
+     *
+     * @param functionId Id of the function to delete.
+     * @return On successful delete, render HTML template with http status code 400. Else display NOT FOUND message.
+     */
+    public Result deleteFunctionCategory(Function function) {
+        List<Function> functions = Function.findAllFunctionsOfCategory(function.functionCategory);
+        for (Function currentFunctionElement : functions) {
+            if (currentFunctionElement == null) {
+                return notFound(String.format("Function %s does not exist.", currentFunctionElement.functionId));
+            }
+            List<FunctionContent> functionContents =
+                    FunctionContent.findAllByFunctionId(currentFunctionElement.functionId);
+            for (FunctionContent currentFunctionContentElement : functionContents) {
+                if (currentFunctionContentElement == null) {
+                    return notFound(String.format(
+                            "Function Content %s does not exist.", currentFunctionContentElement.functionContentId));
+                }
+                currentFunctionContentElement.setDeleteStatus(true);
+                currentFunctionContentElement.update();
+            }
+            currentFunctionElement.setDeleteStatus(true);
+            currentFunctionElement.update();
+        }
+        flash("delete-success", "Deletion successful.");
+        return redirect(routes.ManagementController.platformPropertiesFunction());
     }
 
     public Result platformPropertiesImpact() {

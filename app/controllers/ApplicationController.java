@@ -47,7 +47,8 @@ public class ApplicationController extends Controller {
                         routes.javascript.PlatformsController.savePlatform(),
                         routes.javascript.PlatformsController.showSelectedPlatformFunctions(),
                         routes.javascript.PlatformsController.platforms(),
-                        routes.javascript.ManagementController.saveInformation()
+                        routes.javascript.ManagementController.saveInformation(),
+                        routes.javascript.ManagementController.createNewInformation()
                 )
         ).as("text/javascript");
     }

@@ -85,16 +85,22 @@ GET     /management/commentfeed         controllers.ManagementController.managem
 GET     /management/platformproperties  controllers.Default.redirect(to ="/management/platformproperties/platforminformation")
 
 #Management page platform properties general information
-GET     /management/platformproperties/platforminformation   controllers.ManagementController.platformPropertiesInformation()
+GET     /management/platformproperties/platforminformation                  controllers.ManagementController.platformPropertiesInformation()
 
 #Management page platform properties function
-GET     /management/platformproperties/function             controllers.ManagementController.platformPropertiesFunction()
+GET     /management/platformproperties/function                             controllers.ManagementController.platformPropertiesFunction()
 
 #Management page platform properties impact
-GET     /management/platformproperties/impact               controllers.ManagementController.platformPropertiesImpact()
+GET     /management/platformproperties/impact                               controllers.ManagementController.platformPropertiesImpact()
 
 #Update information
-POST    /management/platformproperties/platforminformation  controllers.ManagementController.saveInformation()
+POST    /management/platformproperties/platforminformation                  controllers.ManagementController.saveInformation()
+
+#Create a new information
+POST    /management/platformproperties/platforminformation/createnew        controllers.ManagementController.createNewInformation()
 
 #Delete information
-DELETE  /management/platformproperties/platforminformation/:informationId  controllers.ManagementController.deleteInformation(informationId: Long)
+DELETE  /management/platformproperties/platforminformation/:informationId   controllers.ManagementController.deleteInformation(informationId: Long)
+
+#Delete function
+DELETE  /management/platformproperties/function/:functionCategories         controllers.ManagementController.deleteFunctionCategory(functionCategories: models.Function)

@@ -109,6 +109,21 @@ public class Information extends BaseDomain implements PathBindable<Information>
     }
 
     /**
+     * Map the data of the request form to a new Information Object.
+     *
+     * @param requestForm Form containing the data for the new Information object.
+     * @return New Information Object containing either nothing or a new informationName.
+     */
+    public static Information formToNewInformation(DynamicForm requestForm) {
+        String createNewInformationString = requestForm.get("createNewInformation");
+        Information newInformation = new Information();
+        if (createNewInformationString != null || !(createNewInformationString.isEmpty())) {
+            newInformation.setInformationName(createNewInformationString);
+        }
+        return newInformation;
+    }
+
+    /**
      * Map all the data of the request form to Platform and InformationContent objects. If the data is to be updated,
      * load the existing data into the objects. Else create new objects to save everything.
      *
@@ -138,12 +153,7 @@ public class Information extends BaseDomain implements PathBindable<Information>
                 resultInformationList.add(newInformation);
             }
         }
-        String createNewInformationString = requestForm.get("createNewInformation");
-        if (createNewInformationString != null || !(createNewInformationString.isEmpty())) {
-            Information newInformation = new Information();
-            newInformation.setInformationName(createNewInformationString);
-            resultInformationList.add(newInformation);
-        }
+
         return resultInformationList;
     }
 

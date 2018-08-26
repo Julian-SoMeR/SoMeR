@@ -54,15 +54,18 @@ p {
 /* JS message that only displays when Javascript is blocked. */
 .js-message {
     display: block;
-
     /* Show the "Use JS" message slowly to avoid blinking */
     animation: 5s fadeIn;
     animation-fill-mode: forwards;
-    position: absolute;
+    position: fixed;
+    top: 0px;
+    left: 0px;
     color: white;
     font-weight: bold;
     width: 100%;
     text-align: center;
+    background-color: darkred;
+    z-index: 1000;
 }
 
 @keyframes fadeIn {
@@ -75,6 +78,14 @@ p {
         display: block;
         opacity: 1;
     }
+}
+
+/* Block marking on specific elements. (Chrome, Opera, Firefox, Edge, Safari) */
+.unselectable {
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
 }
 
 /* General list stylings. */
@@ -92,6 +103,7 @@ p {
 html,
 body {
     background-color: #F5F5F5;
+    font-size: 16px;
     /*width: 100vw;
     height: 100vh;
     */
@@ -222,6 +234,7 @@ a:hover {
     background-color: #E6E6E6;
     border: 1px solid black;
     border-radius: 3px;
+    cursor: pointer;
 }
 
 .search-icon:hover,
@@ -236,7 +249,7 @@ a:hover {
 
 /* This is necessary to highlight search results. */
 .highlight {
-    background-color: lightblue;
+    background-color: #faffcc;
     /*#e2e2e2*/
 }
 
@@ -456,7 +469,6 @@ a:hover {
 .alert-success {
     display: block;
     color: black;
-    transition-duration: 1s;
     padding: 2px 10px;
     border: 1px solid black;
     background-color: #bfffd2;
@@ -464,13 +476,6 @@ a:hover {
     top: 135px;
     left: 45%;
 }
-
-.management-alert-error {
-    display: block;
-    padding-left: 15px;
-
-}
-
 
 /* ---- General content container styles ---- */
 /* Have a margin, such that there is now overlap with global navigation */
@@ -754,7 +759,7 @@ dd.error {
     justify-content: flex-end;
 }
 
-.platforms-filter-container {
+.filter-container {
     display: flex;
     justify-content: flex-end;
     width: 300px;
@@ -1261,7 +1266,7 @@ dd.error {
 }
 
 .management-create-new-input {
-    display: block;
+    display: none;
     width: 100%;
     margin: 5px;
     padding: 5px;
@@ -1269,7 +1274,7 @@ dd.error {
 }
 
 .create-new-save-cancel-icon-container {
-    display: flex;
+    display: none;
     text-align: right;
     justify-content: flex-end;
     padding-top: 5px;
@@ -1278,6 +1283,159 @@ dd.error {
 .column-name {
     font-size: 20px;
 }
+
+/* Search Result */
+.search-results-heading {
+
+}
+
+.no-results {
+    text-align: center;
+}
+
+.results-found {
+    margin-top: 10px;
+}
+
+.searchresult-container {
+    background-color: #eaeaea;
+    border: 1px solid black;
+    margin: 0 auto;
+    padding: 0 15px 0 15px;
+    position: relative;
+    width: 600px;
+}
+
+.searchresult-section {
+    width: 100%;
+    margin-bottom: 1em;
+}
+.searchresult-title {
+    background-color: #F5F5F5;
+    color: black;
+    display: inline-block;
+    font-size: 16px;
+    min-width: 50%;
+    border: 1px solid black;
+    border-bottom: none;
+    margin-left: 8px;
+    padding: 8px;
+    padding-top: 4px;
+}
+ .searchresult-title-container {
+     display: flex;
+     padding-right: 9px;
+ }
+
+ .searchresult-title-bottom-border {
+     display: flex;
+     border-bottom: 1px solid black;
+     flex-grow: 1;
+     flex-shrink: 1;
+ }
+
+ .searchresult-link {
+     margin: 0;
+ }
+
+ .searchresult-link:hover {
+    text-decoration: none;
+ }
+
+.searchresult-value-container {
+    background-color: #F5F5F5;
+    border: 1px solid black;
+    border-top: none;
+    width: 97%;
+    min-height: 80px;
+    padding: 16px 15px 0 15px;
+    margin: 0 auto;
+}
+
+.searchresult-value-container:hover {
+    background-color: #CCCCCC;
+}
+
+.search-filter-container {
+    display: flex;
+    flex-direction: column;
+    margin-left: -2.5%;
+    margin-bottom: 15px;
+    min-height: 32px;
+    padding-left: 3.9%;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-bottom: none;
+    width: 105.2%;
+}
+.filter-label {
+    font-weight: bold;
+
+    padding-left: 5px;
+}
+
+.filter-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 25px;
+    color: black;
+    margin: 5px 3px 0px 3px;
+    min-width: 24px;
+    height: 24px;
+    padding: 15px 10px;
+    cursor: pointer;
+}
+
+.filter-box:hover {
+    background-color: #e2e2e2;
+}
+
+.filter-box-label {
+    width: 100%;
+}
+
+.search-results-filter-container {
+    display: flex;
+}
+
+.searchresult-value-attribute,
+.searchresult-value-text {
+    background-color: #e2e2e2;
+    min-height: 24px;
+    width: 100%;
+    padding: 10px 15px 5px 15px;
+    margin-bottom: 16px;
+}
+
+.searchresult-value-label,
+.searchresult,
+.searchresult-destination,
+.searchresult-location {
+    font-weight: bold;
+}
+
+.searchresult-1,
+.searchresult-2,
+.searchresult-3 {
+    font-style: italic;
+}
+
+a .searchresult-value-label{
+    color: black;
+}
+
+.searchresult-icon {
+    position: relative;
+    top: 4px;
+    left: -2px;
+}
+
+
 
 /* ---- COOKIE MESSAGE ---- */
 .js_enabled .cookie-message {

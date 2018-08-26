@@ -1,7 +1,6 @@
 /* Hide JS message when JavaScript is allowed. */
-window.onload = function () {
-    document.getElementById("js-message").style.display = "none";
-};
+document.getElementById("js-message").style.display = "none";
+
 
 /* Back to top button. Display when the user scrolls down and hide when back at top */
 window.onscroll = function () {
@@ -125,6 +124,7 @@ setInterval(function () {
     }
 }, 3000);
 
+
 /*let searchContainer = document.getElementById("search-container");
 searchContainer.addEventListener("load",highlightSearchbox);
 function highlightSearchbox() {
@@ -196,3 +196,5 @@ $(document).ready(function () {
     }
 });
 */
+
+

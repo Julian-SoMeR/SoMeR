@@ -58,12 +58,12 @@
                 </div>
             }
             <!-- Global Header with Top Navigation, Search & Login before each pages content! -->
-        <header>
-                <!-- Show flash messages on all pages. Still need to think about where to place them. -->
 
-            <p id="js-message" class="js-message">This website uses JavaScript.
-                Please enable it for the best experience!</p>
+        <header>
+                <p id="js-message" class="js-message">This website uses JavaScript.
+                    Please enable it for the best experience!</p>
             <div id="header-container" class="header-container">
+
                 <div class="logo">
                     <a href="@routes.ApplicationController.home()">
                         <img src="@routes.Assets.at("images/logo_metrics_white.svg")"/>
@@ -88,7 +88,7 @@
                         href="@routes.ApplicationController.aggregators("networkingandcollaboration")">
                             Aggregators</a>
 
-                            <!--<a class="     @setTopLinkActive("/howtoparticipate") navigation-link"
+                            <!--<a class="      @setTopLinkActive("/howtoparticipate") navigation-link"
                             href="@routes.ApplicationController.howTo()">
                             How To Participate
                         </a>

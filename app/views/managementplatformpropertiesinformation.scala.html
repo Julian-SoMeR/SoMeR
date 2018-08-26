@@ -1,184 +1,194 @@
 @(informationList: List[Information])
-    @main("Management Page") {
-        <!-- JavaScript Router to enable dialogs and routing from them. -->
-        <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
-        <script src="@routes.Assets.at("javascripts/management.js")" type="text/javascript"></script>
-            <!-- Breadcrumbs that get displayed before the content!
+@main("Management Page") {
+    <!-- JavaScript Router to enable dialogs and routing from them. -->
+    <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
+
+
+        <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
-        <div class="breadcrumbs">
-            <p class="breadcrumb-paragraph">You are here: </p>
-            <ul class="breadcrumb-list">
-                <li class="breadcrumb-firstItem">SoMeR Management</li>
-                <li>Comment Feed</li>
-            </ul>
-        </div>
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-firstItem">SoMeR Management </li>
+            <li>Platform Properties <strong>(Platform Information)</strong></li>
+        </ul>
+    </div>
 
-        <div id="content-container" class="content-container">
-            <div class="management-container">
-                <div class="management-heading-container">
-                    <h1 class="management-headings">SoMeR Management</h1>
+    <div id="content-container" class="content-container">
+        <div class="management-container">
+            <div class="management-heading-container">
+                <h1 class="management-headings">SoMeR Management</h1>
+            </div>
+
+            <div class="management-navigation-container">
+                <div class="management-left-bottom-border"></div>
+                <a class="management-top-navigation-link">
+                    Comment Feed
+                </a>
+                <a class="management-top-navigation-link management-top-navigation-active">
+                    Platform Properties
+                </a>
+                <a class="management-top-navigation-link">
+                    Aggregator Properties
+                </a>
+                <a class="management-top-navigation-link">
+                    History
+                </a>
+                <div class="management-right-bottom-border"></div>
+            </div>
+
+            <div class="management-content-container">
+                <div class="management-subnavigation-container">
+                    <a class="management-subnavigation-link management-subnavigation-active">
+                        Platform Information
+                    </a>
+                    <a class="management-subnavigation-link"
+                    href="@routes.ManagementController.platformPropertiesFunction()">
+                        Function
+                    </a>
+                    <a class="management-subnavigation-link"
+                    href="@routes.ManagementController.platformPropertiesImpact()">
+                        Impact
+                    </a>
                 </div>
+                <div class=".management-platform-information-table-container">
+                    <div class="select-or-create-new-information-container">
+                        <h2 class="select-management-platform-information-heading">Manage Platform Information</h2>
+                        <a onclick="showNewInformationInput()"
+                        class="create-new-platform-information">
+                            <button class="custom-button add-button" id="add-button">
+                                <i class="material-icons add">add</i>
+                                Create new Platform Information</button>
+                        </a>
 
-                <div class="management-navigation-container">
-                    <div class="management-left-bottom-border"></div>
-                    <a class="management-top-navigation-link">
-                        Comment Feed
-                    </a>
-                    <a class="management-top-navigation-link management-top-navigation-active">
-                        Platform Properties
-                    </a>
-                    <a class="management-top-navigation-link">
-                        Aggregator Properties
-                    </a>
-                    <a class="management-top-navigation-link">
-                        History
-                    </a>
-                    <div class="management-right-bottom-border"></div>
-                </div>
-
-                <div class="management-content-container">
-                    <div class="management-subnavigation-container">
-                        <a class="management-subnavigation-link management-subnavigation-active">
-                            Platform Information
-                        </a>
-                        <a class="management-subnavigation-link"
-                        href="@routes.ManagementController.platformPropertiesFunction()">
-                            Function
-                        </a>
-                        <a class="management-subnavigation-link"
-                        href="@routes.ManagementController.platformPropertiesImpact()">
-                            Impact
-                        </a>
                     </div>
-                    <div class=".management-platform-information-table-container">
-                        <div class="select-or-create-new-information-container">
-                            <h2 class="select-management-platform-information-heading">Manage Platform Information</h2>
-                            <a href="@routes.PlatformsController.createNewPlatform()"
-                            class="create-new-platform-information">
-                                <button class="custom-button add-button">
-                                    <i class="material-icons add">add</i>
-                                    Create new Platform Information</button>
-                            </a>
 
-                        </div>
+                    <table id="management-platform-information-table"
+                    class="management-platform-information-table">
+                        <thead>
+                            <tr>
+                                <th class="table-header">
+                                    <div class="table-name">
+                                        <span class="column-name">
+                                            Information Name
+                                        </span>
+                                    </div>
+                                    <div class="filter-container">
+                                        <input type="text" id="information-filter" class="platform-filter"
+                                        placeholder="Filter information..">
+                                        <button type="button" id="filter-button"
+                                        class="custom-button custom-filter-button"
+                                        onclick="filterInformations()">
+                                            Filter
+                                        </button>
+                                        <hr class="filter-button-separator"/>
+                                        <button type="button"
+                                        class="custom-button custom-reset-button"
+                                        onclick="resetInformationFilter()">
+                                            Reset
+                                        </button>
+                                    </div>
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                        <table id="management-platform-information-table"
-                        class="management-platform-information-table">
-                            <thead>
-                                <tr>
-                                    <th class="table-header">
-                                        <div class="table-name">
-                                            <span class="column-name">
-                                                Information Name
-                                            </span>
-                                        </div>
-                                        <div class="platforms-filter-container">
-                                            <input type="text" id="platform-filter" class="platform-filter"
-                                            placeholder="Filter information..">
-                                            <button class="custom-button custom-filter-button"
-                                            onclick="filterPlatforms()">
-                                                Filter
-                                            </button>
-                                            <hr class="filter-button-separator"/>
-                                            <button class="custom-button custom-reset-button"
-                                            onclick="resetPlatformFilter()">
-                                                Reset
-                                            </button>
-                                        </div>
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                            @helper.form(action = routes.ManagementController.management(),
-                                'class -> "custom-form", 'id -> "management-form") {
+                        @helper.form(action = routes.ManagementController.management(),
+                            'class -> "custom-form", 'id -> "management-form") {
 
-                                <tr id="platform-table-row" class="management-table-row">
-                                    <td class="table-cell">
-                                        <div class="table-column">
-                                            <input type="text" placeholder="Enter new information name.."
-                                            value=""
-                                            name="createNewInformation"
-                                            class="management-create-new-input"
-                                            id="create-new-input">
-                                            <div class="create-new-save-cancel-icon-container "
-                                            id="create-new-save-cancel-icon-container">
-                                                <a id="submit-form" onclick="submitForm()">
-                                                    <i class="material-icons save">
-                                                        save
-                                                    </i>
-                                                </a>
-                                                <a>
-                                                    <i class="material-icons cancel"
-                                                    onclick="hideCreateNewInput()">
-                                                        close
-                                                    </i>
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                @for(information <- informationList) {
-                                    <tr id="platform-table-row" class="management-table-row">
-                                        <td class="table-cell" id="table-cell">
-                                            <div class="table-column"
-                                            id="table-column">
-                                                <a class="management-table-row-link"
-                                                id="table-row-link-@information.informationId"
-                                                value="@information.informationName">
-                                                @information.informationName</a>
-                                                <div class="delete-edit-icon-container"
-                                                id="delete-edit-icon-container-@information.informationId">
-                                                    <a onclick="showInput('@information.informationId')">
-                                                        <i class="material-icons edit">edit</i>
-                                                    </a>
-
-                                                        <!-- Very ugly formatting but line breaks break everything-->
-                                                    <a
-                                                    onclick="deleteInformation('@routes.ManagementController.deleteInformation(information.informationId)', '@information.informationName')">
-                                                        <i class="material-icons delete">delete</i>
-                                                    </a>
-                                                </div>
-                                                <input type="text" placeholder="Enter information name.."
-                                                value="@information.informationName"
-                                                class="management-table-row-input"
-                                                name="informationName-@information.informationId"
-                                                id="table-row-input-@information.informationId">
-
-                                                <input type="hidden" value="@information.informationId"
-                                                name="informationId-@information.informationId"/>
-
-                                                <div class="save-cancel-icon-container "
-                                                id="save-cancel-icon-container-@information.informationId">
-                                                    <a id="submit-form" onclick="submitForm()">
-                                                        <i class="material-icons save">
+                            <tr id="platform-table-row" class="management-table-row">
+                                <td class="table-cell">
+                                    <div class="table-column">
+                                        <input type="text" placeholder="Enter new information name.."
+                                        value=""
+                                        name="createNewInformation"
+                                        class="management-create-new-input"
+                                        id="create-new-input">
+                                        <div class="create-new-save-cancel-icon-container unselectable"
+                                        id="create-new-save-cancel-icon-container">
+                                            <a class="unselectable" id="submit-form"
+                                            onclick="submitNewInformation()">
+                                                <i class="material-icons save unselectable">
                                                     save
-                                                        </i>
-                                                    </a>
-                                                    <a>
-                                                        <i class="material-icons cancel"
-                                                        onclick="hideInput('@information.informationId')">
+                                                </i>
+                                            </a>
+                                            <a class="unselectable">
+                                                <i class="material-icons cancel unselectable"
+                                                onclick="hideCreateNewInput()">
                                                     close
-                                                        </i>
-                                                    </a>
-                                                </div>
-                                            </div>
-                                                <!-- Show an error message when there is an input
+                                                </i>
+                                            </a>
+                                        </div>
+                                    </div>
+                                        <!-- Show an error message when there is an input
                                                 error on the general information content. -->
-                                            @if(flash.containsKey("information_name_error"
-                                                    + information.informationId)) {
-                                                <div class="alert alert-error management-alert-error">
-                                                @flash.get("information_name_error" + information.informationId)
-                                                </div>
-                                            }
-                                        </td>
 
-                                    </tr>
-                                }
+                                </td>
+                            </tr>
+                            @for(information <- informationList) {
+                                <tr id="platform-table-row" class="management-table-row">
+                                    <td class="table-cell" id="table-cell">
+                                        <div class="table-column"
+                                        id="table-column">
+                                            <a class="management-table-row-link"
+                                            id="table-row-link-@information.informationId"
+                                            value="@information.informationName">
+                                            @information.informationName</a>
+                                            <div class="delete-edit-icon-container unselectable"
+                                            id="delete-edit-icon-container-@information.informationId">
+                                                <a class="unselectable"
+                                                onclick="showInput('@information.informationId')">
+                                                    <i class="material-icons edit">edit</i>
+                                                </a>
+
+                                                    <!-- Very ugly formatting but line breaks break everything-->
+                                                <a class="unselectable"
+                                                onclick="deleteInformation('@routes.ManagementController.deleteInformation(information.informationId)', '@information.informationName')">
+                                                    <i class="material-icons delete">delete</i>
+                                                </a>
+                                            </div>
+                                            <input type="text" placeholder="Enter information name.."
+                                            value="@information.informationName"
+                                            class="management-table-row-input"
+                                            name="informationName-@information.informationId"
+                                            id="table-row-input-@information.informationId">
+
+                                            <input type="hidden" value="@information.informationId"
+                                            name="informationId-@information.informationId"/>
+
+                                            <div class="save-cancel-icon-container unselectable"
+                                            id="save-cancel-icon-container-@information.informationId">
+                                                <a class="unselectable" id="submit-form" onclick="submitForm()">
+                                                    <i class="material-icons save unselectable">
+                                                    save
+                                                    </i>
+                                                </a>
+                                                <a class="unselectable">
+                                                    <i class="material-icons cancel unselectable"
+                                                    onclick="hideInput('@information.informationId')">
+                                                    close
+                                                    </i>
+                                                </a>
+                                            </div>
+                                        </div>
+                                            <!-- Show an error message when there is an input
+                                                error on the general information content. -->
+                                        @if(flash.containsKey("information_name_error"
+                                                + information.informationId)) {
+                                            <div class="alert alert-error">
+                                            @flash.get("information_name_error" + information.informationId)
+                                            </div>
+                                        }
+                                    </td>
+
+                                </tr>
                             }
-                            </tbody>
-                        </table>
-                    </div>
+                        }
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
-    }
+    </div>
+    <script src="@routes.Assets.at("javascripts/management.js")" type="text/javascript"></script>
+}

@@ -1,6 +1,5 @@
 @(platforms: List[Platform])
 @main("Platforms Page") {
-    <script src="@routes.Assets.at("javascripts/platforms.js")" type="text/javascript"></script>
         <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
     <div class="breadcrumbs">
@@ -29,10 +28,11 @@
                                     Platform Name
                                 </span>
                             </div>
-                            <div class="platforms-filter-container">
+                            <div class="filter-container">
                                 <input type="text" id="platform-filter" class="platform-filter"
                                 placeholder="Filter platforms..">
-                                <button class="custom-button custom-filter-button" onclick="filterPlatforms()">
+                                <button type="button" class="custom-button custom-filter-button" id="filter-button"
+                                onclick="filterPlatforms()">
                                     Filter
                                 </button>
                                 <hr class="filter-button-separator"/>
@@ -53,7 +53,7 @@
                                 class="table-row-link">
                                 @platform.platformName</a>
                             <div class="delete-edit-icon-container">
-                                <a onclick=
+                                <a class="unselectable" onclick=
                                 "deletePlatform('@routes.PlatformsController.deletePlatform(platform.platformId)', '@platform.platformName')">
                                     <i class="material-icons delete">delete</i></a>
                             </div>
@@ -66,4 +66,5 @@
         </div>
 
     </div>
+    <script src="@routes.Assets.at("javascripts/platforms.js")" type="text/javascript"></script>
 }
