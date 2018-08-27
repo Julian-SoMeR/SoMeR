@@ -1,5 +1,5 @@
 @(informationList: List[Information])
-@main("Management Page") {
+@main("Platform Properties Platform Information") {
     <!-- JavaScript Router to enable dialogs and routing from them. -->
     <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
 
@@ -22,16 +22,20 @@
 
             <div class="management-navigation-container">
                 <div class="management-left-bottom-border"></div>
+                <!--
                 <a class="management-top-navigation-link">
                     Comment Feed
                 </a>
+                -->
                 <a class="management-top-navigation-link management-top-navigation-active">
                     Platform Properties
                 </a>
-                <a class="management-top-navigation-link">
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.aggregatorProperties()">
                     Aggregator Properties
                 </a>
-                <a class="management-top-navigation-link">
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.showHistory()">
                     History
                 </a>
                 <div class="management-right-bottom-border"></div>
@@ -74,7 +78,7 @@
                                         </span>
                                     </div>
                                     <div class="filter-container">
-                                        <input type="text" id="information-filter" class="platform-filter"
+                                        <input type="text" id="information-filter" class="filter"
                                         placeholder="Filter information..">
                                         <button type="button" id="filter-button"
                                         class="custom-button custom-filter-button"
@@ -132,6 +136,7 @@
                                         id="table-column">
                                             <a class="management-table-row-link"
                                             id="table-row-link-@information.informationId"
+                                            onclick="showInput('@information.informationId')"
                                             value="@information.informationName">
                                             @information.informationName</a>
                                             <div class="delete-edit-icon-container unselectable"

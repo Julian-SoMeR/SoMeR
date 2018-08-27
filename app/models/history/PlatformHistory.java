@@ -1,5 +1,6 @@
-package models;
+package models.history;
 
+import models.Platform;
 import play.data.validation.Constraints;
 
 import java.util.*;
@@ -37,12 +38,15 @@ public class PlatformHistory extends Model {
     @JoinColumn(name = "platform_platform_id")
     public Platform platform;
 
+    @NotNull
     public String platformName;
 
     Timestamp historyCreationDate;
 
     // Same flag as in all other entities. Except in history tables it can be used to detect the
     // kind of change that occurred. E.g. 0 -> 1: Deletion, 1 -> 0: Recovery from Deletion. 0 -> 0: Update.
+    @Column(columnDefinition = "TINYINT default '0'")
+    @NotNull
     Boolean deleteStatus;
 
     // List to collect all platform objects to render them on the platforms page.
@@ -58,6 +62,15 @@ public class PlatformHistory extends Model {
         this.platformName = platformName;
     }
 
+    /* ---- Methods ---- */
+    public static List<PlatformHistory> findAllHistory() {
+        List<PlatformHistory> platformHistoryList =
+                Ebean.find(PlatformHistory.class).orderBy("historyCreationDate desc").findList();
+        ArrayList<PlatformHistory> platformHistoryArrayList = new ArrayList<PlatformHistory>(platformHistoryList);
+        return platformHistoryArrayList;
+    }
+
+    /* ----Getters Setters ---- */
     public Long getPlatformHistoryId() {
         return platformHistoryId;
     }
@@ -88,5 +101,15 @@ public class PlatformHistory extends Model {
 
     public static void setPlatformHistoryList(List<PlatformHistory> platformHistoryList) {
         PlatformHistory.platformHistoryList = platformHistoryList;
+    }
+
+    public String toString() {
+        return "PlatformHistory{" +
+                "platformHistoryId=" + platformHistoryId +
+                ", platform=" + platform +
+                ", platformName='" + platformName + '\'' +
+                ", historyCreationDate=" + historyCreationDate +
+                ", deleteStatus=" + deleteStatus +
+                '}';
     }
 }

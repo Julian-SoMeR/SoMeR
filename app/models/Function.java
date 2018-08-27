@@ -24,9 +24,12 @@ public class Function extends BaseDomain implements PathBindable<Function> {
     @Id
     public Long functionId;
     @DocSortable
+    @NotNull
     public String functionName;
+    @NotNull
+    @Column(columnDefinition = "TEXT default ''")
     public String functionCategory;
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT default ''")
     public String functionDescription;
 
     //@DocEmbedded

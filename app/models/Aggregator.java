@@ -20,10 +20,13 @@ public class Aggregator extends BaseDomain implements PathBindable<Aggregator> {
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long aggregatorId;
-    //@DocSortable
+    @DocSortable
+    @NotNull
     public String aggregatorName;
+    @NotNull
+    @Column(columnDefinition = "TEXT default ''")
     public String aggregatorCategory;
-    @Column(columnDefinition = "TEXT")
+    @Column(columnDefinition = "TEXT default ''")
     public String aggregatorDescription;
 
     //@DocEmbedded

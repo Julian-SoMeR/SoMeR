@@ -21,10 +21,15 @@ public class Impact extends BaseDomain implements PathBindable<Impact> {
     /* These are all attributes that are mapped for the database. */
     @Id
     public Long impactId;
-    //@DocSortable
+    @DocSortable
+    @NotNull
     public String impactName;
+
+    @NotNull
+    @Column(columnDefinition = "TEXT default ''")
     public String impactCategory;
-    @Column(columnDefinition = "TEXT")
+
+    @Column(columnDefinition = "TEXT default ''")
     public String impactDescription;
 
     //@DocEmbedded

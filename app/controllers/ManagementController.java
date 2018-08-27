@@ -1,5 +1,6 @@
 package controllers;
 
+import models.history.*;
 import play.mvc.*;
 import play.*;
 import views.html.*;
@@ -14,6 +15,15 @@ import play.data.Form;
 import play.data.FormFactory;
 import play.data.DynamicForm;
 
+import io.ebean.RawSql;
+import io.ebean.RawSqlBuilder;
+
+import io.ebean.*;
+import io.ebean.SqlQuery;
+import io.ebean.SqlRow;
+import io.ebean.SqlUpdate;
+
+import java.sql.Timestamp;
 import java.util.*;
 
 public class ManagementController extends Controller {
@@ -36,7 +46,7 @@ public class ManagementController extends Controller {
      * @return Render HTML template with http status code 400.
      */
     public Result management() {
-        return ok(management.render());
+        return redirect(routes.ManagementController.platformPropertiesInformation());
     }
 
     public Result platformPropertiesInformation() {
@@ -161,7 +171,7 @@ public class ManagementController extends Controller {
 
     public Result platformPropertiesFunction() {
         List<Function> functions = Function.findDistinctCategories();
-        return ok(managementplatformpropertiesfunction.render(functions));
+        return ok(managementplatformpropertiesfunctioncategories.render(functions));
     }
 
     /**
@@ -220,6 +230,79 @@ public class ManagementController extends Controller {
     }
 
     public Result aggregatorProperties() {
-        return TODO;
+        return ok(managementaggregatorproperties.render());
+    }
+
+    public Result showHistory() {
+        /*
+        List<PlatformHistory> platformHistoryList = PlatformHistory.findAllHistory();
+        List<InformationHistory> informationHistoryList = InformationHistory.findAllHistory();
+        List<InformationContentHistory> informationContentHistoryList = InformationContentHistory.findAllHistory();
+        List<ImpactHistory> impactHistoryList = ImpactHistory.findAllHistory();
+        List<ImpactContentHistory> impactContentHistoryList = ImpactContentHistory.findAllHistory();
+        List<FunctionHistory> functionHistoryList = FunctionHistory.findAllHistory();
+        List<FunctionContentHistory> functionContentHistoryList = FunctionContentHistory.findAllHistory();
+        System.out.println("|||||||Platform History: " + platformHistoryList);
+        System.out.println("|||||||Information History: " + informationHistoryList);
+        System.out.println("|||||||Information Content History: " + informationContentHistoryList);
+        System.out.println("|||||||Impact History: " + impactHistoryList);
+        System.out.println("|||||||Impact Content History: " + impactContentHistoryList);
+        System.out.println("|||||||Function History: " + functionHistoryList);
+        System.out.println("|||||||Function Content History: " + functionContentHistoryList);
+        analyzeHistory(platformHistoryList,
+                informationHistoryList,
+                informationContentHistoryList,
+                impactHistoryList,
+                impactContentHistoryList,
+                functionHistoryList,
+                functionContentHistoryList);
+        */
+
+        List<Platform> resultList = new ArrayList<>();
+        String sqlQueryString = "select\n" +
+                "\tt.ID, max(t.DATE) DATE, p.platform_name NAME\n" +
+                "from (\n" +
+                "select fc.platform_platform_id ID, max(fch.history_creation_date) DATE\n" +
+                "from function_content fc\n" +
+                "\tjoin function_content_history fch on fch.function_content_function_content_id = fc.function_content_id\n" +
+                "group by fc.platform_platform_id\n" +
+                "union\n" +
+                "select fc.platform_platform_id ID, max(fh.history_creation_date) DATE\n" +
+                "from function_content fc\n" +
+                "\tjoin function_history fh on fh.function_function_id = fc.function_function_id\n" +
+                "group by fc.platform_platform_id\n" +
+                ") t\n" +
+                "join platform p on p.platform_id = t.ID\n" +
+                "group by t.ID Order by DATE desc, Name asc";
+
+        SqlQuery sqlQuery = Ebean.createSqlQuery(sqlQueryString);
+        List<SqlRow> sqlResult = sqlQuery.findList();
+        List<HistoryResult> historyResults = new ArrayList<>();
+        for(SqlRow curSqlRow : sqlResult){
+            HistoryResult historyResult
+                    = new HistoryResult(curSqlRow.getString("id"),
+                                        curSqlRow.getString("name"),
+                                        Timestamp.valueOf(curSqlRow.getString("date")));
+            historyResults.add(historyResult);
+        }
+        System.out.println(historyResults);
+        return ok(managementhistory.render(historyResults));
+    }
+
+
+
+    private List<Platform> analyzeHistory(List<PlatformHistory> platformHistoryList,
+                                          List<InformationHistory> informationHistoryList,
+                                          List<InformationContentHistory> informationContentHistoryList,
+                                          List<ImpactHistory> impactHistoryList,
+                                          List<ImpactContentHistory> impactContentHistoryList,
+                                          List<FunctionHistory> functionHistoryList,
+                                          List<FunctionContentHistory> functionContentHistoryList) {
+
+        List<Platform> resultList = new ArrayList<>();
+        for (PlatformHistory currentPlatformHistory : platformHistoryList) {
+            Long currentPlatformId = currentPlatformHistory.platform.platformId;
+        }
+        return resultList;
     }
 }

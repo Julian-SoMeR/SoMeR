@@ -8,7 +8,7 @@
           "properties" : {
             "impactId": { "type": "long" },
             "deleteStatus": { "type": "boolean" },
-            "impactName": { "type": "text" },
+            "impactName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
             "impactCategory": { "type": "text" },
             "impactDescription": { "type": "text" },
             "creationDate": { "type": "date" },

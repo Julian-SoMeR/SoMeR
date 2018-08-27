@@ -14,9 +14,8 @@ public class ApplicationController extends Controller {
         return ok(home.render());
     }
 
-    public Result aggregators(String category) {
-        List<Function> functionList = Function.findDistinctCategories();
-        return ok(aggregators.render(functionList));
+    public Result aggregators() {
+        return ok(aggregators.render());
     }
 
     public Result howTo() {

@@ -163,7 +163,7 @@ $(document).ready(function () {
     }
 });
 
-/* ---- Management Information Search Filter ---- */
+/* ---- Management Search Filter ---- */
 function filterInformations() {
     let input, filter, table, tr, td, i;
 
@@ -186,16 +186,54 @@ function filterInformations() {
     }
 }
 
-//Reset function for platform filter
+//Reset function for information filter
 function resetInformationFilter() {
     let input = document.getElementById("information-filter");
     input.value = "";
     filterInformations();
 }
 
+/* Enable Enter on information filter input. */
+let informationFilter = document.getElementById("information-filter");
+informationFilter.addEventListener("keyup", function (event) {
+    event.preventDefault();
+    if (event.keyCode === 13) {
+        document.getElementById("filter-button").click();
+    }
+});
+
+function filterFunctionCategories() {
+    let input, filter, table, tr, td, i;
+
+    input = document.getElementById("function-category-filter");
+    input.style.display = "block";
+    input.focus();
+    filter = input.value.toUpperCase();
+    table = document.getElementById("management-function-category-table");
+    tr = table.getElementsByTagName("tr");
+    // Hide all rows that do not match the filter
+    for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+            if (td.innerHTML.toUpperCase().indexOf(filter) > -1) {
+                tr[i].style.display = "";
+            } else {
+                tr[i].style.display = "none";
+            }
+        }
+    }
+}
+
+//Reset function for platform filter
+function resetFunctionCategoriesFilter() {
+    let input = document.getElementById("function-category-filter");
+    input.value = "";
+    filterFunctionCategories();
+}
+
 /* Enable Enter on platform filter input. */
-let platformFilter = document.getElementById("information-filter");
-platformFilter.addEventListener("keyup", function (event) {
+let functionCategoryFilter = document.getElementById("function-category-filter");
+functionCategoryFilter.addEventListener("keyup", function (event) {
     event.preventDefault();
     if (event.keyCode === 13) {
         document.getElementById("filter-button").click();

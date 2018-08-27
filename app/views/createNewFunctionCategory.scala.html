@@ -1,5 +1,5 @@
 @import helper._
-@main("Create New Platform Page") {
+@main("Create New Function Category Page") {
     @if(flash.containsKey("error")) {
         <div class="alert alert-error">
         @flash.get("error")
@@ -12,7 +12,7 @@
         <ul class="breadcrumb-list">
             <li class="breadcrumb-firstItem"><a href="@routes.PlatformsController.platforms()">
                 Platforms</a></li>
-            <li>Create new Platform</li>
+            <li>Create new Function Category</li>
         </ul>
     </div>
 
@@ -20,27 +20,28 @@
         <div class="platformcreate-container">
             <div class="form-container">
             @helper.form(action = routes.PlatformsController.saveNewPlatform(),
-                'class -> "custom-form", 'id -> "create-new-platform-form", 'name -> "create-new-platform-form") {
+                'class -> "custom-form", 'id -> "create-new-function-category-form",
+                'name -> "create-new-function-category-form") {
                 <fieldset class="fieldset-container">
                     <legend>
                         <div class="platformcreate-form-legend">
                             <button type="button" class="create-new-top-navigation-link platform-navigation-active">
-                                <h2 class="platforms-headings">Create New Platform</h2>
+                                <h2 class="platforms-headings">Create new Function Category</h2>
                             </button>
                             <div class="create-new-right-bottom-border"></div>
                         </div>
                     </legend>
 
                     <div class="label-input-container">
-                        <label for="platformName">
+                        <label for="functionCategory">
                             Enter Platform Name
                         </label>
-                        <input type="text" name="platformName" value=""
+                        <input type="text" name="functionCategory" value=""
                         placeholder="Enter Platform Name.. (Required)" required/>
                             <!-- Show an error message when there is an input error on the platform name. -->
-                        @if(flash.containsKey("platform_error")) {
+                        @if(flash.containsKey("function_category_create_new_error")) {
                             <div class="alert alert-error">
-                            @flash.get("platform_error")
+                            @flash.get("function_category_create_new_error")
                             </div>
                         }
                     </div>

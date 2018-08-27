@@ -9,7 +9,7 @@
         if(platform != null) platform.platformId
     }
 
-    @main("General Platform Information") {
+    @main("Platform Information Page") {
         <!-- JavaScript Router to enable dialogs and routing from them. -->
         <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
 
@@ -38,18 +38,18 @@
                     <fieldset class="fieldset-container">
                         <legend>
                             <div class="platform-form-legend">
-                                <a class="platforms-top-navigation-link platform-navigation-active">
+                                <a class="create-new-top-navigation-link platform-navigation-active">
                                     Platform Information
                                 </a>
-                                <a class="platforms-top-navigation-link discard-warning"
+                                <a class="create-new-top-navigation-link discard-warning"
                                 href="@routes.PlatformsController.showSelectedPlatformFunctions(platform.platformId)">
                                     Functions (by Category)
                                 </a>
-                                <a class="platforms-top-navigation-link discard-warning"
+                                <a class="create-new-top-navigation-link discard-warning"
                                 href="@routes.PlatformsController.showSelectedPlatformImpacts(platform.platformId)">
                                     Impacts (by Category)
                                 </a>
-                                <div class="platforms-right-bottom-border"></div>
+                                <div class="create-new-right-bottom-border"></div>
                             </div>
                         </legend>
 

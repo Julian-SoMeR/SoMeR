@@ -85,7 +85,7 @@
                         href="@routes.PlatformsController.platforms()">
                             Platforms</a>
                         <a class="@setTopLinkActive("/aggregators") navigation-link discard-warning"
-                        href="@routes.ApplicationController.aggregators("networkingandcollaboration")">
+                        href="@routes.ApplicationController.aggregators()">
                             Aggregators</a>
 
                             <!--<a class="      @setTopLinkActive("/howtoparticipate") navigation-link"
@@ -93,13 +93,14 @@
                             How To Participate
                         </a>
                         -->
+                        <a class="@setTopLinkActive("/management") navigation-link discard-warning"
+                        href="@routes.ManagementController.management()">
+                            SoMeR Management</a>
 
                         <a class="@setTopLinkActive("/about") navigation-link discard-warning"
                         href="@routes.ApplicationController.about()">
                             About Us</a>
-                        <a class="@setTopLinkActive("/management") navigation-link discard-warning"
-                        href="@routes.ManagementController.management()">
-                            SoMeR Management</a>
+
                     </div>
 
                     <div class="inbetween-bottom-border"></div>
@@ -227,7 +228,7 @@
                 <li>
                     <a class="@setFooterLinkActive("/about") discard-warning"
                     href="@routes.ApplicationController.about()">
-                    About
+                    About Us
                     </a>
                 </li>
                 <li>

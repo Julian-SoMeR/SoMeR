@@ -1,4 +1,4 @@
-@main("Management Page") {
+@main("Platform Properties Impact Categories Page") {
 
     <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
@@ -18,16 +18,20 @@
 
             <div class="management-navigation-container">
                 <div class="management-left-bottom-border"></div>
+                <!--
                 <a class="management-top-navigation-link">
                     Comment Feed
                 </a>
+                -->
                 <a class="management-top-navigation-link management-top-navigation-active">
                     Platform Properties
                 </a>
-                <a class="management-top-navigation-link">
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.aggregatorProperties()">
                     Aggregator Properties
                 </a>
-                <a class="management-top-navigation-link">
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.showHistory()">
                     History
                 </a>
                 <div class="management-right-bottom-border"></div>
@@ -46,6 +50,9 @@
                     <a class="management-subnavigation-link management-subnavigation-active">
                         Impact
                     </a>
+                </div>
+                <div class="content-placeholder">
+                    <img src="@routes.Assets.at("images/underconstruction.png")"/>
                 </div>
             </div>
 

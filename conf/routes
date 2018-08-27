@@ -19,7 +19,7 @@ GET     /home                       controllers.ApplicationController.home()
 GET     /platforms                  controllers.PlatformsController.platforms()
 
 #Aggregators page
-GET     /aggregators/:category      controllers.ApplicationController.aggregators(category: String)
+GET     /aggregators     controllers.ApplicationController.aggregators()
 
 #How To page
 GET     /howtoparticipate           controllers.ApplicationController.howTo()
@@ -79,10 +79,15 @@ POST    /platforms/impacts              controllers.PlatformsController.savePlat
 # ---- Special routes for Management page ----#
 
 #Management page comment feed
-GET     /management/commentfeed         controllers.ManagementController.management()
+GET     /management/commentfeed             controllers.ManagementController.management()
+#GET     /management                     controllers.ManagementController.management()
+
+#Management page comment feed
+GET     /management/aggregatorproperties    controllers.ManagementController.aggregatorProperties()
+
 
 #Management page platform properties
-GET     /management/platformproperties  controllers.Default.redirect(to ="/management/platformproperties/platforminformation")
+GET     /management/platformproperties      controllers.Default.redirect(to ="/management/platformproperties/platforminformation")
 
 #Management page platform properties general information
 GET     /management/platformproperties/platforminformation                  controllers.ManagementController.platformPropertiesInformation()
@@ -92,6 +97,9 @@ GET     /management/platformproperties/function                             cont
 
 #Management page platform properties impact
 GET     /management/platformproperties/impact                               controllers.ManagementController.platformPropertiesImpact()
+
+#Management history page
+GET     /management/history                             controllers.ManagementController.showHistory()
 
 #Update information
 POST    /management/platformproperties/platforminformation                  controllers.ManagementController.saveInformation()

@@ -30,6 +30,7 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
     public Long platformId;
     @Constraints.Required
     @DocSortable
+    @NotNull
     public String platformName;
 
     //@DocEmbedded

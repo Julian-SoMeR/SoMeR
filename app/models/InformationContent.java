@@ -32,10 +32,12 @@ public class InformationContent extends BaseDomain implements PathBindable<Infor
     @DocEmbedded
     @ManyToOne
     @JoinColumn(name = "information_information_id")
+    @NotNull
     public Information information;
     @DocEmbedded
     @ManyToOne
     @JoinColumn(name = "platform_platform_id")
+    @NotNull
     public Platform platform;
 
     /* ----- Constructors ----- */

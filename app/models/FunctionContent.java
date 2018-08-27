@@ -32,10 +32,12 @@ public class FunctionContent extends BaseDomain implements PathBindable<Function
     @DocEmbedded
     @ManyToOne
     @JoinColumn(name = "function_function_id")
+    @NotNull
     public Function function;
     @DocEmbedded
     @ManyToOne
     @JoinColumn(name = "platform_platform_id")
+    @NotNull
     public Platform platform;
 
     /* ----- Constructors ----- */

@@ -1,5 +1,5 @@
 @(functionList: List[Function])
-@main("Management Page") {
+@main("Platform Properties Function Categories Page") {
 
     <!-- Breadcrumbs that get displayed before the content!
              This is a bit redundant BUT works without JS!!-->
@@ -19,16 +19,20 @@
 
             <div class="management-navigation-container">
                 <div class="management-left-bottom-border"></div>
+                <!--
                 <a class="management-top-navigation-link">
                     Comment Feed
                 </a>
+                -->
                 <a class="management-top-navigation-link management-top-navigation-active">
                     Platform Properties
                 </a>
-                <a class="management-top-navigation-link">
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.aggregatorProperties()">
                     Aggregator Properties
                 </a>
-                <a class="management-top-navigation-link">
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.showHistory()">
                     History
                 </a>
                 <div class="management-right-bottom-border"></div>
@@ -60,7 +64,7 @@
 
                     </div>
 
-                    <table id="management-platform-information-table"
+                    <table id="management-function-category-table"
                     class="management-platform-information-table">
                         <thead>
                             <tr>
@@ -71,17 +75,17 @@
                                         </span>
                                     </div>
                                     <div class="filter-container">
-                                        <input type="text" id="information-filter" class="platform-filter"
+                                        <input type="text" id="function-category-filter" class="filter"
                                         placeholder="Filter function categories..">
                                         <button type="button" id="filter-button"
                                         class="custom-button custom-filter-button"
-                                        onclick="filterInformations()">
+                                        onclick="filterFunctionCategories()">
                                             Filter
                                         </button>
                                         <hr class="filter-button-separator"/>
                                         <button type="button"
                                         class="custom-button custom-reset-button"
-                                        onclick="resetInformationFilter()">
+                                        onclick="resetFunctionCategoriesFilter()">
                                             Reset
                                         </button>
                                     </div>
@@ -94,59 +98,25 @@
                             'class -> "custom-form", 'id -> "management-form") {
 
                             @for(function <- functionList) {
-                                <tr id="platform-table-row" class="management-table-row">
+                                <tr id="platform-table-row" class="management-category-table-row">
                                     <td class="table-cell" id="table-cell">
                                         <div class="table-column"
                                         id="table-column">
-                                            <a class="management-table-row-link"
+                                            <a class="management-category-table-row-link"
                                             id="table-row-link-@function.functionDescription"
                                             value="@function.functionCategory">
                                             @function.functionCategory</a>
                                             <div class="delete-edit-icon-container unselectable"
                                             id="delete-edit-icon-container-@function.functionDescription">
-                                                <a class="unselectable"
-                                                onclick="showInput('@function.functionDescription')">
-                                                    <i class="material-icons edit">edit</i>
-                                                </a>
-
                                                     <!-- Very ugly formatting but line breaks break everything-->
                                                 <a class="unselectable"
                                                 onclick="deleteFunctionCategory('@routes.ManagementController.deleteFunctionCategory(function)', '@function.functionCategory')">
                                                     <i class="material-icons delete">delete</i>
                                                 </a>
                                             </div>
-                                            <input type="text" placeholder="Enter function category name.."
-                                            value="@function.functionCategory"
-                                            class="management-table-row-input"
-                                            name="functionCategory-@function.functionDescription"
-                                            id="table-row-input-@function.functionDescription">
-
                                             <input type="hidden" value="@function.functionDescription"
                                             name="functionCategoryUrl-@function.functionDescription"/>
-
-                                            <div class="save-cancel-icon-container unselectable"
-                                            id="save-cancel-icon-container-@function.functionDescription">
-                                                <a class="unselectable" id="submit-form" onclick="submitForm()">
-                                                    <i class="material-icons save unselectable">
-                                                    save
-                                                    </i>
-                                                </a>
-                                                <a class="unselectable">
-                                                    <i class="material-icons cancel unselectable"
-                                                    onclick="hideInput('@function.functionDescription')">
-                                                    close
-                                                    </i>
-                                                </a>
-                                            </div>
                                         </div>
-                                            <!-- Show an error message when there is an input
-                                                error on the function categories. -->
-                                        @if(flash.containsKey("function_name_error"
-                                                + function.functionDescription)) {
-                                            <div class="alert alert-error">
-                                            @flash.get("function_name_error" + function.functionDescription)
-                                            </div>
-                                        }
                                     </td>
 
                                 </tr>

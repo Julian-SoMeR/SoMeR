@@ -8,7 +8,7 @@
           "properties" : {
             "aggregatorId": { "type": "long" },
             "deleteStatus": { "type": "boolean" },
-            "aggregatorName": { "type": "text" },
+            "aggregatorName": { "type": "text", "fields": { "raw": { "type": "keyword" } } },
             "aggregatorCategory": { "type": "text" },
             "aggregatorDescription": { "type": "text" },
             "creationDate": { "type": "date" },

@@ -1,0 +1,70 @@
+@import models.history.HistoryResult
+@(resultList: List[HistoryResult])
+@main("Management History") {
+    <!-- JavaScript Router to enable dialogs and routing from them. -->
+    <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
+
+
+        <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-firstItem">SoMeR Management </li>
+            <li>History</li>
+        </ul>
+    </div>
+
+    <div id="content-container" class="content-container">
+        <div class="management-container">
+            <div class="management-heading-container">
+                <h1 class="management-headings">SoMeR Management</h1>
+            </div>
+
+            <div class="management-navigation-container">
+                <div class="management-left-bottom-border"></div>
+                    <!--
+                <a class="management-top-navigation-link">
+                    Comment Feed
+                </a>
+                -->
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.platformPropertiesInformation()">
+                    Platform Properties
+                </a>
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.aggregatorProperties()">
+                    Aggregator Properties
+                </a>
+                <a class="management-top-navigation-link  management-top-navigation-active">
+                    History
+                </a>
+                <div class="management-right-bottom-border"></div>
+            </div>
+
+            <div class="management-content-container">
+                <table class="history-table">
+                    <tr>
+                        <th>Platform Name</th>
+                        <th>Last Change Date</th>
+                    </tr>
+                    @for(result <- resultList) {
+
+
+                        <tr>
+                            <td class="history-table-data">
+                                <a class="history-table-row-link"
+                                href="">
+                                @result.name
+                                </a>
+                            </td>
+                            <td class="history-table-data">@result.timestampString</td>
+                        </tr>
+
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.at("javascripts/management.js")" type="text/javascript"></script>
+}

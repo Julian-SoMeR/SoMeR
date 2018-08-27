@@ -26,6 +26,7 @@ public class Information extends BaseDomain implements PathBindable<Information>
     @Id
     public Long informationId;
     @DocSortable
+    @NotNull
     public String informationName;
     //@DocEmbedded
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "information")

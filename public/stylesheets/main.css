@@ -15,6 +15,7 @@ h1, h2, h3, h4, h5, h6 {
 
 h1 {
     font-size: 35px;
+    text-align: center;
 }
 
 h2 {
@@ -146,12 +147,14 @@ a:hover {
 .header-container .logo {
     display: block;
     padding: 10px;
+    padding-bottom: 5px;
     margin: auto 0;
     border-bottom: 1px solid black;
 }
 
 .header-container .logo img {
-    width: 150px;
+    width: 140px;
+
 }
 
 .top-navigation {
@@ -583,6 +586,15 @@ a:hover {
     align-items: left;
 }
 
+.home-list {
+    margin-left: 20px;
+    margin-bottom: 20px;
+}
+
+.home-list li {
+    padding: 5px;
+}
+
 /* ---- PLATFORM STYLES ----*/
 .add {
     position: relative;
@@ -607,6 +619,7 @@ a:hover {
 .platforms-headings {
     margin-left: 15px;
     margin-right: 15px;
+    text-align: center;
 }
 
 .form-container {
@@ -691,7 +704,8 @@ dd.error {
 
 .platform-details-header-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 
 .platform-details-container {
@@ -699,7 +713,7 @@ dd.error {
     flex-direction: column;
 }
 
-.platforms-top-navigation-link {
+.create-new-top-navigation-link {
     display: flex;
     text-decoration: none;
     font-size: 16px;
@@ -713,13 +727,13 @@ dd.error {
     cursor: pointer;
 }
 
-.platforms-top-navigation-link:visited,
-.platforms-top-navigation-link:link {
+.create-new-top-navigation-link:visited,
+.create-new-top-navigation-link:link {
     color: #FFF;
     text-decoration: none;
 }
 
-.platforms-top-navigation-link:hover,
+.create-new-top-navigation-link:hover,
 .platform-navigation-active,
 .platform-navigation-active:visited,
 .platform-navigation-active:link {
@@ -766,7 +780,7 @@ dd.error {
     margin: 5px 0;
 }
 
-.platform-filter {
+.filter {
     width: 300px;
     padding: 4px;
     margin-right: 5px;
@@ -802,6 +816,11 @@ dd.error {
 
 .table-cell {
     padding: 0px !important;
+}
+
+.table-cell:hover {
+    background-color: #CCCCCC;
+    cursor: pointer;
 }
 
 .platform-table a,
@@ -883,7 +902,7 @@ dd.error {
 }
 
 
-.platforms-right-bottom-border {
+.create-new-right-bottom-border {
     display: flex;
     border-bottom: 1px solid #2F2F2F;
     flex-grow: 1;
@@ -1047,12 +1066,14 @@ dd.error {
 
 .management-heading-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
 }
 
 .management-headings {
     margin-right: 15px;
     margin-left: 15px;
+    text-align: center;
 }
 
 .management-navigation-container {
@@ -1224,13 +1245,10 @@ dd.error {
     padding-left: 10px;
 }
 
-.management-table-row-link:hover {
-    background-color: #F5F5F5;
-}
-
+.management-table-row-link:hover,
 .management-table-row:hover {
-    background-color: #F5F5F5;
-    cursor: unset;
+    background-color: #CCCCCC;
+    cursor: pointer;
 }
 
 .management-table-row-input {
@@ -1284,7 +1302,36 @@ dd.error {
     font-size: 20px;
 }
 
-/* Search Result */
+.management-category-table-row-link {
+    width: 100%;
+    min-height: 100%;
+    padding: 5px 0;
+    padding-left: 10px;
+}
+
+.management-category-table-row:hover {
+    background-color: #CCCCCC;
+    cursor: pointer;
+}
+
+/* ----- Management History ----- */
+.history-table {
+    width: 100%;
+}
+
+.history-table-data {
+    text-align: center;
+}
+
+.history-table-row-link {
+    width: 100%;
+}
+
+.history-table-row-link:hover {
+    background-color: #404040;
+}
+
+/* ------- Search Result ------- */
 .search-results-heading {
 
 }
@@ -1434,8 +1481,6 @@ a .searchresult-value-label{
     top: 4px;
     left: -2px;
 }
-
-
 
 /* ---- COOKIE MESSAGE ---- */
 .js_enabled .cookie-message {
@@ -1687,4 +1732,11 @@ table + h3 {
     .search-box {
         width: 150px;
     }
+}
+
+
+.content-placeholder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
