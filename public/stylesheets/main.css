@@ -1053,9 +1053,9 @@ dd.error {
 .howto-container {
     display: flex;
     flex-direction: column;
-    max-width: 600px;
     margin: 0 auto;
-    align-items: left;
+    width: 600px;
+    align-items: flex-start;
 }
 
 
@@ -1417,11 +1417,30 @@ dd.error {
 }
 .filter-label {
     font-weight: bold;
-
-    padding-left: 5px;
 }
 
 .filter-box {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #AFAFAF;
+    font-size: 14px;
+    font-weight: bold;
+    border: 1px solid black;
+    border-radius: 25px;
+    color: black;
+    margin: 5px 3px 0px 3px;
+    min-width: 24px;
+    height: 24px;
+    padding: 15px 10px;
+    cursor: pointer;
+}
+
+.filter-box:hover {
+    background-color: #c4ffcf;
+}
+
+.filter-box-active {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1438,7 +1457,7 @@ dd.error {
     cursor: pointer;
 }
 
-.filter-box:hover {
+.filter-box-active:hover {
     background-color: #e2e2e2;
 }
 
@@ -1446,8 +1465,19 @@ dd.error {
     width: 100%;
 }
 
+.filter-add {
+    color: darkgreen;
+}
+
+.filter-close {
+    color: darkred;
+}
+
 .search-results-filter-container {
     display: flex;
+    align-items: center;
+    padding: 2px;
+    margin-right: 25px
 }
 
 .searchresult-value-attribute,

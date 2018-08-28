@@ -25,25 +25,6 @@ create table aggregator_content (
   constraint pk_aggregator_content primary key (aggregator_content_id)
 );
 
-create table aggregator_content_history (
-  aggregator_content_history_id bigint auto_increment not null,
-  aggregator_content            TEXT default '' not null,
-  aggregator_content_aggregator_content_id bigint,
-  history_creation_date         datetime(6),
-  delete_status                 TINYINT default '0' not null,
-  constraint pk_aggregator_content_history primary key (aggregator_content_history_id)
-);
-
-create table aggregator_history (
-  aggregator_history_id         bigint auto_increment not null,
-  aggregator_aggregator_id      bigint,
-  aggregator_name               varchar(255) not null,
-  aggregator_category           TEXT default '' not null,
-  history_creation_date         datetime(6),
-  delete_status                 TINYINT default '0' not null,
-  constraint pk_aggregator_history primary key (aggregator_history_id)
-);
-
 create table function (
   function_id                   bigint auto_increment not null,
   delete_status                 tinyint(1) default 0 not null,
@@ -188,12 +169,6 @@ alter table aggregator_content add constraint fk_aggregator_content_aggregator_a
 create index ix_aggregator_content_platform_platform_id on aggregator_content (platform_platform_id);
 alter table aggregator_content add constraint fk_aggregator_content_platform_platform_id foreign key (platform_platform_id) references platform (platform_id) on delete restrict on update restrict;
 
-create index ix_aggregator_content_history_aggregator_content_aggregat_1 on aggregator_content_history (aggregator_content_aggregator_content_id);
-alter table aggregator_content_history add constraint fk_aggregator_content_history_aggregator_content_aggregat_1 foreign key (aggregator_content_aggregator_content_id) references aggregator_content (aggregator_content_id) on delete restrict on update restrict;
-
-create index ix_aggregator_history_aggregator_aggregator_id on aggregator_history (aggregator_aggregator_id);
-alter table aggregator_history add constraint fk_aggregator_history_aggregator_aggregator_id foreign key (aggregator_aggregator_id) references aggregator (aggregator_id) on delete restrict on update restrict;
-
 create index ix_function_content_function_function_id on function_content (function_function_id);
 alter table function_content add constraint fk_function_content_function_function_id foreign key (function_function_id) references function (function_id) on delete restrict on update restrict;
 
@@ -242,12 +217,6 @@ drop index ix_aggregator_content_aggregator_aggregator_id on aggregator_content;
 alter table aggregator_content drop foreign key fk_aggregator_content_platform_platform_id;
 drop index ix_aggregator_content_platform_platform_id on aggregator_content;
 
-alter table aggregator_content_history drop foreign key fk_aggregator_content_history_aggregator_content_aggregat_1;
-drop index ix_aggregator_content_history_aggregator_content_aggregat_1 on aggregator_content_history;
-
-alter table aggregator_history drop foreign key fk_aggregator_history_aggregator_aggregator_id;
-drop index ix_aggregator_history_aggregator_aggregator_id on aggregator_history;
-
 alter table function_content drop foreign key fk_function_content_function_function_id;
 drop index ix_function_content_function_function_id on function_content;
 
@@ -290,10 +259,6 @@ drop index ix_platform_history_platform_platform_id on platform_history;
 drop table if exists aggregator;
 
 drop table if exists aggregator_content;
-
-drop table if exists aggregator_content_history;
-
-drop table if exists aggregator_history;
 
 drop table if exists function;
 

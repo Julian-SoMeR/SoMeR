@@ -1,0 +1,66 @@
+@main("Platform Properties Function Page") {
+
+    <!-- Breadcrumbs that get displayed before the content!
+             This is a bit redundant BUT works without JS!!-->
+    <div class="breadcrumbs">
+        <p class="breadcrumb-paragraph">You are here: </p>
+        <ul class="breadcrumb-list">
+            <li class="breadcrumb-firstItem">SoMeR Management</li>
+            <li>
+                <a href="@routes.ManagementController.platformPropertiesFunction()">
+                    Platform Properties <strong>(Function)</strong>
+                </a>
+            </li>
+            <li>Under Construction</li>
+        </ul>
+    </div>
+
+    <div id="content-container" class="content-container">
+        <div class="management-container">
+            <div class="management-heading-container">
+                <h1 class="management-headings">SoMeR Management</h1>
+            </div>
+
+            <div class="management-navigation-container">
+                <div class="management-left-bottom-border"></div>
+                    <!--
+                <a class="management-top-navigation-link">
+                    Comment Feed
+                </a>
+                -->
+                <a class="management-top-navigation-link management-top-navigation-active">
+                    Platform Properties
+                </a>
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.aggregatorProperties()">
+                    Aggregator Properties
+                </a>
+                <a class="management-top-navigation-link"
+                href="@routes.ManagementController.showHistory()">
+                    History
+                </a>
+                <div class="management-right-bottom-border"></div>
+            </div>
+
+            <div class="management-content-container">
+                <div class="management-subnavigation-container">
+                    <a class="management-subnavigation-link"
+                    href="@routes.ManagementController.platformPropertiesInformation()">
+                        Platform Information
+                    </a>
+                    <a class="management-subnavigation-link management-subnavigation-active">
+                        Function
+                    </a>
+                    <a class="management-subnavigation-link"
+                    href="@routes.ManagementController.platformPropertiesImpact()">
+                        Impact
+                    </a>
+                </div>
+                <div class="content-placeholder">
+                    <img src="@routes.Assets.at("images/underconstruction.png")"/>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="@routes.Assets.at("javascripts/management.js")" type="text/javascript"></script>
+}

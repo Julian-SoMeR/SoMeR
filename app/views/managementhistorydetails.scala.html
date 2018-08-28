@@ -1,6 +1,4 @@
-@import models.history.HistoryResult
-@(resultList: List[HistoryResult])
-@main("Management History") {
+@main("Management History Details") {
     <!-- JavaScript Router to enable dialogs and routing from them. -->
     <script type="text/javascript" src="@routes.ApplicationController.javascriptRoutes"></script>
 
@@ -11,7 +9,14 @@
         <p class="breadcrumb-paragraph">You are here: </p>
         <ul class="breadcrumb-list">
             <li class="breadcrumb-firstItem">SoMeR Management </li>
-            <li>History</li>
+            <li>
+                <a href="@routes.ManagementController.showHistory()">
+                    History
+                </a>
+            </li>
+            <li>
+                Under Construction
+            </li>
         </ul>
     </div>
 
@@ -43,26 +48,9 @@
             </div>
 
             <div class="management-content-container">
-                <table class="history-table">
-                    <tr>
-                        <th>Platform Name</th>
-                        <th>Last Change Date</th>
-                    </tr>
-                    @for(result <- resultList) {
-
-
-                        <tr>
-                            <td class="history-table-data">
-                                <a class="history-table-row-link"
-                                href="@routes.ManagementController.showHistoryDetails()">
-                                @result.name
-                                </a>
-                            </td>
-                            <td class="history-table-data">@result.timestampString</td>
-                        </tr>
-
-                    }
-                </table>
+                <div class="content-placeholder">
+                    <img src="@routes.Assets.at("images/underconstruction.png")"/>
+                </div>
             </div>
         </div>
     </div>

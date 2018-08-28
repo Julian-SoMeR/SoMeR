@@ -95,11 +95,17 @@ GET     /management/platformproperties/platforminformation                  cont
 #Management page platform properties function
 GET     /management/platformproperties/function                             controllers.ManagementController.platformPropertiesFunction()
 
+#Management page platform properties function
+GET     /management/platformproperties/function/empty                       controllers.ManagementController.platformPropertiesFunctionEmpty()
+
 #Management page platform properties impact
 GET     /management/platformproperties/impact                               controllers.ManagementController.platformPropertiesImpact()
 
 #Management history page
-GET     /management/history                             controllers.ManagementController.showHistory()
+GET     /management/history                                                 controllers.ManagementController.showHistory()
+
+#Management history page
+GET     /management/history/empty                                           controllers.ManagementController.showHistoryDetails()
 
 #Update information
 POST    /management/platformproperties/platforminformation                  controllers.ManagementController.saveInformation()

@@ -225,6 +225,11 @@ public class ManagementController extends Controller {
         return redirect(routes.ManagementController.platformPropertiesFunction());
     }
 
+
+    public Result platformPropertiesFunctionEmpty() {
+        return ok(managementplatformpropertiesfunction.render());
+    }
+
     public Result platformPropertiesImpact() {
         return ok(managementplatformpropertiesimpact.render());
     }
@@ -287,6 +292,10 @@ public class ManagementController extends Controller {
         }
         System.out.println(historyResults);
         return ok(managementhistory.render(historyResults));
+    }
+
+    public Result showHistoryDetails() {
+        return  ok(managementhistorydetails.render());
     }
 
 
