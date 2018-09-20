@@ -21,7 +21,7 @@ import play.mvc.*;
 import java.sql.Timestamp;
 
 /**
- * This model contains all the platform data of the SoMeR.
+ * This model contains all the function history data of the SoMeR.
  * The JPA/Ebean annotations are used to tell Play how
  * to generate the tables, contents and relations of the database and provide evolutions.
  */
@@ -53,7 +53,7 @@ public class FunctionHistory extends Model {
     @NotNull
     Boolean deleteStatus;
 
-    // List to collect all platform objects to render them on the platforms page.
+    // List to collect all functionHistory objects to render them on the history subpage.
     private static List<FunctionHistory> functionHistoryList;
 
     /* ----- Constructors ----- */

@@ -1,3 +1,5 @@
+/* JS for the platforms site. */
+
 // Delete a platform after confirming a dialog
 function deletePlatform(urlToDelete, platformName) {
     let dialogResult = confirm("Are you sure you want to delete '" +
@@ -59,62 +61,6 @@ function submitWithCategory(submitValue) {
     submitButton.click();
 }
 
-/*
-function submitWithValue(submitValue) {
-    if (submitValue === "platformcreate-saveredirectfunctions") {
-        let dialogResult = confirm("You can only view functions after the platform is saved.\n" +
-            "Save and proceed to the 'Functions' tab?");
-        if (dialogResult) {
-            let submitButton = document.getElementById("form-submit-button");
-            submitButton.value = submitValue;
-            submitButton.click();
-        }
-    } else if (submitValue === "platformcreate-saveredirectimpacts") {
-        let dialogResult = confirm("You can only view impacts after the platform is saved.\n" +
-            "Save and proceed to the 'Impacts' tab?");
-        if (dialogResult) {
-            let submitButton = document.getElementById("form-submit-button");
-            submitButton.value = submitValue;
-            submitButton.click();
-        }
-    } else if (submitValue === "platformcreate-saveonly" || submitValue === "generalinformation-saveonly") {
-
-    let submitButton = document.getElementById("form-submit-button");
-    submitButton.value = submitValue;
-    submitButton.click();
-    }
-}
-*/
-
-
-/*Save and redirect to functions page
-function saveRedirectToFunctions() {
-    let platformForm = document.getElementById("create-new-platform-form");
-    let formSubmitted = false;
-    let dialogResult = confirm("You can only view functions after the platform is saved.\n" +
-        "Save and proceed to the 'Functions' tab?");
-    if(dialogResult) {
-        platformForm.submit();
-        formSubmitted = true;
-        console.log("1");
-        let saveRouting = jsRoutes.controllers.PlatformsController.platforms(1);
-        $.ajax({
-            url: saveRouting.url,
-            type: saveRouting.type,
-            success: function (results) {
-                console.log("2");
-                //location.reload();
-            }
-
-        })
-        $.ajax(jsRoutes.controllers.PlatformsController.saveGeneralPlatformInformation())
-            .done(console.log("2"))
-            .fail(console.log("3"));
-    }
-    console.log("4");
-}
-*/
-
 /* ---- Platform Search Filter ---- */
 function filterPlatforms() {
     let input, filter, table, tr, td, i;
@@ -153,10 +99,3 @@ platformFilter.addEventListener("keyup", function (event) {
         document.getElementById("filter-button").click();
     }
 });
-
-
-/*
-$(document).ready(function () {
-
-});
-*/

@@ -1,3 +1,6 @@
+/* JS for the SoMeR Management site. */
+
+/* Showing and hiding inputs for changes on platform information subsite. */
 function showInput(informationId) {
     let selectedTableRowLinkString = "table-row-link-" + informationId;
     let deleteEditIconContainerString = "delete-edit-icon-container-" + informationId;
@@ -53,7 +56,7 @@ function hideCreateNewInput() {
     createNewSaveCancelContainer.style.display = "none";
 }
 
-// Submit the form with ajax, to avoid reloading the window.
+// Submit the management form with ajax, to avoid reloading the window.
 function submitForm() {
     jsRoutes.controllers.ManagementController.saveInformation().ajax({
         data: $('#management-form').serialize(),
@@ -141,6 +144,7 @@ function submitNewInformation() {
     });
 }
 
+// Test for session storage to use JS for displaying error, save and delete messages
 $(document).ready(function () {
     window.onload = function () {
         let saveSuccessReloading = sessionStorage.getItem("save_success_reloading");

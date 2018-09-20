@@ -88,14 +88,10 @@
                         href="@routes.ApplicationController.aggregators()">
                             Aggregators</a>
 
-                            <!--<a class="      @setTopLinkActive("/howtoparticipate") navigation-link"
-                            href="@routes.ApplicationController.howTo()">
-                            How To Participate
-                        </a>
-                        -->
                         <a class="@setTopLinkActive("/management") navigation-link discard-warning"
                         href="@routes.ManagementController.management()">
                             SoMeR Management</a>
+
 
                         <a class="@setTopLinkActive("/about") navigation-link discard-warning"
                         href="@routes.ApplicationController.about()">
@@ -106,29 +102,14 @@
                     <div class="inbetween-bottom-border"></div>
                     <div class="right-header-container">
                         <div class="login-container">
+
                             <input class="custom-button" type="button" onclick="registerVisible()" value="Register"/>
                             <hr class="login-separator"/>
+
                             <input class="custom-button" type="button" onclick="loginVisible()" value="Login"/>
+
+
                         </div>
-
-                            <!--
-                            helper.form(action = routes.SearchController.search(searchForm("searchQuery")
-                                    .getValue().orElse("")
-                                ), 'class -> "setTopLinkActive(" / search") search-container"
-                                ,
-                                'id -> "search-container"
-                                )
-                                {
-
-                            helper.inputText(searchForm("searchQuery"), 'id -> "search-box", 'class -> "search-box",
-                                'placeholder -> "Search..")
-                            <button class="search-button" type="submit">
-                                <i class="material-icons search-icon">
-                                                search
-                                </i>
-                            </button>
-                            }
-                            -->
 
                         <form id="search-container" class="search-container"
                         action="/search">

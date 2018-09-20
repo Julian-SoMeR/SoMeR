@@ -55,12 +55,7 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
     /* ----- Constructors ----- */
     public Platform() {
     }
-/*
-    public Platform(Long platformId, String platformName) {
-        this.platformId = platformId;
-        this.platformName = platformName;
-    }
-*/
+
     public Platform(Long platformId, String platformName, List<FunctionContent> functionContents,
                     List<ImpactContent> impactContents, List<InformationContent> informationContents) {
         this.platformId = platformId;
@@ -127,6 +122,11 @@ public class Platform extends BaseDomain implements PathBindable<Platform> {
         return platformArrayList;
     }
 
+    /**
+     * Translate the contents of the dynamic form into a platform object.
+     * @param requestForm Dynamic form received by http request.
+     * @return Platform object with the new content from the request form.
+     */
     public static Platform formToPlatform(DynamicForm requestForm) {
         Platform platform = new Platform();
         String platformIdString = requestForm.get("platformId");

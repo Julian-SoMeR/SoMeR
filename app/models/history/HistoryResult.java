@@ -3,6 +3,9 @@ package models.history;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 
+/**
+ * Class to format all the history objects into one displayable object.
+ */
 public class HistoryResult {
 
     public String id;

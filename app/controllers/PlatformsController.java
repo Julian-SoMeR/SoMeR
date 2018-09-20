@@ -16,6 +16,9 @@ import play.data.DynamicForm;
 
 import java.util.*;
 
+/**
+ * Controller Class for the platforms page. Everything the happens on this page goes here.
+ */
 public class PlatformsController extends Controller {
     // Dynamic form to bind data of multiple models from an html form to a form object.
     private DynamicForm requestForm;
@@ -287,7 +290,7 @@ public class PlatformsController extends Controller {
             }
         }
         // If none of the error flags is true, show a success message
-        flash("success", "Save successful.");
+        flash("success", "Successfully saved.");
         // Decide where to route next.
         switch (routingCaseSelector) {
             case 0:
@@ -367,7 +370,7 @@ public class PlatformsController extends Controller {
             }
         }
         // If none of the error flags is true, show a success message
-        flash("success", "Save successful.");
+        flash("success", "Successfully saved.");
         // Decide where to route next.
         switch (routingCaseSelector) {
             case 0:
@@ -505,7 +508,7 @@ public class PlatformsController extends Controller {
             }
         }
         // If none of the error flags is true, show a success message
-        flash("success", "Save successful.");
+        flash("success", "Successfully saved.");
         // Decide where to route next.
         switch (routingCaseSelector) {
             case 0:

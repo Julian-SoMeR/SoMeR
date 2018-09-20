@@ -21,9 +21,6 @@ GET     /platforms                  controllers.PlatformsController.platforms()
 #Aggregators page
 GET     /aggregators     controllers.ApplicationController.aggregators()
 
-#How To page
-GET     /howtoparticipate           controllers.ApplicationController.howTo()
-
 #About page
 GET     /about                      controllers.ApplicationController.about()
 

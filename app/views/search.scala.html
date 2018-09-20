@@ -20,7 +20,6 @@
                     <p class="no-results">No results found. Try a different keyword.</p>
                 } else {
                     @if(!(searchObject.queryString.isEmpty())) {
-                            <!-- NEW -->
                         <div class="searchresult-container">
                             <h3 class="results-found">Results found: @searchObject.resultCount</h3>
                             <div class="search-filter-container">
@@ -30,7 +29,7 @@
                                     onclick="toogleInformationFilterButton()">
                                         <div class="filter-box-label"
                                         id="information-filter-box-label">
-                                            Platform Information (@platformList.length)
+                                            Platform Information (@(platformList.length + informationContents.length))
                                         </div>
                                         <i class="material-icons filter-add">add</i>
                                     </div>
@@ -38,7 +37,7 @@
                                     onclick="toogleInformationFilterButton()">
                                         <div class="filter-box-label"
                                         id="information-filter-box-label">
-                                            Platform Information (@platformList.length)
+                                            Platform Information (@(platformList.length + informationContents.length))
                                         </div>
                                         <i class="material-icons filter-close">close</i>
                                     </div>
@@ -212,12 +211,10 @@
                                 </section>
                             }
                             </div>
-
                         </div>
-                            <!-- NEW -->
                     </div>
-        }
-        }
+                }
+            }
         }
             <!-- jquery.highlight.js highlighter to mark query string in search results.
              See "https://raw.githubusercontent.com/bartaz/sandbox.js/master/jquery.highlight.js".
@@ -235,45 +232,4 @@
                 });
         </script>
         <script src="@routes.Assets.at("javascripts/search.js")" type="text/javascript"></script>
-            <!--
-            <div id="search-result-container" class="search-result-container">
-
-
-        @if(!(searchObject.queryString.isEmpty())) {
-        <table id="search-result-table" class="platform-table">
-
-            <tbody>
-
-                @for(platformResult <- platformList) {
-                    <tr id="platform-table-row" class="table-row">
-                        <td id="platform-table-column" class="table-column">
-                            <p>Result found in platforms:</p>
-                            <h3>
-                                <a href="@routes.PlatformsController.showSelectedPlatformInformation(platformResult.platformId)">
-                                    <div class="query-result">@platformResult.platformName</div></a>
-                            </h3>
-
-                        </td>
-                    </tr>
-                }
-
-                @for(functionContentResult <- functionContents) {
-                    <tr id="platform-table-row" class="table-row">
-                        <td id="platform-table-column" class="table-column">
-                            <p>Result found in functions of platform "@functionContentResult.platform.platformName":</p>
-                            <h4>@functionContentResult.function.functionName :</h4>
-                            <h5>
-                                <a href="@routes.PlatformsController
-                                .showSelectedPlatformInformation(platformResult.platformdataId)">
-                                    <div class="query-result">@functionContentResult.functionContent</div></a>
-                            </h5>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
-    }
-    </div>
-    </div>-->
 }
-

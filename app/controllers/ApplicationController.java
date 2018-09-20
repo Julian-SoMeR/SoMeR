@@ -8,6 +8,9 @@ import javax.inject.*;
 import play.routing.JavaScriptReverseRouter;
 import java.util.*;
 
+/**
+ * Basic Controller Class to route and render all general pages with no SoMeR content.
+ */
 public class ApplicationController extends Controller {
 
     public Result home() {

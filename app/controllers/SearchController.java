@@ -8,6 +8,9 @@ import models.*;
 import javax.inject.*;
 import java.util.List;
 
+/**
+ * Controller Class for the search results page. This collects all search results and renders them.
+ */
 public class SearchController extends Controller {
     public Result search(Search searchObject) {
             List<Platform> platforms = Search.queryAllPlatforms(searchObject.queryString);

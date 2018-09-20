@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * Model for display on the search results page.
+ */
 public class Search implements QueryStringBindable<Search> {
     public Long queryId;
     public String queryString;
@@ -52,6 +55,12 @@ public class Search implements QueryStringBindable<Search> {
     }
 
     /* ---- Methods ---- */
+
+    /**
+     * Query all platform objects for the given query string.
+     * @param queryString String given by the user to search for.
+     * @return List of all platform objects found by the given query string.
+     */
     public static List<Platform> queryAllPlatforms(String queryString) {
         platformList = Ebean.find(Platform.class).setUseDocStore(true).where()
                 .ilike("platformName", "%" + queryString + "%").findList();
@@ -60,6 +69,11 @@ public class Search implements QueryStringBindable<Search> {
         return platformArrayList;
     }
 
+    /**
+     * Query all InformationContent objects for the given query string.
+     * @param queryString String given by the user to search for.
+     * @return List of all InformationContent objects found by the given query string.
+     */
     public static List<InformationContent> queryAllInformationContents(String queryString) {
         informationContents = Ebean.find(InformationContent.class).setUseDocStore(true).where()
                 .ilike("informationContent", "%" + queryString + "%").findList();
@@ -69,6 +83,11 @@ public class Search implements QueryStringBindable<Search> {
         return informationContentArrayList;
     }
 
+    /**
+     * Query all FunctionContent objects for the given query string.
+     * @param queryString String given by the user to search for.
+     * @return List of all FunctionContent objects found by the given query string.
+     */
     public static List<FunctionContent> queryAllFunctionContents(String queryString) {
         functionContents = Ebean.find(FunctionContent.class).setUseDocStore(true).where()
                 .ilike("functionContent", "%" + queryString + "%").findList();
@@ -77,6 +96,11 @@ public class Search implements QueryStringBindable<Search> {
         return functionContentArrayList;
     }
 
+    /**
+     * Query all ImpactContent objects for the given query string.
+     * @param queryString String given by the user to search for.
+     * @return List of all ImpactContent objects found by the given query string.
+     */
     public static List<ImpactContent> queryAllImpactContents(String queryString) {
         impactContents = Ebean.find(ImpactContent.class).setUseDocStore(true).where()
                 .ilike("impactContent", "%" + queryString + "%").findList();

@@ -26,6 +26,9 @@ import io.ebean.SqlUpdate;
 import java.sql.Timestamp;
 import java.util.*;
 
+/**
+ * Controller Class for the SoMeR Management page. Everything happening on this page goes here.
+ */
 public class ManagementController extends Controller {
     // Dynamic form to bind data of multiple models from an html form to a form object.
     private DynamicForm requestForm;
@@ -225,7 +228,7 @@ public class ManagementController extends Controller {
         return redirect(routes.ManagementController.platformPropertiesFunction());
     }
 
-
+    // These can be used to implement the missing views.
     public Result platformPropertiesFunctionEmpty() {
         return ok(managementplatformpropertiesfunction.render());
     }
@@ -238,31 +241,12 @@ public class ManagementController extends Controller {
         return ok(managementaggregatorproperties.render());
     }
 
+    /**
+     * Prototype method to render the first list of the history tab, sorted by change date and alphabetically otherwise.
+     * The sql query is only conceptual and needs some work.
+     * @return List of all history entries for all platforms with their last change date.
+     */
     public Result showHistory() {
-        /*
-        List<PlatformHistory> platformHistoryList = PlatformHistory.findAllHistory();
-        List<InformationHistory> informationHistoryList = InformationHistory.findAllHistory();
-        List<InformationContentHistory> informationContentHistoryList = InformationContentHistory.findAllHistory();
-        List<ImpactHistory> impactHistoryList = ImpactHistory.findAllHistory();
-        List<ImpactContentHistory> impactContentHistoryList = ImpactContentHistory.findAllHistory();
-        List<FunctionHistory> functionHistoryList = FunctionHistory.findAllHistory();
-        List<FunctionContentHistory> functionContentHistoryList = FunctionContentHistory.findAllHistory();
-        System.out.println("|||||||Platform History: " + platformHistoryList);
-        System.out.println("|||||||Information History: " + informationHistoryList);
-        System.out.println("|||||||Information Content History: " + informationContentHistoryList);
-        System.out.println("|||||||Impact History: " + impactHistoryList);
-        System.out.println("|||||||Impact Content History: " + impactContentHistoryList);
-        System.out.println("|||||||Function History: " + functionHistoryList);
-        System.out.println("|||||||Function Content History: " + functionContentHistoryList);
-        analyzeHistory(platformHistoryList,
-                informationHistoryList,
-                informationContentHistoryList,
-                impactHistoryList,
-                impactContentHistoryList,
-                functionHistoryList,
-                functionContentHistoryList);
-        */
-
         List<Platform> resultList = new ArrayList<>();
         String sqlQueryString = "select\n" +
                 "\tt.ID, max(t.DATE) DATE, p.platform_name NAME\n" +
@@ -297,8 +281,6 @@ public class ManagementController extends Controller {
     public Result showHistoryDetails() {
         return  ok(managementhistorydetails.render());
     }
-
-
 
     private List<Platform> analyzeHistory(List<PlatformHistory> platformHistoryList,
                                           List<InformationHistory> informationHistoryList,

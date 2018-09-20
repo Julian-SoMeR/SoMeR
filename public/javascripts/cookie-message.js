@@ -1,3 +1,5 @@
+//Cookie message for EU Cookie Law. Derived from "https://github.com/studio24/cookie-message".
+//                 View "MIT License.md" in "/public/" folder.
 $(document).ready(function () {
 
     /**

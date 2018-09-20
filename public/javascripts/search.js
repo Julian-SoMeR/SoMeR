@@ -1,5 +1,7 @@
-$(document).ready(function () {
+/* JS for the search results site. */
 
+/* ---- Search Filters ---- */
+$(document).ready(function () {
 let searchContainer = document.getElementById("search-container");
 searchContainer.style.backgroundColor = "#F5F5F5";
 searchContainer.style.border = "1px solid black";
@@ -7,6 +9,7 @@ searchContainer.style.borderBottom = "1.25px solid #F5F5F5";
 searchContainer.style.transitionDuration = "unset";
 });
 
+// Toggle filters for adding / removing filter criteria to search results.
 let informationFilterFlag = false;
 function toogleInformationFilterButton() {
     let filterButton = document.getElementById("information-filter-box");

@@ -882,7 +882,7 @@ dd.error {
     justify-content: flex-start;
     width: 550px;
     position: relative;
-    top: -16px;
+    top: -15px;
     left: 0px;
 }
 
@@ -1769,4 +1769,8 @@ table + h3 {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.logged-in {
+    color: white;
 }

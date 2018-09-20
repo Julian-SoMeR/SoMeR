@@ -25,7 +25,7 @@ public class BaseDomain extends Model {
     @WhenCreated
     Timestamp creationDate;
 
-    // Auto-generated timestamp for the creation of any entity
+    // Auto-generated timestamp for the modification of any entity
     @WhenModified
     Timestamp modificationDate;
 
